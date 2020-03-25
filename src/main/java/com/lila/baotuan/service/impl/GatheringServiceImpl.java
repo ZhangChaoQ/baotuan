@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 收款表 服务实现类
+ * 收款记录 服务实现类
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 @Service
 public class GatheringServiceImpl extends ServiceImpl<GatheringMapper, Gathering> implements IGatheringService {

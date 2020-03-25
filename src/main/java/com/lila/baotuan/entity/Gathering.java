@@ -7,17 +7,16 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
-import lombok.Data;
+import java.io.Serializable;
 
 /**
  * <p>
- * 收款表
+ * 收款记录
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
-@Data
 public class Gathering extends Model<Gathering> {
 
     private static final long serialVersionUID = 1L;
@@ -28,10 +27,10 @@ public class Gathering extends Model<Gathering> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
-     * 付款用户编码
+     * 付款用户id
      */
-	@TableField("user_code")
-	private String userCode;
+	@TableField("user_id")
+	private Integer userId;
     /**
      * 付款金额
      */
@@ -54,12 +53,12 @@ public class Gathering extends Model<Gathering> {
 		this.id = id;
 	}
 
-	public String getUserCode() {
-		return userCode;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Double getMoney() {
@@ -95,7 +94,7 @@ public class Gathering extends Model<Gathering> {
 	public String toString() {
 		return "Gathering{" +
 			", id=" + id +
-			", userCode=" + userCode +
+			", userId=" + userId +
 			", money=" + money +
 			", createtime=" + createtime +
 			", overtime=" + overtime +

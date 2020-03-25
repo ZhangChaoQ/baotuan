@@ -2,8 +2,11 @@ package com.lila.baotuan.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -11,12 +14,17 @@ import com.baomidou.mybatisplus.activerecord.Model;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 用户id
+     */
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
     /**
      * 用户编码
      */
@@ -35,10 +43,10 @@ public class User extends Model<User> {
 	@TableField("invite_code")
 	private String inviteCode;
     /**
-     * 推广人(用户编码)
+     * 用户id
      */
-	@TableField("user_code")
-	private String userCode;
+	@TableField("user_id")
+	private Integer userId;
     /**
      * 支付宝账号
      */
@@ -54,11 +62,23 @@ public class User extends Model<User> {
      */
 	private Double money;
     /**
-     * 会员等级
+     * 会员id
      */
-	@TableField("member_code")
-	private String memberCode;
+	@TableField("member_id")
+	private Integer memberId;
+    /**
+     * 是否启用(1:启用 0:禁用)
+     */
+	private Integer enabled;
 
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getCode() {
 		return code;
@@ -92,12 +112,12 @@ public class User extends Model<User> {
 		this.inviteCode = inviteCode;
 	}
 
-	public String getUserCode() {
-		return userCode;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getZfbAccount() {
@@ -124,31 +144,41 @@ public class User extends Model<User> {
 		this.money = money;
 	}
 
-	public String getMemberCode() {
-		return memberCode;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setMemberCode(String memberCode) {
-		this.memberCode = memberCode;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public Integer getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Integer enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
 	protected Serializable pkVal() {
-		return this.code;
+		return this.id;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
+			", id=" + id +
 			", code=" + code +
 			", phone=" + phone +
 			", password=" + password +
 			", inviteCode=" + inviteCode +
-			", userCode=" + userCode +
+			", userId=" + userId +
 			", zfbAccount=" + zfbAccount +
 			", zfbUrl=" + zfbUrl +
 			", money=" + money +
-			", memberCode=" + memberCode +
+			", memberId=" + memberId +
+			", enabled=" + enabled +
 			"}";
 	}
 }

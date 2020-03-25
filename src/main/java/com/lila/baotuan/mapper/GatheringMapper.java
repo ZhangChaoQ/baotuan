@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
-  * 收款表 Mapper 接口
+  * 收款记录 Mapper 接口
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 @Mapper
 public interface GatheringMapper extends BaseMapper<Gathering> {

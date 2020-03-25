@@ -6,13 +6,12 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 收款表 服务类
+ * 收款记录 服务类
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
-@Service
 public interface IGatheringService extends IService<Gathering> {
 	
 }

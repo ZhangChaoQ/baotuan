@@ -2,8 +2,11 @@ package com.lila.baotuan.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -11,7 +14,7 @@ import com.baomidou.mybatisplus.activerecord.Model;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 public class Notic extends Model<Notic> {
 
@@ -20,6 +23,7 @@ public class Notic extends Model<Notic> {
     /**
      * 公告id
      */
+	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
      * 标题

@@ -2,6 +2,8 @@ package com.lila.baotuan.service;
 
 import com.lila.baotuan.entity.SystemUser;
 import com.baomidou.mybatisplus.service.IService;
+import com.lila.baotuan.service.impl.SystemUserServiceImpl;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,9 +12,8 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
-@Service
 public interface ISystemUserService extends IService<SystemUser> {
-	
+
 }

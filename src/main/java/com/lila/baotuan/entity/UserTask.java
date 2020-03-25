@@ -2,9 +2,12 @@ package com.lila.baotuan.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -12,7 +15,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 @TableName("user_task")
 public class UserTask extends Model<UserTask> {
@@ -22,22 +25,23 @@ public class UserTask extends Model<UserTask> {
     /**
      * 用户任务id
      */
+	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
-     * 用户编码
+     * 用户id
      */
-	@TableField("user_code")
-	private String userCode;
+	@TableField("user_id")
+	private Integer userId;
     /**
      * 任务id
      */
 	@TableField("task_id")
 	private Integer taskId;
     /**
-     * 任务状态
+     * 任务状态id
      */
-	@TableField("task_status_code")
-	private String taskStatusCode;
+	@TableField("task_status_id")
+	private Integer taskStatusId;
 
 
 	public Integer getId() {
@@ -48,12 +52,12 @@ public class UserTask extends Model<UserTask> {
 		this.id = id;
 	}
 
-	public String getUserCode() {
-		return userCode;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Integer getTaskId() {
@@ -64,12 +68,12 @@ public class UserTask extends Model<UserTask> {
 		this.taskId = taskId;
 	}
 
-	public String getTaskStatusCode() {
-		return taskStatusCode;
+	public Integer getTaskStatusId() {
+		return taskStatusId;
 	}
 
-	public void setTaskStatusCode(String taskStatusCode) {
-		this.taskStatusCode = taskStatusCode;
+	public void setTaskStatusId(Integer taskStatusId) {
+		this.taskStatusId = taskStatusId;
 	}
 
 	@Override
@@ -81,9 +85,9 @@ public class UserTask extends Model<UserTask> {
 	public String toString() {
 		return "UserTask{" +
 			", id=" + id +
-			", userCode=" + userCode +
+			", userId=" + userId +
 			", taskId=" + taskId +
-			", taskStatusCode=" + taskStatusCode +
+			", taskStatusId=" + taskStatusId +
 			"}";
 	}
 }

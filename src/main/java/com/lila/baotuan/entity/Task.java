@@ -2,8 +2,11 @@ package com.lila.baotuan.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -11,7 +14,7 @@ import com.baomidou.mybatisplus.activerecord.Model;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 public class Task extends Model<Task> {
 
@@ -20,6 +23,7 @@ public class Task extends Model<Task> {
     /**
      * 任务id
      */
+	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
     /**
      * 任务标题
@@ -42,10 +46,10 @@ public class Task extends Model<Task> {
      */
 	private String url;
     /**
-     * 任务类型
+     * 任务类型id
      */
-	@TableField("task_type_code")
-	private String taskTypeCode;
+	@TableField("task_type_id")
+	private Integer taskTypeId;
 
 
 	public Integer getId() {
@@ -96,12 +100,12 @@ public class Task extends Model<Task> {
 		this.url = url;
 	}
 
-	public String getTaskTypeCode() {
-		return taskTypeCode;
+	public Integer getTaskTypeId() {
+		return taskTypeId;
 	}
 
-	public void setTaskTypeCode(String taskTypeCode) {
-		this.taskTypeCode = taskTypeCode;
+	public void setTaskTypeId(Integer taskTypeId) {
+		this.taskTypeId = taskTypeId;
 	}
 
 	@Override
@@ -118,7 +122,7 @@ public class Task extends Model<Task> {
 			", number=" + number +
 			", money=" + money +
 			", url=" + url +
-			", taskTypeCode=" + taskTypeCode +
+			", taskTypeId=" + taskTypeId +
 			"}";
 	}
 }

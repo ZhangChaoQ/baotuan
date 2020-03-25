@@ -4,15 +4,17 @@
 
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.lila.baotuan.entity.User">
-		<id column="code" property="code" />
+		<id column="id" property="id" />
+		<result column="code" property="code" />
 		<result column="phone" property="phone" />
 		<result column="password" property="password" />
 		<result column="invite_code" property="inviteCode" />
-		<result column="user_code" property="userCode" />
+		<result column="user_id" property="userId" />
 		<result column="zfb_account" property="zfbAccount" />
 		<result column="zfb_url" property="zfbUrl" />
 		<result column="money" property="money" />
-		<result column="member_code" property="memberCode" />
+		<result column="member_id" property="memberId" />
+		<result column="enabled" property="enabled" />
 	</resultMap>
 
 </mapper>

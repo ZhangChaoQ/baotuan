@@ -7,11 +7,11 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 收款表 前端控制器
+ * 收款记录 前端控制器
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 @Controller
 @RequestMapping("/baotuan/gathering")

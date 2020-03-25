@@ -5,9 +5,9 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.lila.baotuan.entity.UserTask">
 		<id column="id" property="id" />
-		<result column="user_code" property="userCode" />
+		<result column="user_id" property="userId" />
 		<result column="task_id" property="taskId" />
-		<result column="task_status_code" property="taskStatusCode" />
+		<result column="task_status_id" property="taskStatusId" />
 	</resultMap>
 
 </mapper>

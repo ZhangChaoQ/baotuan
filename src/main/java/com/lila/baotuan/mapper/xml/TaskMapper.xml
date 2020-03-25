@@ -10,7 +10,7 @@
 		<result column="number" property="number" />
 		<result column="money" property="money" />
 		<result column="url" property="url" />
-		<result column="task_type_code" property="taskTypeCode" />
+		<result column="task_type_id" property="taskTypeId" />
 	</resultMap>
 
 </mapper>

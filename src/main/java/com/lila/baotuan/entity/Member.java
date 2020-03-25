@@ -2,7 +2,10 @@ package com.lila.baotuan.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.activerecord.Model;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -10,12 +13,17 @@ import com.baomidou.mybatisplus.activerecord.Model;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
 public class Member extends Model<Member> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 会员等级id
+     */
+	@TableId(value="id", type= IdType.AUTO)
+	private Integer id;
     /**
      * 会员等级编码
      */
@@ -37,6 +45,14 @@ public class Member extends Model<Member> {
      */
 	private Integer url;
 
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getCode() {
 		return code;
@@ -80,12 +96,13 @@ public class Member extends Model<Member> {
 
 	@Override
 	protected Serializable pkVal() {
-		return this.code;
+		return this.id;
 	}
 
 	@Override
 	public String toString() {
 		return "Member{" +
+			", id=" + id +
 			", code=" + code +
 			", name=" + name +
 			", context=" + context +

@@ -2,6 +2,8 @@ package com.lila.baotuan.mapper;
 
 import com.lila.baotuan.entity.SystemUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -9,8 +11,9 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-24
+ * @since 2020-03-25
  */
+@Mapper
 public interface SystemUserMapper extends BaseMapper<SystemUser> {
 
 }
