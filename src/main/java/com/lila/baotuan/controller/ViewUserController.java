@@ -7,14 +7,15 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 用户角色 前端控制器
+ * VIEW 前端控制器
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 @Controller
-@RequestMapping("/baotuan/userRole")
-public class UserRoleController {
-	
+@RequestMapping("/baotuan/viewUser")
+public class ViewUserController {
+
 }
+

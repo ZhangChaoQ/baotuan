@@ -1,10 +1,8 @@
 package com.lila.baotuan.entity;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -13,101 +11,106 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 public class Member extends Model<Member> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * 会员等级id
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 会员等级编码
      */
-	private String code;
+    private String code;
+
     /**
      * 会员名称
      */
-	private String name;
+    private String name;
+
     /**
      * 会员权益
      */
-	private String context;
+    private String context;
+
     /**
      * 会员价格
      */
-	private Double money;
+    private Double money;
+
     /**
      * 支付宝二维码
      */
-	private Integer url;
+    private Integer url;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getContext() {
-		return context;
-	}
+    public String getContext() {
+        return context;
+    }
 
-	public void setContext(String context) {
-		this.context = context;
-	}
+    public void setContext(String context) {
+        this.context = context;
+    }
 
-	public Double getMoney() {
-		return money;
-	}
+    public Double getMoney() {
+        return money;
+    }
 
-	public void setMoney(Double money) {
-		this.money = money;
-	}
+    public void setMoney(Double money) {
+        this.money = money;
+    }
 
-	public Integer getUrl() {
-		return url;
-	}
+    public Integer getUrl() {
+        return url;
+    }
 
-	public void setUrl(Integer url) {
-		this.url = url;
-	}
+    public void setUrl(Integer url) {
+        this.url = url;
+    }
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
-	@Override
-	public String toString() {
-		return "Member{" +
-			", id=" + id +
-			", code=" + code +
-			", name=" + name +
-			", context=" + context +
-			", money=" + money +
-			", url=" + url +
-			"}";
-	}
+    @Override
+    public String toString() {
+        return "Member{" +
+        "id=" + id +
+        ", code=" + code +
+        ", name=" + name +
+        ", context=" + context +
+        ", money=" + money +
+        ", url=" + url +
+        "}";
+    }
 }

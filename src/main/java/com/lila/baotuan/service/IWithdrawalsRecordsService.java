@@ -1,8 +1,7 @@
 package com.lila.baotuan.service;
 
 import com.lila.baotuan.entity.WithdrawalsRecords;
-import com.baomidou.mybatisplus.service.IService;
-import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 public interface IWithdrawalsRecordsService extends IService<WithdrawalsRecords> {
-	
+
 }

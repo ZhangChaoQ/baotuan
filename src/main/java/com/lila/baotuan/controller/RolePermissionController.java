@@ -11,10 +11,11 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 @Controller
 @RequestMapping("/baotuan/rolePermission")
 public class RolePermissionController {
-	
+
 }
+

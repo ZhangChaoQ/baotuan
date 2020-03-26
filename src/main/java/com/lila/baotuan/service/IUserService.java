@@ -1,7 +1,7 @@
 package com.lila.baotuan.service;
 
 import com.lila.baotuan.entity.User;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 public interface IUserService extends IService<User> {
-	
+
 }

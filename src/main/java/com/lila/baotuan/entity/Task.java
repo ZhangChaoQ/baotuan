@@ -1,11 +1,8 @@
 package com.lila.baotuan.entity;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -14,115 +11,120 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 public class Task extends Model<Task> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * 任务id
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 任务标题
      */
-	private String title;
+    private String title;
+
     /**
      * 任务描述
      */
-	private String context;
+    private String context;
+
     /**
      * 任务数量
      */
-	private Integer number;
+    private Integer number;
+
     /**
      * 任务金额
      */
-	private Double money;
+    private Double money;
+
     /**
      * 任务链接
      */
-	private String url;
+    private String url;
+
     /**
      * 任务类型id
      */
-	@TableField("task_type_id")
-	private Integer taskTypeId;
+    private Integer taskTypeId;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getContext() {
-		return context;
-	}
+    public String getContext() {
+        return context;
+    }
 
-	public void setContext(String context) {
-		this.context = context;
-	}
+    public void setContext(String context) {
+        this.context = context;
+    }
 
-	public Integer getNumber() {
-		return number;
-	}
+    public Integer getNumber() {
+        return number;
+    }
 
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
-	public Double getMoney() {
-		return money;
-	}
+    public Double getMoney() {
+        return money;
+    }
 
-	public void setMoney(Double money) {
-		this.money = money;
-	}
+    public void setMoney(Double money) {
+        this.money = money;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public Integer getTaskTypeId() {
-		return taskTypeId;
-	}
+    public Integer getTaskTypeId() {
+        return taskTypeId;
+    }
 
-	public void setTaskTypeId(Integer taskTypeId) {
-		this.taskTypeId = taskTypeId;
-	}
+    public void setTaskTypeId(Integer taskTypeId) {
+        this.taskTypeId = taskTypeId;
+    }
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
-	@Override
-	public String toString() {
-		return "Task{" +
-			", id=" + id +
-			", title=" + title +
-			", context=" + context +
-			", number=" + number +
-			", money=" + money +
-			", url=" + url +
-			", taskTypeId=" + taskTypeId +
-			"}";
-	}
+    @Override
+    public String toString() {
+        return "Task{" +
+        "id=" + id +
+        ", title=" + title +
+        ", context=" + context +
+        ", number=" + number +
+        ", money=" + money +
+        ", url=" + url +
+        ", taskTypeId=" + taskTypeId +
+        "}";
+    }
 }

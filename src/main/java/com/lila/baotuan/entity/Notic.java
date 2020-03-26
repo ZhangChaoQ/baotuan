@@ -1,11 +1,9 @@
 package com.lila.baotuan.entity;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
@@ -14,75 +12,78 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-26
  */
 public class Notic extends Model<Notic> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID=1L;
 
     /**
      * 公告id
      */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
     /**
      * 标题
      */
-	private String title;
+    private String title;
+
     /**
      * 内容
      */
-	private String context;
+    private String context;
+
     /**
      * 创建时间
      */
-	private Date createtime;
+    private LocalDateTime createtime;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getContext() {
-		return context;
-	}
+    public String getContext() {
+        return context;
+    }
 
-	public void setContext(String context) {
-		this.context = context;
-	}
+    public void setContext(String context) {
+        this.context = context;
+    }
 
-	public Date getCreatetime() {
-		return createtime;
-	}
+    public LocalDateTime getCreatetime() {
+        return createtime;
+    }
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
+    public void setCreatetime(LocalDateTime createtime) {
+        this.createtime = createtime;
+    }
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
-	@Override
-	public String toString() {
-		return "Notic{" +
-			", id=" + id +
-			", title=" + title +
-			", context=" + context +
-			", createtime=" + createtime +
-			"}";
-	}
+    @Override
+    public String toString() {
+        return "Notic{" +
+        "id=" + id +
+        ", title=" + title +
+        ", context=" + context +
+        ", createtime=" + createtime +
+        "}";
+    }
 }

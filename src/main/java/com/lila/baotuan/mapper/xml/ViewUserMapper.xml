@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lila.baotuan.mapper.ViewUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lila.baotuan.entity.ViewUser">
+        <result column="id" property="id" />
+        <result column="user_code" property="userCode" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="invite_code" property="inviteCode" />
+        <result column="user_id" property="userId" />
+        <result column="zfb_account" property="zfbAccount" />
+        <result column="zfb_url" property="zfbUrl" />
+        <result column="money" property="money" />
+        <result column="member_id" property="memberId" />
+        <result column="enabled" property="enabled" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="inviter_code" property="inviterCode" />
+        <result column="inviter_member_code" property="inviterMemberCode" />
+        <result column="inviter_member_name" property="inviterMemberName" />
+        <result column="user_member_money" property="userMemberMoney" />
+        <result column="inviter_member_money" property="inviterMemberMoney" />
+    </resultMap>
+
+</mapper>
