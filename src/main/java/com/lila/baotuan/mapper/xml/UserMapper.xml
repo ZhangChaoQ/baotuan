@@ -11,8 +11,8 @@
         <result column="password" property="password" />
         <result column="invite_code" property="inviteCode" />
         <result column="user_id" property="userId" />
-        <result column="zfb_account" property="zfbAccount" />
-        <result column="zfb_url" property="zfbUrl" />
+        <result column="Alipay_account" property="alipayAccount" />
+        <result column="Alipay_url" property="alipayUrl" />
         <result column="money" property="money" />
         <result column="member_id" property="memberId" />
         <result column="enabled" property="enabled" />

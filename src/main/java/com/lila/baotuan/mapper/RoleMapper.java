@@ -2,7 +2,6 @@ package com.lila.baotuan.mapper;
 
 import com.lila.baotuan.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -10,9 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-27
  */
-@Mapper
 public interface RoleMapper extends BaseMapper<Role> {
 
 }

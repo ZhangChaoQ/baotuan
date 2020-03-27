@@ -10,6 +10,7 @@
         <result column="task_status_id" property="taskStatusId" />
         <result column="user_money" property="userMoney" />
         <result column="task_money" property="taskMoney" />
+        <result column="invite_id" property="inviteId" />
     </resultMap>
 
 </mapper>

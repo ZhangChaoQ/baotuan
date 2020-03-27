@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.lila.baotuan.entity.WithdrawalsRecords;
 import com.lila.baotuan.service.impl.WithdrawalsRecordsServiceImpl;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/baotuan/withdrawalsRecords")
 public class WithdrawalsRecordsController {
 
-    @Resource
+    @Autowired
     private WithdrawalsRecordsServiceImpl withdrawalsRecordsService;
 
     /*

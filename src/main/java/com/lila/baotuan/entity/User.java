@@ -3,6 +3,7 @@ package com.lila.baotuan.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 /**
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-27
  */
 public class User extends Model<User> {
 
@@ -56,12 +57,14 @@ public class User extends Model<User> {
     /**
      * 支付宝账号
      */
-    private String zfbAccount;
+    @TableField("Alipay_account")
+    private String alipayAccount;
 
     /**
      * 支付宝二维码
      */
-    private Integer zfbUrl;
+    @TableField("Alipay_url")
+    private Integer alipayUrl;
 
     /**
      * 余额
@@ -135,20 +138,20 @@ public class User extends Model<User> {
         this.userId = userId;
     }
 
-    public String getZfbAccount() {
-        return zfbAccount;
+    public String getAlipayAccount() {
+        return alipayAccount;
     }
 
-    public void setZfbAccount(String zfbAccount) {
-        this.zfbAccount = zfbAccount;
+    public void setAlipayAccount(String alipayAccount) {
+        this.alipayAccount = alipayAccount;
     }
 
-    public Integer getZfbUrl() {
-        return zfbUrl;
+    public Integer getAlipayUrl() {
+        return alipayUrl;
     }
 
-    public void setZfbUrl(Integer zfbUrl) {
-        this.zfbUrl = zfbUrl;
+    public void setAlipayUrl(Integer alipayUrl) {
+        this.alipayUrl = alipayUrl;
     }
 
     public Double getMoney() {
@@ -190,8 +193,8 @@ public class User extends Model<User> {
         ", password=" + password +
         ", inviteCode=" + inviteCode +
         ", userId=" + userId +
-        ", zfbAccount=" + zfbAccount +
-        ", zfbUrl=" + zfbUrl +
+        ", alipayAccount=" + alipayAccount +
+        ", alipayUrl=" + alipayUrl +
         ", money=" + money +
         ", memberId=" + memberId +
         ", enabled=" + enabled +

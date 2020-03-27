@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-27
  */
 public class Member extends Model<Member> {
 
@@ -44,9 +44,19 @@ public class Member extends Model<Member> {
     private Double money;
 
     /**
+     * 升级费用
+     */
+    private Double upMoney;
+
+    /**
      * 支付宝二维码
      */
     private Integer url;
+
+    /**
+     * 升级二维码
+     */
+    private Integer upUrl;
 
 
     public Integer getId() {
@@ -89,12 +99,28 @@ public class Member extends Model<Member> {
         this.money = money;
     }
 
+    public Double getUpMoney() {
+        return upMoney;
+    }
+
+    public void setUpMoney(Double upMoney) {
+        this.upMoney = upMoney;
+    }
+
     public Integer getUrl() {
         return url;
     }
 
     public void setUrl(Integer url) {
         this.url = url;
+    }
+
+    public Integer getUpUrl() {
+        return upUrl;
+    }
+
+    public void setUpUrl(Integer upUrl) {
+        this.upUrl = upUrl;
     }
 
     @Override
@@ -110,7 +136,9 @@ public class Member extends Model<Member> {
         ", name=" + name +
         ", context=" + context +
         ", money=" + money +
+        ", upMoney=" + upMoney +
         ", url=" + url +
+        ", upUrl=" + upUrl +
         "}";
     }
 }

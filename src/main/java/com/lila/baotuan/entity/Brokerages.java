@@ -6,18 +6,18 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 分佣记录
+ * 金额记录
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-27
  */
 public class Brokerages extends Model<Brokerages> {
 
     private static final long serialVersionUID=1L;
 
     /**
-     * 分佣id
+     * 金额记录id
      */
     private Integer id;
 
@@ -27,16 +27,19 @@ public class Brokerages extends Model<Brokerages> {
     private Integer userId;
 
     /**
-     * 推荐人id
-     */
-    private Integer inviterId;
-
-    /**
-     * 获取分佣金额
+     * 金额
      */
     private Double money;
 
+    /**
+     * 创建时间
+     */
     private LocalDateTime createtime;
+
+    /**
+     * 分佣类型
+     */
+    private Integer brokeragesTypeId;
 
 
     public Integer getId() {
@@ -55,14 +58,6 @@ public class Brokerages extends Model<Brokerages> {
         this.userId = userId;
     }
 
-    public Integer getInviterId() {
-        return inviterId;
-    }
-
-    public void setInviterId(Integer inviterId) {
-        this.inviterId = inviterId;
-    }
-
     public Double getMoney() {
         return money;
     }
@@ -79,6 +74,14 @@ public class Brokerages extends Model<Brokerages> {
         this.createtime = createtime;
     }
 
+    public Integer getBrokeragesTypeId() {
+        return brokeragesTypeId;
+    }
+
+    public void setBrokeragesTypeId(Integer brokeragesTypeId) {
+        this.brokeragesTypeId = brokeragesTypeId;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -89,9 +92,9 @@ public class Brokerages extends Model<Brokerages> {
         return "Brokerages{" +
         "id=" + id +
         ", userId=" + userId +
-        ", inviterId=" + inviterId +
         ", money=" + money +
         ", createtime=" + createtime +
+        ", brokeragesTypeId=" + brokeragesTypeId +
         "}";
     }
 }

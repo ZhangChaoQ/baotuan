@@ -11,11 +11,38 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 25/03/2020 19:20:17
+ Date: 27/03/2020 19:20:56
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for brokerages
+-- ----------------------------
+DROP TABLE IF EXISTS `brokerages`;
+CREATE TABLE `brokerages`  (
+  `id` int(11) NOT NULL COMMENT '金额记录id',
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
+  `money` double(255, 2) NULL DEFAULT NULL COMMENT '金额',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `brokerages_type_id` int(11) NULL DEFAULT NULL COMMENT '分佣类型',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id`) USING BTREE,
+  CONSTRAINT `brokerages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '金额记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for brokerages_type
+-- ----------------------------
+DROP TABLE IF EXISTS `brokerages_type`;
+CREATE TABLE `brokerages_type`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '类型id',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型编码',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型说明',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '转账类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for gathering
@@ -41,12 +68,14 @@ CREATE TABLE `member`  (
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '会员等级编码',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '会员名称',
   `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '会员权益',
-  `money` double(255, 3) NULL DEFAULT NULL COMMENT '会员价格',
+  `money` double(255, 2) NULL DEFAULT NULL COMMENT '会员价格',
+  `up_money` double(255, 2) NULL DEFAULT NULL COMMENT '升级费用',
   `url` int(255) NULL DEFAULT NULL COMMENT '支付宝二维码',
+  `up_url` int(255) NULL DEFAULT NULL COMMENT '升级二维码',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `url`(`url`) USING BTREE,
   CONSTRAINT `member_ibfk_1` FOREIGN KEY (`url`) REFERENCES `upload_file` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for notic
@@ -59,6 +88,18 @@ CREATE TABLE `notic`  (
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for pay_status
+-- ----------------------------
+DROP TABLE IF EXISTS `pay_status`;
+CREATE TABLE `pay_status`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '支付状态id',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态编码',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态说明',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for permission
@@ -96,16 +137,47 @@ CREATE TABLE `role_permission`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for system_user
+-- Table structure for sys_user
 -- ----------------------------
-DROP TABLE IF EXISTS `system_user`;
-CREATE TABLE `system_user`  (
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '后台用户id',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '后台用户姓名',
   `login_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录账号',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户角色id',
+  `system_user_id` int(11) NULL DEFAULT NULL COMMENT '系统用户id',
+  `role_id` int(11) NULL DEFAULT NULL COMMENT '角色id',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `role_id`(`role_id`) USING BTREE,
+  INDEX `system_user_role_ibfk_1`(`system_user_id`) USING BTREE,
+  CONSTRAINT `sys_user_role_ibfk_1` FOREIGN KEY (`system_user_id`) REFERENCES `sys_user` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `sys_user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_withdrawals
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_withdrawals`;
+CREATE TABLE `sys_withdrawals`  (
+  `id` int(11) NOT NULL COMMENT '金额记录id',
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
+  `money` double(255, 2) NULL DEFAULT NULL COMMENT '提款金额',
+  `pay_money` double(255, 2) NULL DEFAULT NULL COMMENT '支付金额',
+  `pay_status_id` int(11) NULL DEFAULT NULL COMMENT '支付状态',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id`) USING BTREE,
+  CONSTRAINT `sys_withdrawals_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '转款记录 ' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for task
@@ -134,7 +206,7 @@ CREATE TABLE `task_status`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务状态名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务状态简要说明',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务状态' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for task_type
@@ -168,37 +240,24 @@ CREATE TABLE `upload_file`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户姓名',
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户编码',
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '电话/登录账号',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录密码',
   `invite_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '个人邀请码',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
-  `zfb_account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝账号',
-  `zfb_url` int(11) NOT NULL COMMENT '支付宝二维码',
+  `Alipay_account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝账号',
+  `Alipay_url` int(11) NULL DEFAULT NULL COMMENT '支付宝二维码',
   `money` double(255, 2) NOT NULL DEFAULT 0.00 COMMENT '余额',
-  `member_id` int(11) NULL DEFAULT NULL COMMENT '会员id',
-  `enabled` tinyint(1) NULL DEFAULT NULL COMMENT '是否启用(1:启用 0:禁用)',
+  `member_id` int(11) NULL DEFAULT 0 COMMENT '会员id',
+  `enabled` tinyint(1) NULL DEFAULT 1 COMMENT '是否启用(1:启用 0:禁用)',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
+  INDEX `zfb_url`(`Alipay_url`) USING BTREE,
   INDEX `member_id`(`member_id`) USING BTREE,
-  INDEX `zfb_url`(`zfb_url`) USING BTREE,
-  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`zfb_url`) REFERENCES `upload_file` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`Alipay_url`) REFERENCES `upload_file` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for user_role
--- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户角色id',
-  `system_user_id` int(11) NULL DEFAULT NULL COMMENT '系统用户id',
-  `role_id` int(11) NULL DEFAULT NULL COMMENT '角色id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `system_user_id`(`system_user_id`) USING BTREE,
-  INDEX `role_id`(`role_id`) USING BTREE,
-  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`system_user_id`) REFERENCES `system_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户角色' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_task
@@ -216,22 +275,18 @@ CREATE TABLE `user_task`  (
   CONSTRAINT `user_task_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_task_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `user_task_ibfk_3` FOREIGN KEY (`task_status_id`) REFERENCES `task_status` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for withdrawals_records
+-- View structure for view_user
 -- ----------------------------
-DROP TABLE IF EXISTS `withdrawals_records`;
-CREATE TABLE `withdrawals_records`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '提现记录id',
-  `user_id` int(11) NOT NULL COMMENT '提现人id',
-  `money` double(255, 2) NULL DEFAULT NULL COMMENT '提款金额',
-  `pay_money` double(255, 2) NULL DEFAULT NULL COMMENT '支付金额',
-  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '提现时间',
-  `overtime` datetime(0) NULL DEFAULT NULL COMMENT '到款时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_id`(`user_id`) USING BTREE,
-  CONSTRAINT `withdrawals_records_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '提现记录' ROW_FORMAT = Dynamic;
+DROP VIEW IF EXISTS `view_user`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user` AS select `user`.`id` AS `id`,`user`.`code` AS `user_code`,`user`.`phone` AS `phone`,`user`.`password` AS `password`,`user`.`invite_code` AS `invite_code`,`user`.`user_id` AS `user_id`,`user`.`Alipay_account` AS `zfb_account`,`user`.`Alipay_url` AS `zfb_url`,`user`.`money` AS `money`,`user`.`member_id` AS `member_id`,`user`.`enabled` AS `enabled`,`member`.`code` AS `code`,`member`.`name` AS `name`,`inviter`.`code` AS `inviter_code`,`inviter_member`.`code` AS `inviter_member_code`,`inviter_member`.`name` AS `inviter_member_name`,`inviter_member`.`money` AS `user_member_money`,`inviter_member`.`money` AS `inviter_member_money` from (((`user` left join `member` on((`user`.`member_id` = `member`.`id`))) join `user` `inviter` on((`user`.`user_id` = `inviter`.`id`))) left join `member` `inviter_member` on((`inviter`.`member_id` = `member`.`id`)));
+
+-- ----------------------------
+-- View structure for view_user_task
+-- ----------------------------
+DROP VIEW IF EXISTS `view_user_task`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user_task` AS select `user_task`.`id` AS `id`,`user_task`.`user_id` AS `user_id`,`user_task`.`task_id` AS `task_id`,`user_task`.`task_status_id` AS `task_status_id`,`user`.`money` AS `user_money`,`task`.`money` AS `task_money`,`user`.`user_id` AS `invite_id` from ((`user_task` left join `user` on((`user_task`.`user_id` = `user`.`id`))) left join `task` on((`user_task`.`task_id` = `task`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

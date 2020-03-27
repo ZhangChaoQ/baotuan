@@ -9,7 +9,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-27
  */
 public class ViewUserTask extends Model<ViewUserTask> {
 
@@ -44,6 +44,11 @@ public class ViewUserTask extends Model<ViewUserTask> {
      * 任务金额
      */
     private Double taskMoney;
+
+    /**
+     * 用户id
+     */
+    private Integer inviteId;
 
 
     public Integer getId() {
@@ -94,6 +99,14 @@ public class ViewUserTask extends Model<ViewUserTask> {
         this.taskMoney = taskMoney;
     }
 
+    public Integer getInviteId() {
+        return inviteId;
+    }
+
+    public void setInviteId(Integer inviteId) {
+        this.inviteId = inviteId;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -108,6 +121,7 @@ public class ViewUserTask extends Model<ViewUserTask> {
         ", taskStatusId=" + taskStatusId +
         ", userMoney=" + userMoney +
         ", taskMoney=" + taskMoney +
+        ", inviteId=" + inviteId +
         "}";
     }
 }

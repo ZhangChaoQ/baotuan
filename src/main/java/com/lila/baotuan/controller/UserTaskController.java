@@ -32,6 +32,8 @@ public class UserTaskController {
     private ViewUserTaskServiceImpl viewUserTaskService;
     @Resource
     private UserController userController;
+    @Resource
+    private BrokeragesController brokeragesController;
 
     /*
      * 完成任务
@@ -44,7 +46,12 @@ public class UserTaskController {
         uw.set("task_status_id", taskStatusId);
         uw.eq("id", id);
         boolean result = userTaskService.update(uw);
-        if (result) userController.updateMoney(viewUserTask.getTaskMoney(), viewUserTask.getUserId());
+        if (result) {
+            userController.updateMoney(viewUserTask.getTaskMoney()*0.98, viewUserTask.getUserId());
+            brokeragesController.addTask(viewUserTask.getUserId(),viewUserTask.getTaskMoney()*0.98);
+            userController.updateMoney(viewUserTask.getTaskMoney()*0.02, viewUserTask.getInviteId());
+            brokeragesController.addTask(viewUserTask.getInviteId(),viewUserTask.getTaskMoney()*0.02);
+        }
         return result;
     }
 

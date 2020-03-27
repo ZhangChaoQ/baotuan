@@ -9,7 +9,9 @@
         <result column="name" property="name" />
         <result column="context" property="context" />
         <result column="money" property="money" />
+        <result column="up_money" property="upMoney" />
         <result column="url" property="url" />
+        <result column="up_url" property="upUrl" />
     </resultMap>
 
 </mapper>
