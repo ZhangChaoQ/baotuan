@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 01/04/2020 20:36:48
+ Date: 02/04/2020 18:58:20
 */
 
 SET NAMES utf8mb4;
@@ -87,7 +87,7 @@ CREATE TABLE `member`  (
 -- Records of member
 -- ----------------------------
 INSERT INTO `member` VALUES (1, 'Regular', '普通会员', '无权益', 0.00, 0.00, 0, NULL, NULL);
-INSERT INTO `member` VALUES (2, 'Low', '初级会员', '每天可接8个任务', 299.00, 299.00, 1, NULL, NULL);
+INSERT INTO `member` VALUES (2, 'Low', '初级会员', '每天可接8个任务', 299.00, 299.00, 8, NULL, NULL);
 INSERT INTO `member` VALUES (3, 'Middle', '中级会员', '每天可接15个任务', 599.00, 300.00, 15, NULL, NULL);
 INSERT INTO `member` VALUES (4, 'High', '高级会员', '每天可接25个任务', 999.00, 400.00, 25, NULL, NULL);
 
@@ -215,8 +215,8 @@ CREATE TABLE `task`  (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES (1, '抖音测试', '点赞+关注', 100, 0, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-19 11:50:23');
-INSERT INTO `task` VALUES (2, '抖音测试2', '点赞+关注', 100, 0, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-30 12:13:15');
+INSERT INTO `task` VALUES (1, '抖音测试', '点赞+关注', 100, 1, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-14 19:50:23');
+INSERT INTO `task` VALUES (2, '抖音测试2', '点赞+关注', 100, 1, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-24 20:13:15');
 
 -- ----------------------------
 -- Table structure for task_status
@@ -309,19 +309,18 @@ CREATE TABLE `user_task`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `task_id`(`task_id`) USING BTREE,
   INDEX `task_status_id`(`task_status_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_task
 -- ----------------------------
-INSERT INTO `user_task` VALUES (1, 1, 1, 0, '2020-04-01 12:30:36');
-INSERT INTO `user_task` VALUES (2, 1, 2, 0, '2020-04-01 12:30:37');
+INSERT INTO `user_task` VALUES (1, 1, 1, 1, '2020-04-02 01:48:25');
 
 -- ----------------------------
 -- View structure for view_user
 -- ----------------------------
 DROP VIEW IF EXISTS `view_user`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user` AS select `user`.`id` AS `id`,`user`.`code` AS `user_code`,`user`.`phone` AS `phone`,`user`.`password` AS `password`,`user`.`invite_code` AS `invite_code`,`user`.`user_id` AS `user_id`,`user`.`Alipay_account` AS `zfb_account`,`user`.`Alipay_url` AS `zfb_url`,`user`.`money` AS `money`,`user`.`member_id` AS `member_id`,`user`.`enabled` AS `enabled`,`member`.`code` AS `code`,`member`.`name` AS `name`,`inviter`.`code` AS `inviter_code`,`inviter_member`.`code` AS `inviter_member_code`,`inviter_member`.`name` AS `inviter_member_name`,`inviter_member`.`money` AS `user_member_money`,`inviter_member`.`money` AS `inviter_member_money`,`member`.`task_number` AS `task_number` from (((`user` left join `member` on((`user`.`member_id` = `member`.`id`))) left join `user` `inviter` on((`user`.`user_id` = `inviter`.`id`))) left join `member` `inviter_member` on((`inviter`.`member_id` = `member`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user` AS select `user`.`id` AS `id`,`user`.`code` AS `user_code`,`user`.`phone` AS `phone`,`user`.`password` AS `password`,`user`.`invite_code` AS `invite_code`,`user`.`user_id` AS `user_id`,`user`.`Alipay_account` AS `zfb_account`,`user`.`Alipay_url` AS `zfb_url`,`user`.`money` AS `money`,`user`.`member_id` AS `member_id`,`user`.`enabled` AS `enabled`,`member`.`code` AS `code`,`member`.`name` AS `name`,`inviter`.`code` AS `inviter_code`,`inviter`.`invite_code` AS `inviter_invite_code`,`inviter_member`.`code` AS `inviter_member_code`,`inviter_member`.`name` AS `inviter_member_name`,`inviter_member`.`money` AS `user_member_money`,`inviter_member`.`money` AS `inviter_member_money`,`member`.`task_number` AS `task_number` from (((`user` left join `member` on((`user`.`member_id` = `member`.`id`))) left join `user` `inviter` on((`user`.`user_id` = `inviter`.`id`))) left join `member` `inviter_member` on((`inviter`.`member_id` = `member`.`id`)));
 
 -- ----------------------------
 -- View structure for view_user_task
