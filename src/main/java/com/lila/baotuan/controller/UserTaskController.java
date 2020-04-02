@@ -1,18 +1,18 @@
 package com.lila.baotuan.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.lila.baotuan.entity.UserTask;
-import com.lila.baotuan.entity.ViewUserTask;
+import com.alibaba.fastjson.JSONObject;
+import com.lila.baotuan.entity.Result;
+import com.lila.baotuan.service.impl.TaskServiceImpl;
 import com.lila.baotuan.service.impl.UserTaskServiceImpl;
-import com.lila.baotuan.service.impl.ViewUserTaskServiceImpl;
-import org.apache.ibatis.annotations.Param;
+import com.lila.baotuan.utils.ServiceUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-26
+ * @since 2020-03-28
  */
 @Controller
 @RequestMapping("/baotuan/userTask")
@@ -29,41 +29,51 @@ public class UserTaskController {
     @Resource
     private UserTaskServiceImpl userTaskService;
     @Resource
-    private ViewUserTaskServiceImpl viewUserTaskService;
-    @Resource
-    private UserController userController;
-    @Resource
-    private BrokeragesController brokeragesController;
+    private TaskServiceImpl taskService;
 
     /*
-     * 完成任务
+     * 接取任务
      * */
-    public boolean updateUserTask(@Param("id") int id, @Param("taskStatusId") int taskStatusId) {
-        QueryWrapper<ViewUserTask> qw = new QueryWrapper<>();
-        qw.eq("id", id);
-        ViewUserTask viewUserTask = viewUserTaskService.getOne(qw);
-        UpdateWrapper<UserTask> uw = new UpdateWrapper<>();
-        uw.set("task_status_id", taskStatusId);
-        uw.eq("id", id);
-        boolean result = userTaskService.update(uw);
-        if (result) {
-            userController.updateMoney(viewUserTask.getTaskMoney()*0.98, viewUserTask.getUserId());
-            brokeragesController.addTask(viewUserTask.getUserId(),viewUserTask.getTaskMoney()*0.98);
-            userController.updateMoney(viewUserTask.getTaskMoney()*0.02, viewUserTask.getInviteId());
-            brokeragesController.addTask(viewUserTask.getInviteId(),viewUserTask.getTaskMoney()*0.02);
+    @RequestMapping(value = "/insertUserTask")
+    @ResponseBody
+    public Result intsetUserTask(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int userId = jData.getInteger("userId");
+        int taskId = jData.getInteger("taskId");
+        Result result = new Result();
+        int count = taskService.updateSurplus(taskId);
+        if (count == 0) {
+            result.setCode(false);
+            result.setData(-1);
+            result.setMsg("该任务已结束，请刷新页面");
+            return result;
+        } else {
+            int id = userTaskService.insertUserTask(userId, taskId);
+            if (id == -1) {
+                result.setCode(false);
+                result.setData(id);
+                result.setMsg("已接受过该任务，请勿重复接取");
+                taskService.addSurplus(taskId);
+            } else if (id == -2) {
+                result.setCode(false);
+                result.setData(id);
+                result.setMsg("今日可接任务数量已接完，想继续接取任务请升级会员");
+                taskService.addSurplus(taskId);
+            } else {
+                result.setCode(true);
+                result.setData(id);
+                result.setMsg("任务接受成功");
+            }
         }
         return result;
     }
 
     /*
-     * 添加任务
+     * 完成任务
      * */
-    public boolean addUserTask(@Param("userId") int userId, @Param("taskId") int taskId) {
-        UserTask userTask = new UserTask();
-        userTask.setTaskId(taskId);
-        userTask.setUserId(userId);
-        boolean result = userTaskService.save(userTask);
-        return result;
+    @RequestMapping("/updateTaskStatus")
+    public int updateTaskStatus(int id) {
+        return userTaskService.updateTaskStatus(id);
     }
 }
 

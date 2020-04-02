@@ -9,7 +9,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-04-02
  */
 public class ViewUser extends Model<ViewUser> {
 
@@ -86,6 +86,11 @@ public class ViewUser extends Model<ViewUser> {
     private String inviterCode;
 
     /**
+     * 个人邀请码
+     */
+    private String inviterInviteCode;
+
+    /**
      * 会员等级编码
      */
     private String inviterMemberCode;
@@ -104,6 +109,11 @@ public class ViewUser extends Model<ViewUser> {
      * 会员价格
      */
     private Double inviterMemberMoney;
+
+    /**
+     * 没日任务数量
+     */
+    private Integer taskNumber;
 
 
     public Integer getId() {
@@ -218,6 +228,14 @@ public class ViewUser extends Model<ViewUser> {
         this.inviterCode = inviterCode;
     }
 
+    public String getInviterInviteCode() {
+        return inviterInviteCode;
+    }
+
+    public void setInviterInviteCode(String inviterInviteCode) {
+        this.inviterInviteCode = inviterInviteCode;
+    }
+
     public String getInviterMemberCode() {
         return inviterMemberCode;
     }
@@ -250,6 +268,14 @@ public class ViewUser extends Model<ViewUser> {
         this.inviterMemberMoney = inviterMemberMoney;
     }
 
+    public Integer getTaskNumber() {
+        return taskNumber;
+    }
+
+    public void setTaskNumber(Integer taskNumber) {
+        this.taskNumber = taskNumber;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -272,10 +298,12 @@ public class ViewUser extends Model<ViewUser> {
         ", code=" + code +
         ", name=" + name +
         ", inviterCode=" + inviterCode +
+        ", inviterInviteCode=" + inviterInviteCode +
         ", inviterMemberCode=" + inviterMemberCode +
         ", inviterMemberName=" + inviterMemberName +
         ", userMemberMoney=" + userMemberMoney +
         ", inviterMemberMoney=" + inviterMemberMoney +
+        ", taskNumber=" + taskNumber +
         "}";
     }
 }

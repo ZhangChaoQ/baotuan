@@ -3,6 +3,7 @@ package com.lila.baotuan.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-04-02
  */
 public class Task extends Model<Task> {
 
@@ -39,6 +40,11 @@ public class Task extends Model<Task> {
     private Integer number;
 
     /**
+     * 任务剩余数量
+     */
+    private Integer surplus;
+
+    /**
      * 任务金额
      */
     private Double money;
@@ -52,6 +58,11 @@ public class Task extends Model<Task> {
      * 任务类型id
      */
     private Integer taskTypeId;
+
+    /**
+     * 发布时间
+     */
+    private LocalDateTime createtime;
 
 
     public Integer getId() {
@@ -86,6 +97,14 @@ public class Task extends Model<Task> {
         this.number = number;
     }
 
+    public Integer getSurplus() {
+        return surplus;
+    }
+
+    public void setSurplus(Integer surplus) {
+        this.surplus = surplus;
+    }
+
     public Double getMoney() {
         return money;
     }
@@ -110,6 +129,14 @@ public class Task extends Model<Task> {
         this.taskTypeId = taskTypeId;
     }
 
+    public LocalDateTime getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(LocalDateTime createtime) {
+        this.createtime = createtime;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -122,9 +149,11 @@ public class Task extends Model<Task> {
         ", title=" + title +
         ", context=" + context +
         ", number=" + number +
+        ", surplus=" + surplus +
         ", money=" + money +
         ", url=" + url +
         ", taskTypeId=" + taskTypeId +
+        ", createtime=" + createtime +
         "}";
     }
 }

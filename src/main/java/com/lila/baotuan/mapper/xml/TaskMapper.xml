@@ -8,9 +8,11 @@
         <result column="title" property="title" />
         <result column="context" property="context" />
         <result column="number" property="number" />
+        <result column="surplus" property="surplus" />
         <result column="money" property="money" />
         <result column="url" property="url" />
         <result column="task_type_id" property="taskTypeId" />
+        <result column="createtime" property="createtime" />
     </resultMap>
 
 </mapper>

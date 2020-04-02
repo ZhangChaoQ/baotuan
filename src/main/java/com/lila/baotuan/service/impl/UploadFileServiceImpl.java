@@ -6,15 +6,30 @@ import com.lila.baotuan.service.IUploadFileService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 上传文件表 服务实现类
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-03-28
  */
 @Service
 public class UploadFileServiceImpl extends ServiceImpl<UploadFileMapper, UploadFile> implements IUploadFileService {
 
+    /*
+     * 添加上传
+     * */
+    public int insertUploadFile(String url, String name, int userId, double size) {
+        UploadFile uploadFile = new UploadFile();
+        uploadFile.setCreatetime(LocalDateTime.now());
+        uploadFile.setName(name);
+        uploadFile.setSize(size);
+        uploadFile.setUrl(url);
+        uploadFile.setUserId(userId);
+        baseMapper.insert(uploadFile);
+        return uploadFile.getId();
+    }
 }

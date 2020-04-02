@@ -11,6 +11,11 @@
         <result column="user_money" property="userMoney" />
         <result column="task_money" property="taskMoney" />
         <result column="invite_id" property="inviteId" />
+        <result column="createtime" property="createtime" />
+        <result column="title" property="title" />
+        <result column="context" property="context" />
+        <result column="url" property="url" />
+        <result column="user_task_createtime" property="userTaskCreatetime" />
     </resultMap>
 
 </mapper>

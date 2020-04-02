@@ -18,10 +18,12 @@
         <result column="code" property="code" />
         <result column="name" property="name" />
         <result column="inviter_code" property="inviterCode" />
+        <result column="inviter_invite_code" property="inviterInviteCode" />
         <result column="inviter_member_code" property="inviterMemberCode" />
         <result column="inviter_member_name" property="inviterMemberName" />
         <result column="user_member_money" property="userMemberMoney" />
         <result column="inviter_member_money" property="inviterMemberMoney" />
+        <result column="task_number" property="taskNumber" />
     </resultMap>
 
 </mapper>

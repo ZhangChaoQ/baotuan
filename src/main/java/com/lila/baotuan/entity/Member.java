@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-04-02
  */
 public class Member extends Model<Member> {
 
@@ -47,6 +47,11 @@ public class Member extends Model<Member> {
      * 升级费用
      */
     private Double upMoney;
+
+    /**
+     * 没日任务数量
+     */
+    private Integer taskNumber;
 
     /**
      * 支付宝二维码
@@ -107,6 +112,14 @@ public class Member extends Model<Member> {
         this.upMoney = upMoney;
     }
 
+    public Integer getTaskNumber() {
+        return taskNumber;
+    }
+
+    public void setTaskNumber(Integer taskNumber) {
+        this.taskNumber = taskNumber;
+    }
+
     public Integer getUrl() {
         return url;
     }
@@ -137,6 +150,7 @@ public class Member extends Model<Member> {
         ", context=" + context +
         ", money=" + money +
         ", upMoney=" + upMoney +
+        ", taskNumber=" + taskNumber +
         ", url=" + url +
         ", upUrl=" + upUrl +
         "}";

@@ -10,6 +10,7 @@
         <result column="context" property="context" />
         <result column="money" property="money" />
         <result column="up_money" property="upMoney" />
+        <result column="task_number" property="taskNumber" />
         <result column="url" property="url" />
         <result column="up_url" property="upUrl" />
     </resultMap>

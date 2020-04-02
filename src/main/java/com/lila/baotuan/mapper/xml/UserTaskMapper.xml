@@ -8,6 +8,7 @@
         <result column="user_id" property="userId" />
         <result column="task_id" property="taskId" />
         <result column="task_status_id" property="taskStatusId" />
+        <result column="createtime" property="createtime" />
     </resultMap>
 
 </mapper>

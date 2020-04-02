@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-04-02
  */
 public class Notic extends Model<Notic> {
 

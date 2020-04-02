@@ -1,23 +1,24 @@
 package com.lila.baotuan.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.lila.baotuan.entity.Member;
-import com.lila.baotuan.entity.User;
-import com.lila.baotuan.mapper.UserMapper;
-import com.lila.baotuan.service.impl.MemberServiceImpl;
-import com.lila.baotuan.service.impl.UserServiceImpl;
-import com.lila.baotuan.tools.MD5Util;
+import com.lila.baotuan.entity.*;
+import com.lila.baotuan.service.impl.*;
+import com.lila.baotuan.utils.ServiceUtil;
+import com.sun.deploy.nativesandbox.comm.Response;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 /**
@@ -26,125 +27,144 @@ import java.util.Random;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-25
+ * @since 2020-03-28
  */
 @Controller
 @RequestMapping("/baotuan/user")
 public class UserController {
+
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private BrokeragesController brokeragesController;
+    private ViewUserServiceImpl viewUserService;
     @Resource
-    private MemberServiceImpl memberService;
+    private ViewUserTaskServiceImpl viewUserTaskService;
+    @Resource
+    private UserTaskServiceImpl userTaskService;
+    @Resource
+    private BrokeragesServiceImpl brokeragesService;
 
     /*
-     * 修改会员等级
+     * 禁用账号
      * */
-    public boolean updateMember(@Param("memberId") int memberId, @Param("id") int id) {
-        QueryWrapper<Member> qw = new QueryWrapper<>();
-        qw.eq("id", memberId);
-        Member member = memberService.getOne(qw);
-        UpdateWrapper<User> uw = new UpdateWrapper<>();
-        uw.set("member_id", memberId);
-        uw.eq("id", id);
-        boolean result = userService.update(uw);//修改会员等级
-        QueryWrapper<User> qwUser = new QueryWrapper<>();
-        qwUser.eq("id", id);
-        User user = userService.getOne(qwUser);
-        if (result) {
-            updateMoney(member.getMoney() * 0.2, user.getUserId());//修改上级分佣
-            brokeragesController.addInvite(user.getUserId(), member.getMoney() * 0.2);//添加分佣记录
-        }
-        qwUser.clear();
-        qwUser.eq("id", user.getUserId());
-        User inviter = userService.getOne(qwUser);//上级
-        if (result) {
-            updateMoney(member.getMoney() * 0.05, inviter.getUserId());//修改上级分佣
-            brokeragesController.addInvite(inviter.getUserId(), member.getMoney() * 0.05);//添加分佣记录
-        }
+    @RequestMapping("/enabled")
+    public int enabledUser(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        return userService.enabledUser(id);
+    }
 
+    /*
+     * 启用账号
+     * */
+    @RequestMapping("/enable")
+    public int enableUser(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        return userService.enabledUser(id);
+    }
+
+    /*
+     * 完成任务
+     * */
+    @RequestMapping("/commitTask")
+    public boolean commitTask(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
+        ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
+        ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
+
+        userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
+        brokeragesService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
+
+        userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+        brokeragesService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+
+        userTaskService.updateTaskStatus(id);
+        return true;
+    }
+
+    /*
+     * 成为会员
+     * */
+    @RequestMapping("/toMember")
+    public int toMember(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        int memberId = jData.getInteger("memberId");
+        ViewUser viewUser = viewUserService.getViewUserById(id);
+        ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
+        int result = userService.updateMember(id, memberId);
+
+        userService.updateMoney(viewUser.getUserId(), viewUser.getInviterMemberMoney() * 0.2);
+        brokeragesService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
+
+        userService.updateMoney(inviter.getUserId(), inviter.getInviterMemberMoney() * 0.05);
+        brokeragesService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
         return result;
     }
 
     /*
-     * 修改余额
+     * 用戶注冊
      * */
-    public boolean updateMoney(@Param("money") double money, @Param("id") int id) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("id", id);
-        User user = userService.getOne(qw);
-        UpdateWrapper<User> uw = new UpdateWrapper<>();
-        uw.set("money", user.getMoney() + money);
-        uw.eq("id", id);
-        boolean result = userService.update(uw);
+    @RequestMapping("/addUser")
+    public int addUser(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        String phone = jData.getString("phone");
+        String password = jData.getString("password");
+        String inviteCode = jData.getString("inviteCode");
+        User inviter = userService.getUserByInviteCode(inviteCode);
+        int id = userService.insertUser(password, getCode(inviter), getInviteCode(), phone, inviter.getId());
+        return id;
+    }
+
+    /*
+     * 用戶登录
+     * */
+    @RequestMapping(value = "/login")
+    @ResponseBody
+    public Result login(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        String phone = jData.getString("phone");
+        String password = jData.getString("password");
+        User user = userService.userLogin(phone, password);
+        Result result=new Result();
+        if(null!=user){
+            result.setCode(true);
+            result.setData(user);
+            result.setMsg("登录成功");
+        }else{
+            result.setCode(false);
+            result.setData(null);
+            result.setMsg("登录失败，请检查账号和密码是否正确");
+        }
         return result;
     }
 
     /*
-     * 检验用户重复
+     * 綁定支付宝
      * */
-    @RequestMapping("/check")
-    @ResponseBody
-    public boolean check(@Param("loginName") String loginName) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("login_name", loginName);
-        int count = userService.count(qw);
-        return count > 0;
+    @RequestMapping("/bindAlipay")
+    public String bindAlipay(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        String alipayCccount = jData.getString("alipayCccount");
+        int alipayUrl = jData.getInteger("alipayUrl");
+        int id = jData.getInteger("id");
+        userService.updateAlipay(id, alipayCccount, alipayUrl);
+        return "index";
     }
 
     /*
-     * 检验用户邀请码
+     * 修改昵称
      * */
-    @RequestMapping("/checkInviteCode")
-    @ResponseBody
-    public boolean checkInviteCode(@Param("inviteCode") String inviteCode) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("invite_code", inviteCode);
-        int count = userService.count(qw);
-        return count > 0;
-    }
-
-    /*
-     * 注册
-     * */
-    @RequestMapping("/register")
-    public String register(@Param("loginName") String loginName, @Param("password") String password, @Param("inviteCode") String inviteCode) {
-        if (!check(loginName)) return "error";//用户名重复
-        if (!checkInviteCode(inviteCode)) return "error";//邀请码不存在
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("invite_code", inviteCode);
-        User inviter = userService.getOne(qw);
-
-        User user = new User();
-        user.setEnabled(true);
-        user.setInviteCode(getInviteCode());
-        user.setPassword(MD5Util.getMD5(password));
-        user.setPhone(loginName);
-        user.setCode(getUserCode(inviter));
-        user.setUserId(inviter.getId());
-        boolean result = userService.save(user);
-        if (result) {
-            return "index";
-        } else {
-            return "error";
-        }
-    }
-
-    /*
-     * 前台登录
-     * */
-    @RequestMapping("/login")
-    public String login(@Param("phone") String phone, @Param("password") String password) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("phone", phone);
-        User user = userService.getOne(qw);
-        if (!user.getEnabled()) return "error";
-        if (user.getPassword().equals(MD5Util.getMD5(password))) {
-            return "index";
-        } else {
-            return "error";
-        }
+    @RequestMapping("/reName")
+    public String reName(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        String name = jData.getString("name");
+        userService.updateName(id, name);
+        return "index";
     }
 
     /*
@@ -161,23 +181,35 @@ public class UserController {
         if (checkInviteCode(sb.toString())) getInviteCode();
         return sb.toString();
     }
-    /*
-     * 获取个人编码 userCode
-     * 编码规则
-     * 上级字母号-用户字母号-用户在当前字母号中的个数
-     * 例：最初号码 ：0-0A-00001
-     *       下级：0A1-0B-00001
-     *           下级：0B1-0C-00001
-     *       下级：0A1-0B-00002
-     *           下级：0B2-0C-00001
-     * 例：最初号码 ：0-0Z-00001
-     *       下级：0Z1-1A-00001
-     *           下级：1A1-1B-00001
-     *       下级：0Z1-1A-00002
-     *           下级：1A2-1B-00001
-     * */
 
-    public String getUserCode(User user) {
+    /*
+     * 检验用户邀请码
+     * */
+    @RequestMapping("/checkInviteCode")
+    public boolean checkInviteCode(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        String inviteCode = jData.getString("inviteCode");
+        return userService.getCountByInviteCode(inviteCode) > 0;
+    }
+
+    public boolean checkInviteCode(String inviteCode) {
+        return userService.getCountByInviteCode(inviteCode) > 0;
+    }
+
+    /*
+     * 检验用户重复
+     * */
+    @RequestMapping("/checkPhone")
+    public boolean check(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        String phone = jData.getString("phone");
+        return userService.getCountByPhone(phone) > 0;
+    }
+
+    /*
+     * 获取用户编码
+     * */
+    public String getCode(User user) {
         String userCode = user.getCode();
         String[] code = userCode.split("-");
         String sup = code[1] + Integer.valueOf(code[2]);//上级
@@ -189,42 +221,11 @@ public class UserController {
         } else {
             letter += 1;
         }
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("user_id", user.getId());
-        String count = userService.count() + 1 + "";
+        String count = userService.getCountByUserId(user.getId()) + 1 + "";
         for (int i = count.length(); i < 5; i++) {
             count = "0" + count;
         }
         return sup + "-" + number + "" + letter + "-" + count;
     }
-
-    /*
-     * 获取上级用户
-     * */
-    public User getUpUser(@Param("id") int id) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("id", id);
-        User user = userService.getOne(qw);
-        return user;
-    }
-
-    /*
-     * 修改密码
-     * */
-    public String updatePassword(@Param("id") int id, @Param("password") String password, @Param("newPassword") String newPassword) {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq("id", id);
-        User user = userService.getOne(qw);
-        if (user.getPassword().equals(MD5Util.getMD5(password))) {
-            UpdateWrapper<User> uw = new UpdateWrapper<>();
-            uw.set("password", MD5Util.getMD5(newPassword));
-            uw.eq("id", id);
-            boolean result = userService.update(uw);
-            if (result) return "index";
-            else return "error";
-        } else {
-            return "error";
-        }
-
-    }
 }
+

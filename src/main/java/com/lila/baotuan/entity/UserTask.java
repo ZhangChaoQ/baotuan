@@ -3,6 +3,7 @@ package com.lila.baotuan.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-27
+ * @since 2020-04-02
  */
 public class UserTask extends Model<UserTask> {
 
@@ -37,6 +38,11 @@ public class UserTask extends Model<UserTask> {
      * 任务状态id
      */
     private Integer taskStatusId;
+
+    /**
+     * 接取时间
+     */
+    private LocalDateTime createtime;
 
 
     public Integer getId() {
@@ -71,6 +77,14 @@ public class UserTask extends Model<UserTask> {
         this.taskStatusId = taskStatusId;
     }
 
+    public LocalDateTime getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(LocalDateTime createtime) {
+        this.createtime = createtime;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -83,6 +97,7 @@ public class UserTask extends Model<UserTask> {
         ", userId=" + userId +
         ", taskId=" + taskId +
         ", taskStatusId=" + taskStatusId +
+        ", createtime=" + createtime +
         "}";
     }
 }
