@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-02
+ * @since 2020-04-04
  */
 public class ViewUserTask extends Model<ViewUserTask> {
 
@@ -75,6 +75,31 @@ public class ViewUserTask extends Model<ViewUserTask> {
      * 接取时间
      */
     private LocalDateTime userTaskCreatetime;
+
+    /**
+     * 任务图片链接
+     */
+    private Integer uploadFileId;
+
+    /**
+     * 上传文件名称
+     */
+    private String name;
+
+    /**
+     * 上传路径
+     */
+    private String fileUrl;
+
+    /**
+     * 上传文件大小
+     */
+    private Double size;
+
+    /**
+     * 上传时间
+     */
+    private LocalDateTime uploadTime;
 
 
     public Integer getId() {
@@ -173,6 +198,46 @@ public class ViewUserTask extends Model<ViewUserTask> {
         this.userTaskCreatetime = userTaskCreatetime;
     }
 
+    public Integer getUploadFileId() {
+        return uploadFileId;
+    }
+
+    public void setUploadFileId(Integer uploadFileId) {
+        this.uploadFileId = uploadFileId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public Double getSize() {
+        return size;
+    }
+
+    public void setSize(Double size) {
+        this.size = size;
+    }
+
+    public LocalDateTime getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(LocalDateTime uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -193,6 +258,11 @@ public class ViewUserTask extends Model<ViewUserTask> {
         ", context=" + context +
         ", url=" + url +
         ", userTaskCreatetime=" + userTaskCreatetime +
+        ", uploadFileId=" + uploadFileId +
+        ", name=" + name +
+        ", fileUrl=" + fileUrl +
+        ", size=" + size +
+        ", uploadTime=" + uploadTime +
         "}";
     }
 }

@@ -1,7 +1,7 @@
 package com.lila.baotuan.service;
 
-import com.lila.baotuan.entity.Notic;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lila.baotuan.entity.Notice;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Zhang
  * @since 2020-03-28
  */
-public interface INoticService extends IService<Notic> {
+public interface INoticeService extends IService<Notice> {
 
 }

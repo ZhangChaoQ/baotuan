@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-02
+ * @since 2020-04-04
  */
 public class Brokerages extends Model<Brokerages> {
 

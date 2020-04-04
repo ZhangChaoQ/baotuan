@@ -16,6 +16,11 @@
         <result column="context" property="context" />
         <result column="url" property="url" />
         <result column="user_task_createtime" property="userTaskCreatetime" />
+        <result column="upload_file_id" property="uploadFileId" />
+        <result column="name" property="name" />
+        <result column="file_url" property="fileUrl" />
+        <result column="size" property="size" />
+        <result column="upload_time" property="uploadTime" />
     </resultMap>
 
 </mapper>

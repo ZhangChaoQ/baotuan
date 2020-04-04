@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-02
+ * @since 2020-04-04
  */
 public class UserTask extends Model<UserTask> {
 
@@ -43,6 +43,11 @@ public class UserTask extends Model<UserTask> {
      * 接取时间
      */
     private LocalDateTime createtime;
+
+    /**
+     * 任务图片链接
+     */
+    private Integer url;
 
 
     public Integer getId() {
@@ -85,6 +90,14 @@ public class UserTask extends Model<UserTask> {
         this.createtime = createtime;
     }
 
+    public Integer getUrl() {
+        return url;
+    }
+
+    public void setUrl(Integer url) {
+        this.url = url;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -98,6 +111,7 @@ public class UserTask extends Model<UserTask> {
         ", taskId=" + taskId +
         ", taskStatusId=" + taskStatusId +
         ", createtime=" + createtime +
+        ", url=" + url +
         "}";
     }
 }

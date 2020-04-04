@@ -36,7 +36,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
         UserTask userTask = new UserTask();
         userTask.setUserId(userId);
         userTask.setTaskId(taskId);
-        userTask.setTaskStatusId(0);
+        userTask.setTaskStatusId(1);
         userTask.setCreatetime(LocalDateTime.now());
         baseMapper.insert(userTask);
         return userTask.getId();

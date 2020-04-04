@@ -12,9 +12,9 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-02
+ * @since 2020-04-04
  */
-public class Notic extends Model<Notic> {
+public class Notice extends Model<Notice> {
 
     private static final long serialVersionUID=1L;
 
@@ -79,7 +79,7 @@ public class Notic extends Model<Notic> {
 
     @Override
     public String toString() {
-        return "Notic{" +
+        return "Notice{" +
         "id=" + id +
         ", title=" + title +
         ", context=" + context +

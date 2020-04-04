@@ -1,6 +1,6 @@
 package com.lila.baotuan.mapper;
 
-import com.lila.baotuan.entity.Notic;
+import com.lila.baotuan.entity.Notice;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-02
+ * @since 2020-04-04
  */
-public interface NoticMapper extends BaseMapper<Notic> {
+public interface NoticeMapper extends BaseMapper<Notice> {
 
 }

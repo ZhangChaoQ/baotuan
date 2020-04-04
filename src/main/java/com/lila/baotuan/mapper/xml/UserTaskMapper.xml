@@ -9,6 +9,7 @@
         <result column="task_id" property="taskId" />
         <result column="task_status_id" property="taskStatusId" />
         <result column="createtime" property="createtime" />
+        <result column="url" property="url" />
     </resultMap>
 
 </mapper>
