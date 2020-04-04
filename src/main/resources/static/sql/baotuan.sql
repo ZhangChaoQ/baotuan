@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 02/04/2020 18:58:20
+ Date: 04/04/2020 18:25:26
 */
 
 SET NAMES utf8mb4;
@@ -92,16 +92,22 @@ INSERT INTO `member` VALUES (3, 'Middle', '中级会员', '每天可接15个任�
 INSERT INTO `member` VALUES (4, 'High', '高级会员', '每天可接25个任务', 999.00, 400.00, 25, NULL, NULL);
 
 -- ----------------------------
--- Table structure for notic
+-- Table structure for notice
 -- ----------------------------
-DROP TABLE IF EXISTS `notic`;
-CREATE TABLE `notic`  (
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公告id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
   `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
+INSERT INTO `notice` VALUES (1, '测试公告', '这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告', '2020-04-04 16:47:49');
+INSERT INTO `notice` VALUES (2, '测试公告', '这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告这是一条测试公告', '2020-04-04 16:47:54');
 
 -- ----------------------------
 -- Table structure for pay_status
@@ -215,8 +221,8 @@ CREATE TABLE `task`  (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES (1, '抖音测试', '点赞+关注', 100, 1, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-14 19:50:23');
-INSERT INTO `task` VALUES (2, '抖音测试2', '点赞+关注', 100, 1, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-24 20:13:15');
+INSERT INTO `task` VALUES (1, '抖音测试', '点赞+关注', 100, 1, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-13 11:50:23');
+INSERT INTO `task` VALUES (2, '抖音测试2', '点赞+关注', 100, 0, 100.50, 'https://v.douyin.com/72wWSN/', 1, '2020-03-24 12:13:15');
 
 -- ----------------------------
 -- Table structure for task_status
@@ -305,16 +311,18 @@ CREATE TABLE `user_task`  (
   `task_id` int(11) NOT NULL COMMENT '任务id',
   `task_status_id` int(11) NULL DEFAULT NULL COMMENT '任务状态id',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '接取时间',
+  `url` int(255) NULL DEFAULT NULL COMMENT '任务图片链接',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `task_id`(`task_id`) USING BTREE,
   INDEX `task_status_id`(`task_status_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_task
 -- ----------------------------
-INSERT INTO `user_task` VALUES (1, 1, 1, 1, '2020-04-02 01:48:25');
+INSERT INTO `user_task` VALUES (1, 1, 1, 1, '2020-04-02 01:48:25', NULL);
+INSERT INTO `user_task` VALUES (2, 1, 2, 1, '2020-04-03 06:14:16', NULL);
 
 -- ----------------------------
 -- View structure for view_user
@@ -326,6 +334,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user` AS select `us
 -- View structure for view_user_task
 -- ----------------------------
 DROP VIEW IF EXISTS `view_user_task`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user_task` AS select `user_task`.`id` AS `id`,`user_task`.`user_id` AS `user_id`,`user_task`.`task_id` AS `task_id`,`user_task`.`task_status_id` AS `task_status_id`,`user`.`money` AS `user_money`,`task`.`money` AS `task_money`,`user`.`user_id` AS `invite_id`,`task`.`createtime` AS `createtime`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`url` AS `url`,`user_task`.`createtime` AS `user_task_createtime` from ((`user_task` left join `user` on((`user_task`.`user_id` = `user`.`id`))) left join `task` on((`user_task`.`task_id` = `task`.`id`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user_task` AS select `user_task`.`id` AS `id`,`user_task`.`user_id` AS `user_id`,`user_task`.`task_id` AS `task_id`,`user_task`.`task_status_id` AS `task_status_id`,`user`.`money` AS `user_money`,`task`.`money` AS `task_money`,`user`.`user_id` AS `invite_id`,`task`.`createtime` AS `createtime`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`url` AS `url`,`user_task`.`createtime` AS `user_task_createtime`,`user_task`.`url` AS `upload_file_id`,`upload_file`.`name` AS `name`,`upload_file`.`url` AS `file_url`,`upload_file`.`size` AS `size`,`upload_file`.`createtime` AS `upload_time` from (((`user_task` left join `user` on((`user_task`.`user_id` = `user`.`id`))) left join `task` on((`user_task`.`task_id` = `task`.`id`))) left join `upload_file` on((`user_task`.`url` = `upload_file`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;
