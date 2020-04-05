@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-04
+ * @since 2020-04-05
  */
 public class UploadFile extends Model<UploadFile> {
 
@@ -28,11 +28,6 @@ public class UploadFile extends Model<UploadFile> {
      * 上传文件名称
      */
     private String name;
-
-    /**
-     * 上传人编码
-     */
-    private Integer userId;
 
     /**
      * 上传路径
@@ -64,14 +59,6 @@ public class UploadFile extends Model<UploadFile> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public String getUrl() {
@@ -108,7 +95,6 @@ public class UploadFile extends Model<UploadFile> {
         return "UploadFile{" +
         "id=" + id +
         ", name=" + name +
-        ", userId=" + userId +
         ", url=" + url +
         ", size=" + size +
         ", createtime=" + createtime +

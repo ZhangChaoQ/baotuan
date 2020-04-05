@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Zhang
  * @since 2020-03-28
  */
-@Controller
+@RestController
 @RequestMapping("/baotuan/user")
 public class UserController {
 
@@ -40,9 +40,9 @@ public class UserController {
     @Resource
     private ViewUserTaskServiceImpl viewUserTaskService;
     @Resource
-    private UserTaskServiceImpl userTaskService;
-    @Resource
     private BrokeragesServiceImpl brokeragesService;
+    @Resource
+    private UserTaskController userTaskController;
 
     /*
      * 禁用账号
@@ -65,12 +65,25 @@ public class UserController {
     }
 
     /*
+     * 接受任务
+     * */
+    @RequestMapping("/insertUserTask")
+    public Result insertUserTask(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int userId = jData.getInteger("userId");
+        int taskId = jData.getInteger("taskId");
+        return userTaskController.intsetUserTask(userId, taskId);
+    }
+
+
+    /*
      * 完成任务
      * */
     @RequestMapping("/commitTask")
-    public boolean commitTask(HttpServletRequest request) {
+    public Result commitTask(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
         int id = jData.getInteger("id");
+        int url = jData.getInteger("url");
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
         ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
         ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
@@ -81,8 +94,7 @@ public class UserController {
         userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
         brokeragesService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
 
-        userTaskService.updateTaskStatus(id);
-        return true;
+        return userTaskController.updateTaskStatus(id, url);
     }
 
     /*
@@ -123,18 +135,17 @@ public class UserController {
      * 用戶登录
      * */
     @RequestMapping(value = "/login")
-    @ResponseBody
     public Result login(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
         String phone = jData.getString("phone");
         String password = jData.getString("password");
         User user = userService.userLogin(phone, password);
-        Result result=new Result();
-        if(null!=user){
+        Result result = new Result();
+        if (null != user) {
             result.setCode(true);
             result.setData(user);
             result.setMsg("登录成功");
-        }else{
+        } else {
             result.setCode(false);
             result.setData(null);
             result.setMsg("登录失败，请检查账号和密码是否正确");

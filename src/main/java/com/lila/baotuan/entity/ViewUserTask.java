@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-04
+ * @since 2020-04-05
  */
 public class ViewUserTask extends Model<ViewUserTask> {
 
@@ -100,6 +100,16 @@ public class ViewUserTask extends Model<ViewUserTask> {
      * 上传时间
      */
     private LocalDateTime uploadTime;
+
+    /**
+     * 任务状态名称
+     */
+    private String taskStatusName;
+
+    /**
+     * 任务状态编码
+     */
+    private String taskStatusCode;
 
 
     public Integer getId() {
@@ -238,6 +248,22 @@ public class ViewUserTask extends Model<ViewUserTask> {
         this.uploadTime = uploadTime;
     }
 
+    public String getTaskStatusName() {
+        return taskStatusName;
+    }
+
+    public void setTaskStatusName(String taskStatusName) {
+        this.taskStatusName = taskStatusName;
+    }
+
+    public String getTaskStatusCode() {
+        return taskStatusCode;
+    }
+
+    public void setTaskStatusCode(String taskStatusCode) {
+        this.taskStatusCode = taskStatusCode;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -263,6 +289,8 @@ public class ViewUserTask extends Model<ViewUserTask> {
         ", fileUrl=" + fileUrl +
         ", size=" + size +
         ", uploadTime=" + uploadTime +
+        ", taskStatusName=" + taskStatusName +
+        ", taskStatusCode=" + taskStatusCode +
         "}";
     }
 }

@@ -67,9 +67,9 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
     /*
      * 完成任务
      * */
-    public int updateTaskStatus(int id) {
+    public int updateTaskStatus(int id, int url) {
         UserTask userTask = getUserTaskById(id);
-        return baseMapper.update(userTask, new UpdateWrapper<UserTask>().set("task_status_id", 2));
+        return baseMapper.update(userTask, new UpdateWrapper<UserTask>().set("task_status_id", 2).set("url", url));
     }
 
     /*

@@ -43,5 +43,18 @@ public class ViewUserTaskController {
         result.setData(list);
         return result;
     }
+
+    @RequestMapping("/usertask")
+    @ResponseBody
+    public Result getUserTask(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
+        Result result = new Result();
+        result.setCode(true);
+        result.setMsg("获取数据成功");
+        result.setData(viewUserTask);
+        return result;
+    }
 }
 

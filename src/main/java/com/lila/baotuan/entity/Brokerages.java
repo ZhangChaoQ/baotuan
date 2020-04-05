@@ -1,6 +1,8 @@
 package com.lila.baotuan.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -10,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-04
+ * @since 2020-04-05
  */
 public class Brokerages extends Model<Brokerages> {
 
@@ -19,6 +21,7 @@ public class Brokerages extends Model<Brokerages> {
     /**
      * 金额记录id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**

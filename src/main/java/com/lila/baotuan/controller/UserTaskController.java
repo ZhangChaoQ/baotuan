@@ -34,12 +34,7 @@ public class UserTaskController {
     /*
      * 接取任务
      * */
-    @RequestMapping(value = "/insertUserTask")
-    @ResponseBody
-    public Result intsetUserTask(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int userId = jData.getInteger("userId");
-        int taskId = jData.getInteger("taskId");
+    public Result intsetUserTask(int userId,int taskId) {
         Result result = new Result();
         int count = taskService.updateSurplus(taskId);
         if (count == 0) {
@@ -71,9 +66,12 @@ public class UserTaskController {
     /*
      * 完成任务
      * */
-    @RequestMapping("/updateTaskStatus")
-    public int updateTaskStatus(int id) {
-        return userTaskService.updateTaskStatus(id);
+    public Result updateTaskStatus(int id, int url) {
+        Result result = new Result();
+        result.setCode(true);
+        result.setMsg("全部任务已完成");
+        result.setData(userTaskService.updateTaskStatus(id, url));
+        return result;
     }
 }
 

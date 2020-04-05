@@ -21,6 +21,8 @@
         <result column="file_url" property="fileUrl" />
         <result column="size" property="size" />
         <result column="upload_time" property="uploadTime" />
+        <result column="task_status_name" property="taskStatusName" />
+        <result column="task_status_code" property="taskStatusCode" />
     </resultMap>
 
 </mapper>

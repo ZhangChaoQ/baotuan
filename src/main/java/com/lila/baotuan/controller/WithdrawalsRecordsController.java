@@ -36,7 +36,7 @@ public class WithdrawalsRecordsController {
     /*
      * 修改提现记录
      * */
-    @RequestMapping("/addWithdrawalsRecords")
+    @RequestMapping("/updateWithdrawalsRecords")
     public boolean updateWithdrawalsRecords(@Param("payStatusId") int payStatusId, @Param("id") int id) {
         int result = withdrawalsRecordsService.updateWithdrawals(payStatusId, id);
         return result == 1;

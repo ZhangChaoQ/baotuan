@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-04
+ * @since 2020-04-05
  */
 public class TaskType extends Model<TaskType> {
 
