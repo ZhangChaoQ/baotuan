@@ -1,6 +1,5 @@
 package com.lila.baotuan.controller;
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.lila.baotuan.entity.Result;
 import com.lila.baotuan.entity.User;
