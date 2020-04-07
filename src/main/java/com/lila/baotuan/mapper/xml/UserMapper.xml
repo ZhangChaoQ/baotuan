@@ -11,11 +11,13 @@
         <result column="password" property="password" />
         <result column="invite_code" property="inviteCode" />
         <result column="user_id" property="userId" />
+        <result column="Alipay_name" property="alipayName" />
         <result column="Alipay_account" property="alipayAccount" />
         <result column="Alipay_url" property="alipayUrl" />
         <result column="money" property="money" />
         <result column="member_id" property="memberId" />
         <result column="enabled" property="enabled" />
+        <result column="createtime" property="createtime" />
     </resultMap>
 
 </mapper>

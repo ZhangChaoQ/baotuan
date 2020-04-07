@@ -10,6 +10,7 @@
         <result column="pay_money" property="payMoney" />
         <result column="pay_status_id" property="payStatusId" />
         <result column="createtime" property="createtime" />
+        <result column="pay_type" property="payType" />
     </resultMap>
 
 </mapper>

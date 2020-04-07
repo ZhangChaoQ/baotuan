@@ -46,6 +46,7 @@ public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper,
         sysWithdrawals.setMoney(money);
         sysWithdrawals.setPayMoney(money * 0.7);
         sysWithdrawals.setCreatetime(LocalDateTime.now());
+        sysWithdrawals.setPayType(true);
         baseMapper.insert(sysWithdrawals);
         return sysWithdrawals.getId();
     }

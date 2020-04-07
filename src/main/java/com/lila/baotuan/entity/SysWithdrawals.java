@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-05
+ * @since 2020-04-07
  */
 public class SysWithdrawals extends Model<SysWithdrawals> {
 
@@ -48,6 +48,11 @@ public class SysWithdrawals extends Model<SysWithdrawals> {
      * 创建时间
      */
     private LocalDateTime createtime;
+
+    /**
+     * 0转入 1支出
+     */
+    private Boolean payType;
 
 
     public Integer getId() {
@@ -98,6 +103,14 @@ public class SysWithdrawals extends Model<SysWithdrawals> {
         this.createtime = createtime;
     }
 
+    public Boolean getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Boolean payType) {
+        this.payType = payType;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -112,6 +125,7 @@ public class SysWithdrawals extends Model<SysWithdrawals> {
         ", payMoney=" + payMoney +
         ", payStatusId=" + payStatusId +
         ", createtime=" + createtime +
+        ", payType=" + payType +
         "}";
     }
 }

@@ -2,23 +2,17 @@ package com.lila.baotuan.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.lila.baotuan.entity.*;
+import com.lila.baotuan.entity.Result;
+import com.lila.baotuan.entity.User;
+import com.lila.baotuan.entity.ViewUser;
+import com.lila.baotuan.entity.ViewUserTask;
 import com.lila.baotuan.service.impl.*;
 import com.lila.baotuan.utils.ServiceUtil;
-import com.sun.deploy.nativesandbox.comm.Response;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.http.HttpRequest;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Random;
 
 /**
@@ -43,6 +37,8 @@ public class UserController {
     private BrokeragesServiceImpl brokeragesService;
     @Resource
     private UserTaskController userTaskController;
+    @Resource
+    private SysWithdrawalsServiceImpl sysWithdrawalsService;
 
     /*
      * 禁用账号
@@ -65,6 +61,50 @@ public class UserController {
     }
 
     /*
+     * 获取下级
+     * */
+    @RequestMapping("/getSonList")
+    public Result getSonList(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        Result result = new Result();
+        result.setCode(true);
+        result.setData(viewUserService.getSonList(id));
+        result.setMsg("获取成功");
+        return result;
+    }
+
+    /*
+     * 获取子级
+     * */
+    @RequestMapping("/getGradSonList")
+    public Result getGradSonList(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        Result result = new Result();
+        result.setCode(true);
+        result.setData(viewUserService.getGrandSonList(id));
+        result.setMsg("获取成功");
+        return result;
+    }
+
+    /*
+     * 用户提现
+     * */
+    @RequestMapping("/withdrawals")
+    public Result userWithdrawals(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int userId = jData.getInteger("userId");
+        int money = jData.getInteger("taskId");
+        Result result = new Result();
+        result.setCode(true);
+        brokeragesService.insertWithdraw(userId, money);
+        result.setData(sysWithdrawalsService.insertSysWithdrawals(userId, money));
+        result.setMsg("提现申请已提交，转账将于24小时内到账，请注意查收");
+        return result;
+    }
+
+    /*
      * 接受任务
      * */
     @RequestMapping("/insertUserTask")
@@ -83,16 +123,20 @@ public class UserController {
     public Result commitTask(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
         int id = jData.getInteger("id");
-        int url = jData.getInteger("url");
+        String urlId = jData.getString("url");
+        int url = -1;
+        if (!urlId.equals("")) url = Integer.valueOf(urlId);
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
         ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
-        ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
 
         userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
         brokeragesService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
 
-        userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
-        brokeragesService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+        if (null != viewUser.getUserId()) {
+            ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
+            userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+            brokeragesService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+        }
 
         return userTaskController.updateTaskStatus(id, url);
     }
@@ -139,7 +183,7 @@ public class UserController {
         JSONObject jData = ServiceUtil.getJsonData(request);
         String phone = jData.getString("phone");
         String password = jData.getString("password");
-        User user = userService.userLogin(phone, password);
+        ViewUser user = viewUserService.userLogin(phone, password);
         Result result = new Result();
         if (null != user) {
             result.setCode(true);
@@ -157,13 +201,17 @@ public class UserController {
      * 綁定支付宝
      * */
     @RequestMapping("/bindAlipay")
-    public String bindAlipay(HttpServletRequest request) {
+    public Result bindAlipay(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
-        String alipayCccount = jData.getString("alipayCccount");
+        String alipayAccount = jData.getString("alipayAccount");
+        String alipayName = jData.getString("alipayName");
         int alipayUrl = jData.getInteger("alipayUrl");
         int id = jData.getInteger("id");
-        userService.updateAlipay(id, alipayCccount, alipayUrl);
-        return "index";
+        Result result = new Result();
+        result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
+        result.setMsg("支付宝绑定成功");
+        result.setCode(true);
+        return result;
     }
 
     /*
@@ -232,7 +280,7 @@ public class UserController {
         } else {
             letter += 1;
         }
-        String count = userService.getCountByUserId(user.getId()) + 1 + "";
+        String count = userService.getCountByCode((number + "" + letter)) + 1 + "";
         for (int i = count.length(); i < 5; i++) {
             count = "0" + count;
         }

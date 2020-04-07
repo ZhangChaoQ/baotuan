@@ -43,7 +43,7 @@ public class UploadFileController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Result uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile uploadFile) {
+    public int uploadFile(@RequestParam("file") MultipartFile uploadFile) {
         String fileName = uploadFile.getOriginalFilename();
         String name = fileName.substring(0, fileName.indexOf("."));
         double size = uploadFile.getSize();
@@ -59,7 +59,7 @@ public class UploadFileController {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        Result result = new Result();
+        int result = -1;
         try {
             //将图片保存到static文件夹里
             file.createNewFile();
@@ -72,12 +72,8 @@ public class UploadFileController {
         return result;
     }
 
-    public Result uploadFile(String url, String name, double size) {
-        Result result = new Result();
-        result.setData(uploadFileService.insertUploadFile(url, name, size));
-        result.setMsg("任务已完成");
-        result.setCode(true);
-        return result;
+    public int uploadFile(String url, String name, double size) {
+        return uploadFileService.insertUploadFile(url, name, size);
     }
 }
 

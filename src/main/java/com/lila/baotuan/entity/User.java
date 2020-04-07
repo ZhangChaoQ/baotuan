@@ -3,6 +3,7 @@ package com.lila.baotuan.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-05
+ * @since 2020-04-07
  */
 public class User extends Model<User> {
 
@@ -55,6 +56,12 @@ public class User extends Model<User> {
     private Integer userId;
 
     /**
+     * 支付宝用户名
+     */
+    @TableField("Alipay_name")
+    private String alipayName;
+
+    /**
      * 支付宝账号
      */
     @TableField("Alipay_account")
@@ -80,6 +87,11 @@ public class User extends Model<User> {
      * 是否启用(1:启用 0:禁用)
      */
     private Boolean enabled;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createtime;
 
 
     public Integer getId() {
@@ -138,6 +150,14 @@ public class User extends Model<User> {
         this.userId = userId;
     }
 
+    public String getAlipayName() {
+        return alipayName;
+    }
+
+    public void setAlipayName(String alipayName) {
+        this.alipayName = alipayName;
+    }
+
     public String getAlipayAccount() {
         return alipayAccount;
     }
@@ -178,6 +198,14 @@ public class User extends Model<User> {
         this.enabled = enabled;
     }
 
+    public LocalDateTime getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(LocalDateTime createtime) {
+        this.createtime = createtime;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -193,11 +221,13 @@ public class User extends Model<User> {
         ", password=" + password +
         ", inviteCode=" + inviteCode +
         ", userId=" + userId +
+        ", alipayName=" + alipayName +
         ", alipayAccount=" + alipayAccount +
         ", alipayUrl=" + alipayUrl +
         ", money=" + money +
         ", memberId=" + memberId +
         ", enabled=" + enabled +
+        ", createtime=" + createtime +
         "}";
     }
 }

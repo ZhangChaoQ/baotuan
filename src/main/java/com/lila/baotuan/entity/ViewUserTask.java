@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-05
+ * @since 2020-04-07
  */
 public class ViewUserTask extends Model<ViewUserTask> {
 

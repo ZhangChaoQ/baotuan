@@ -1,6 +1,8 @@
 package com.lila.baotuan.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-05
+ * @since 2020-04-07
  */
 public class ViewUser extends Model<ViewUser> {
 
@@ -23,7 +25,12 @@ public class ViewUser extends Model<ViewUser> {
     /**
      * 用户编码
      */
-    private String userCode;
+    private String code;
+
+    /**
+     * 用户姓名
+     */
+    private String name;
 
     /**
      * 电话/登录账号
@@ -46,14 +53,22 @@ public class ViewUser extends Model<ViewUser> {
     private Integer userId;
 
     /**
+     * 支付宝用户名
+     */
+    @TableField("Alipay_name")
+    private String alipayName;
+
+    /**
      * 支付宝账号
      */
-    private String zfbAccount;
+    @TableField("Alipay_account")
+    private String alipayAccount;
 
     /**
      * 支付宝二维码
      */
-    private Integer zfbUrl;
+    @TableField("Alipay_url")
+    private Integer alipayUrl;
 
     /**
      * 余额
@@ -71,14 +86,29 @@ public class ViewUser extends Model<ViewUser> {
     private Boolean enabled;
 
     /**
+     * 创建时间
+     */
+    private LocalDateTime createtime;
+
+    /**
      * 会员等级编码
      */
-    private String code;
+    private String memberCode;
 
     /**
      * 会员名称
      */
-    private String name;
+    private String memberName;
+
+    /**
+     * 会员价格
+     */
+    private Double userMemberMoney;
+
+    /**
+     * 没日任务数量
+     */
+    private Integer taskNumber;
 
     /**
      * 用户编码
@@ -103,17 +133,12 @@ public class ViewUser extends Model<ViewUser> {
     /**
      * 会员价格
      */
-    private Double userMemberMoney;
-
-    /**
-     * 会员价格
-     */
     private Double inviterMemberMoney;
 
     /**
-     * 没日任务数量
+     * 上传路径
      */
-    private Integer taskNumber;
+    private String url;
 
 
     public Integer getId() {
@@ -124,12 +149,20 @@ public class ViewUser extends Model<ViewUser> {
         this.id = id;
     }
 
-    public String getUserCode() {
-        return userCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
@@ -164,20 +197,28 @@ public class ViewUser extends Model<ViewUser> {
         this.userId = userId;
     }
 
-    public String getZfbAccount() {
-        return zfbAccount;
+    public String getAlipayName() {
+        return alipayName;
     }
 
-    public void setZfbAccount(String zfbAccount) {
-        this.zfbAccount = zfbAccount;
+    public void setAlipayName(String alipayName) {
+        this.alipayName = alipayName;
     }
 
-    public Integer getZfbUrl() {
-        return zfbUrl;
+    public String getAlipayAccount() {
+        return alipayAccount;
     }
 
-    public void setZfbUrl(Integer zfbUrl) {
-        this.zfbUrl = zfbUrl;
+    public void setAlipayAccount(String alipayAccount) {
+        this.alipayAccount = alipayAccount;
+    }
+
+    public Integer getAlipayUrl() {
+        return alipayUrl;
+    }
+
+    public void setAlipayUrl(Integer alipayUrl) {
+        this.alipayUrl = alipayUrl;
     }
 
     public Double getMoney() {
@@ -204,20 +245,44 @@ public class ViewUser extends Model<ViewUser> {
         this.enabled = enabled;
     }
 
-    public String getCode() {
-        return code;
+    public LocalDateTime getCreatetime() {
+        return createtime;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCreatetime(LocalDateTime createtime) {
+        this.createtime = createtime;
     }
 
-    public String getName() {
-        return name;
+    public String getMemberCode() {
+        return memberCode;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMemberCode(String memberCode) {
+        this.memberCode = memberCode;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public Double getUserMemberMoney() {
+        return userMemberMoney;
+    }
+
+    public void setUserMemberMoney(Double userMemberMoney) {
+        this.userMemberMoney = userMemberMoney;
+    }
+
+    public Integer getTaskNumber() {
+        return taskNumber;
+    }
+
+    public void setTaskNumber(Integer taskNumber) {
+        this.taskNumber = taskNumber;
     }
 
     public String getInviterCode() {
@@ -252,14 +317,6 @@ public class ViewUser extends Model<ViewUser> {
         this.inviterMemberName = inviterMemberName;
     }
 
-    public Double getUserMemberMoney() {
-        return userMemberMoney;
-    }
-
-    public void setUserMemberMoney(Double userMemberMoney) {
-        this.userMemberMoney = userMemberMoney;
-    }
-
     public Double getInviterMemberMoney() {
         return inviterMemberMoney;
     }
@@ -268,12 +325,12 @@ public class ViewUser extends Model<ViewUser> {
         this.inviterMemberMoney = inviterMemberMoney;
     }
 
-    public Integer getTaskNumber() {
-        return taskNumber;
+    public String getUrl() {
+        return url;
     }
 
-    public void setTaskNumber(Integer taskNumber) {
-        this.taskNumber = taskNumber;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -285,25 +342,29 @@ public class ViewUser extends Model<ViewUser> {
     public String toString() {
         return "ViewUser{" +
         "id=" + id +
-        ", userCode=" + userCode +
+        ", code=" + code +
+        ", name=" + name +
         ", phone=" + phone +
         ", password=" + password +
         ", inviteCode=" + inviteCode +
         ", userId=" + userId +
-        ", zfbAccount=" + zfbAccount +
-        ", zfbUrl=" + zfbUrl +
+        ", alipayName=" + alipayName +
+        ", alipayAccount=" + alipayAccount +
+        ", alipayUrl=" + alipayUrl +
         ", money=" + money +
         ", memberId=" + memberId +
         ", enabled=" + enabled +
-        ", code=" + code +
-        ", name=" + name +
+        ", createtime=" + createtime +
+        ", memberCode=" + memberCode +
+        ", memberName=" + memberName +
+        ", userMemberMoney=" + userMemberMoney +
+        ", taskNumber=" + taskNumber +
         ", inviterCode=" + inviterCode +
         ", inviterInviteCode=" + inviterInviteCode +
         ", inviterMemberCode=" + inviterMemberCode +
         ", inviterMemberName=" + inviterMemberName +
-        ", userMemberMoney=" + userMemberMoney +
         ", inviterMemberMoney=" + inviterMemberMoney +
-        ", taskNumber=" + taskNumber +
+        ", url=" + url +
         "}";
     }
 }

@@ -40,7 +40,7 @@ public class BrokeragesServiceImpl extends ServiceImpl<BrokeragesMapper, Brokera
         brokerages.setUserId(id);
         brokerages.setMoney(money);
         brokerages.setCreatetime(LocalDateTime.now());
-        brokerages.setBrokeragesTypeId(0);
+        brokerages.setBrokeragesTypeId(1);
         baseMapper.insert(brokerages);
         return brokerages.getId();
 
@@ -54,7 +54,7 @@ public class BrokeragesServiceImpl extends ServiceImpl<BrokeragesMapper, Brokera
         brokerages.setUserId(id);
         brokerages.setMoney(money);
         brokerages.setCreatetime(LocalDateTime.now());
-        brokerages.setBrokeragesTypeId(2);
+        brokerages.setBrokeragesTypeId(4);
         baseMapper.insert(brokerages);
         return brokerages.getId();
     }
@@ -67,7 +67,7 @@ public class BrokeragesServiceImpl extends ServiceImpl<BrokeragesMapper, Brokera
         brokerages.setUserId(id);
         brokerages.setMoney(money);
         brokerages.setCreatetime(LocalDateTime.now());
-        brokerages.setBrokeragesTypeId(2);
+        brokerages.setBrokeragesTypeId(3);
         baseMapper.insert(brokerages);
         return brokerages.getId();
     }
@@ -80,7 +80,7 @@ public class BrokeragesServiceImpl extends ServiceImpl<BrokeragesMapper, Brokera
         brokerages.setUserId(id);
         brokerages.setMoney(money);
         brokerages.setCreatetime(LocalDateTime.now());
-        brokerages.setBrokeragesTypeId(1);
+        brokerages.setBrokeragesTypeId(2);
         baseMapper.insert(brokerages);
         return brokerages.getId();
     }

@@ -2,12 +2,15 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.lila.baotuan.controller.UserController;
 import com.lila.baotuan.entity.User;
 import com.lila.baotuan.mapper.UserMapper;
 import com.lila.baotuan.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -61,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 根据code获取数量
      * */
     public int getCountByCode(String code) {
-        return baseMapper.selectCount(new QueryWrapper<User>().eq("code", code));
+        return baseMapper.selectCount(new QueryWrapper<User>().like("code", "%-" + code + "-%"));
     }
 
     /*
@@ -82,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 登录
      * */
     public User userLogin(String phone, String password) {
-        return baseMapper.selectOne(new QueryWrapper<User>().eq("phone", phone).eq("password", MD5Util.MD5Encode(password,"UTF-8")));
+        return baseMapper.selectOne(new QueryWrapper<User>().eq("phone", phone).eq("password", MD5Util.MD5Encode(password, "UTF-8")));
     }
 
     /*
@@ -90,7 +93,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int insertUser(String password, String code, String inviteCode, String phone, int userId) {
         User user = new User();
-        user.setPassword(MD5Util.MD5Encode(password,"UTF-8"));
+        user.setPassword(MD5Util.MD5Encode(password, "UTF-8"));
         user.setCode(code);
         user.setEnabled(true);
         user.setInviteCode(inviteCode);
@@ -98,6 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setName(phone);
         user.setMemberId(0);
         user.setUserId(userId);
+        user.setCreatetime(LocalDateTime.now());
         baseMapper.insert(user);
         return user.getId();
     }
@@ -105,9 +109,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /*
      * 綁定支付宝
      * */
-    public int updateAlipay(int id, String alipayCccount, int alipayUrl) {
+    public User updateAlipay(int id, String alipayAccount, int alipayUrl, String alipayName) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayCccount).set("Alipay_url", alipayUrl));
+        baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayAccount).set("Alipay_url", alipayUrl).set("Alipay_name", alipayName));
+        return user;
     }
 
     /*
@@ -141,4 +146,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = getUserById(id);
         return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", true));
     }
+
 }
