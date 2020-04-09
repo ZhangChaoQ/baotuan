@@ -1,19 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>爆团登录</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/bootstrap-theme.css">
-    <script src="../static/js/bootstrap.js"></script>
-    <script src="../static/js/npm.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script th:src="@{js/util.js}"></script>
+    <script src="../js/jquery.cookie.js"></script>
+
 </head>
 <body>
-    <input>
-        <input type="text" placeholder="手机号"/>
-        <input type="password" placeholder="密码"/>
-        <button type="submit" value="登录"></button>
-        <button value="注册"></button>
+<div class="col-md-3 mx-auto t-m">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">账号</label>
+            <div class="col-sm-10">
+                <input type="phone" class="form-control" id="phone" name="phone" placeholder="手机号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-success" onclick="login()">登录</button>
+            </div>
+        </div>
     </form>
+</div>
 </body>
+<script>
+    function login() {
+        const phone = $("#phone").val();
+        const password = $("#password").val();
+        const data = new Object();
+        data.phone = phone;
+        data.password = password;
+        console.log(JSON.stringify(data));
+        request("/baotuan/sysUser/login", data, function (res) {
+                if (res.code) {
+                    $.cookie("user", res.data)
+                    window.location.href = "main"
+                }
+            }
+        )
+    }
+</script>
 </html>
