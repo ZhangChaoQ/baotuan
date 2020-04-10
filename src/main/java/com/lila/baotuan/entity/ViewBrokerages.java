@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-07
+ * @since 2020-04-10
  */
 public class ViewBrokerages extends Model<ViewBrokerages> {
 
@@ -32,6 +32,11 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
     private Double money;
 
     /**
+     * 实付金额
+     */
+    private Double payMoney;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createtime;
@@ -39,17 +44,27 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
     /**
      * 分佣类型
      */
-    private Integer brokeragesTypeId;
+    private Integer sysBrokeragesTypeId;
 
     /**
      * 类型编码
      */
-    private String brokeragesTypeCode;
+    private String sysBrokeragesTypeCode;
 
     /**
      * 类型名称
      */
-    private String brokeragesTypeName;
+    private String sysBrokeragesTypeName;
+
+    /**
+     * 用户编码
+     */
+    private String code;
+
+    /**
+     * 电话/登录账号
+     */
+    private String phone;
 
 
     public Integer getId() {
@@ -76,6 +91,14 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
         this.money = money;
     }
 
+    public Double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Double payMoney) {
+        this.payMoney = payMoney;
+    }
+
     public LocalDateTime getCreatetime() {
         return createtime;
     }
@@ -84,28 +107,44 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
         this.createtime = createtime;
     }
 
-    public Integer getBrokeragesTypeId() {
-        return brokeragesTypeId;
+    public Integer getSysBrokeragesTypeId() {
+        return sysBrokeragesTypeId;
     }
 
-    public void setBrokeragesTypeId(Integer brokeragesTypeId) {
-        this.brokeragesTypeId = brokeragesTypeId;
+    public void setSysBrokeragesTypeId(Integer sysBrokeragesTypeId) {
+        this.sysBrokeragesTypeId = sysBrokeragesTypeId;
     }
 
-    public String getBrokeragesTypeCode() {
-        return brokeragesTypeCode;
+    public String getSysBrokeragesTypeCode() {
+        return sysBrokeragesTypeCode;
     }
 
-    public void setBrokeragesTypeCode(String brokeragesTypeCode) {
-        this.brokeragesTypeCode = brokeragesTypeCode;
+    public void setSysBrokeragesTypeCode(String sysBrokeragesTypeCode) {
+        this.sysBrokeragesTypeCode = sysBrokeragesTypeCode;
     }
 
-    public String getBrokeragesTypeName() {
-        return brokeragesTypeName;
+    public String getSysBrokeragesTypeName() {
+        return sysBrokeragesTypeName;
     }
 
-    public void setBrokeragesTypeName(String brokeragesTypeName) {
-        this.brokeragesTypeName = brokeragesTypeName;
+    public void setSysBrokeragesTypeName(String sysBrokeragesTypeName) {
+        this.sysBrokeragesTypeName = sysBrokeragesTypeName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -119,10 +158,13 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
         "id=" + id +
         ", userId=" + userId +
         ", money=" + money +
+        ", payMoney=" + payMoney +
         ", createtime=" + createtime +
-        ", brokeragesTypeId=" + brokeragesTypeId +
-        ", brokeragesTypeCode=" + brokeragesTypeCode +
-        ", brokeragesTypeName=" + brokeragesTypeName +
+        ", sysBrokeragesTypeId=" + sysBrokeragesTypeId +
+        ", sysBrokeragesTypeCode=" + sysBrokeragesTypeCode +
+        ", sysBrokeragesTypeName=" + sysBrokeragesTypeName +
+        ", code=" + code +
+        ", phone=" + phone +
         "}";
     }
 }

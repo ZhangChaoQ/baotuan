@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>爆团</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">爆团</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layui-this"><a href="main">控制台</a></li>
+            <li class="layui-nav-item"><a href="task">任务管理</a></li>
+            <li class="layui-nav-item"><a href="user">用户管理</a></li>
+            <li class="layui-nav-item"><a href="sysUser">系统管理</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                </a>
+                <!--<dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>-->
+            </li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a href="main-user">用户统计</a></li>
+                <li class="layui-nav-item"><a href="main-in">收入统计</a></li>
+                <li class="layui-nav-item layui-this"><a href="main-out">支出统计</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <canvas id="chart-user"></canvas>
+        <table class="layui-table" lay-filter="table-user" id="table-user">
+        </table>
+    </div>
+
+</div>
+<script src="layui/layui.js"></script>
+<script th:inline="none">
+    //JavaScript代码区域
+    layui.use(['jquery', 'element', 'table'], function () {
+        const table = layui.table;
+        table.render({
+            elem: "#table-user",
+            url: "baotuan/viewBrokerages/getViewBrokeragesByOut",
+            method:"GET",
+            height: 500,
+            page:true,
+            cols: [[
+                {
+                    field: "userId",
+                    sort:true,
+                    title: "购买人ID"
+                }, {
+                    field: "code",
+                    sort:true,
+                    title: "购买人编码"
+                }, {
+                    field: "phone",
+                    title: "购买人电话"
+                }, {
+                    field: "money",
+                    sort:true,
+                    title: "支付金额"
+                }, {
+                    field: "payMoney",
+                    sort:true,
+                    title: "实付金额"
+                }, {
+                    field: "createtime",
+                    title: "到账时间",
+                    sort:true,
+                    templet: function (op) {
+                        return op.createtime.replace("T", " ");
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
+    });
+</script>
+</body>
+</html>

@@ -45,8 +45,23 @@ public class HtmlController {
         return "sysUser";
     }
 
-    @RequestMapping("/main")
+    @RequestMapping("/main-user")
     public String main() {
-        return "main";
+        return "main-user";
+    }
+
+    @RequestMapping("/test")
+    public String test() {
+        return "test";
+    }
+
+    @RequestMapping("/main-in")
+    public String mainIn() {
+        return "main-in";
+    }
+
+    @RequestMapping("/main-out")
+    public String mainOut() {
+        return "main-out";
     }
 }

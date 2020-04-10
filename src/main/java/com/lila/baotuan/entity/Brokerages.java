@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-07
+ * @since 2020-04-10
  */
 public class Brokerages extends Model<Brokerages> {
 
@@ -33,6 +33,11 @@ public class Brokerages extends Model<Brokerages> {
      * 金额
      */
     private Double money;
+
+    /**
+     * 实付金额
+     */
+    private Double payMoney;
 
     /**
      * 创建时间
@@ -69,6 +74,14 @@ public class Brokerages extends Model<Brokerages> {
         this.money = money;
     }
 
+    public Double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Double payMoney) {
+        this.payMoney = payMoney;
+    }
+
     public LocalDateTime getCreatetime() {
         return createtime;
     }
@@ -96,6 +109,7 @@ public class Brokerages extends Model<Brokerages> {
         "id=" + id +
         ", userId=" + userId +
         ", money=" + money +
+        ", payMoney=" + payMoney +
         ", createtime=" + createtime +
         ", brokeragesTypeId=" + brokeragesTypeId +
         "}";
