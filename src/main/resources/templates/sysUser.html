@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>爆团</title>
-    <link rel="stylesheet" href="css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -12,11 +12,11 @@
         <div class="layui-logo">爆团</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="main">控制台</a></li>
+            <li class="layui-nav-item"><a href="main-user">控制台</a></li>
             //用户、收益、转账图表
             <li class="layui-nav-item"><a href="task">任务管理</a></li>
             //任务发布
-            <li class="layui-nav-item"><a href="user">用户管理</a></li>
+            <li class="layui-nav-item"><a href="user-list">用户管理</a></li>
             //用户禁用、转账
             <li class="layui-nav-item layui-this"><a href="sysUser">系统管理</a></li>
             //管理员、权限
@@ -33,12 +33,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
             <li class="layui-nav-item"><a href="">退出</a></li>
         </ul>
@@ -48,7 +43,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-this"><a href="">用户管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="sysUser">用户管理</a></li>
             </ul>
         </div>
     </div>
@@ -63,7 +58,7 @@
         © layui.com - 底部固定区域
     </div>-->
 </div>
-<script src="js/layui.all.js"></script>
+<script src="layui/layui.all.js"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
