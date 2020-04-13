@@ -30,14 +30,14 @@ public class HtmlController {
         return "task";
     }
 
-    @RequestMapping("/withdrawals")
-    public String withdrawals() {
-        return "withdrawals";
+    @RequestMapping("/user-list")
+    public String userList() {
+        return "user-list";
     }
 
-    @RequestMapping("/user")
-    public String user() {
-        return "user";
+    @RequestMapping("/user-withdrawals")
+    public String userWithdrawals() {
+        return "user-withdrawals";
     }
 
     @RequestMapping("/sysUser")
@@ -50,10 +50,6 @@ public class HtmlController {
         return "main-user";
     }
 
-    @RequestMapping("/test")
-    public String test() {
-        return "test";
-    }
 
     @RequestMapping("/main-in")
     public String mainIn() {
@@ -64,4 +60,5 @@ public class HtmlController {
     public String mainOut() {
         return "main-out";
     }
+
 }

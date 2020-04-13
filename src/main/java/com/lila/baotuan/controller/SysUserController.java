@@ -49,9 +49,8 @@ public class SysUserController {
     @RequestMapping("/login")
     @ResponseBody
     public Result login(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String phone = jData.getString("phone");
-        String password = jData.getString("password");
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         SysUser sysUser = sysUserService.login(phone, password);
         Result result = new Result();
         if (null != sysUser) {

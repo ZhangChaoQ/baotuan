@@ -1,27 +1,24 @@
 package com.lila.baotuan.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
 /**
  * <p>
- * 任务
+ * VIEW
  * </p>
  *
  * @author Zhang
  * @since 2020-04-13
  */
-public class Task extends Model<Task> {
+public class ViewTask extends Model<ViewTask> {
 
     private static final long serialVersionUID=1L;
 
     /**
      * 任务id
      */
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -63,6 +60,16 @@ public class Task extends Model<Task> {
      * 发布时间
      */
     private LocalDateTime createtime;
+
+    /**
+     * 任务类型编码
+     */
+    private String taskTypeCode;
+
+    /**
+     * 任务类型名称
+     */
+    private String taskTypeName;
 
 
     public Integer getId() {
@@ -137,14 +144,30 @@ public class Task extends Model<Task> {
         this.createtime = createtime;
     }
 
+    public String getTaskTypeCode() {
+        return taskTypeCode;
+    }
+
+    public void setTaskTypeCode(String taskTypeCode) {
+        this.taskTypeCode = taskTypeCode;
+    }
+
+    public String getTaskTypeName() {
+        return taskTypeName;
+    }
+
+    public void setTaskTypeName(String taskTypeName) {
+        this.taskTypeName = taskTypeName;
+    }
+
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return null;
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "ViewTask{" +
         "id=" + id +
         ", title=" + title +
         ", context=" + context +
@@ -154,6 +177,8 @@ public class Task extends Model<Task> {
         ", url=" + url +
         ", taskTypeId=" + taskTypeId +
         ", createtime=" + createtime +
+        ", taskTypeCode=" + taskTypeCode +
+        ", taskTypeName=" + taskTypeName +
         "}";
     }
 }

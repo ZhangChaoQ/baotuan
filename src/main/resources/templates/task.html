@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>爆团</title>
-    <link rel="stylesheet" href="css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -20,25 +20,12 @@
             //用户禁用、转账
             <li class="layui-nav-item"><a href="sysUser">系统管理</a></li>
             //管理员、权限
-            <!-- <li class="layui-nav-item">
-                 <a href="javascript:;">其它系统</a>
-                 <dl class="layui-nav-child">
-                     <dd><a href="">邮件管理</a></dd>
-                     <dd><a href="">消息管理</a></dd>
-                     <dd><a href="">授权管理</a></dd>
-                 </dl>
-             </li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
             <li class="layui-nav-item"><a href="">退出</a></li>
         </ul>
@@ -54,24 +41,125 @@
     </div>
 
     <div class="layui-body">
-        <!-- 内容主体区域 -->
         <div>
-            <table></table>
+            <button class="layui-btn" onclick="showDail">发布任务</button>
+            <!--添加任务-->
+            <div id="add-div" lay-filter="add-div" style="display: none">
+                <form lay-filter="add-task" class="layui-form">
+                    <div class="layui-form-item layui-col-xs3">
+                        <label class="layui-form-label">类型</label>
+                        <div class="layui-input-block">
+                            <select name="taskType" id="taskType" lay-filter="taskType">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-xs3">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="标题"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-xs3">
+                        <label class="layui-form-label">内容</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="context" lay-verify="context" autocomplete="off" placeholder="内容"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-xs3">
+                        <label class="layui-form-label">数量</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="number" lay-verify="number" autocomplete="off" placeholder="数量"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-col-xs3">
+                        <label class="layui-form-label">金额</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="money" lay-verify="money" autocomplete="off" placeholder="金额"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
         </div>
+        <!-- 内容主体区域 -->
+        <table class="layui-table" lay-filter="table-task" id="table-task"></table>
     </div>
-
-    <!--<div class="layui-footer">
-        &lt;!&ndash; 底部固定区域 &ndash;&gt;
-        © layui.com - 底部固定区域
-    </div>-->
 </div>
-<script src="js/layui.all.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-
+<script src="layui/layui.js"></script>
+<script th:inline="none">
+    var element, table, layer, $, form;
+    layui.use(['element', 'table', 'layer', 'jquery', 'form'], function () {
+        element = layui.element;
+        table = layui.table;
+        layer = layui.layer;
+        form = layui.form;
+        $ = layui.jquery;
+        table.render({
+            elem: "#table-task",
+            url: "baotuan/viewTask/getViewTaskList",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
+            height: 500,
+            page: true,
+            cols: [[
+                {
+                    field: "id",
+                    sort: true,
+                    title: "ID"
+                }, {
+                    field: "title",
+                    sort: true,
+                    title: "标题"
+                }, {
+                    field: "context",
+                    title: "内容"
+                }, {
+                    field: "surplus",
+                    title: "剩余数量"
+                }, {
+                    field: "number",
+                    sort: true,
+                    title: "任务数量"
+                }, {
+                    field: "money",
+                    sort: true,
+                    title: "任务奖励(元)"
+                }, {
+                    field: "createtime",
+                    title: "发布时间",
+                    sort: true,
+                    templet: function (op) {
+                        return op.createtime.replace("T", " ");
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
+        getTaskType();
     });
+
+    function getTaskType() {
+        $.ajax({
+            url: 'baotuan/taskType/getTaskTypeList',
+            method: 'POST',
+            success: function (res) {
+                $.each(res.data, function (index, item) {
+                    $('#taskType').append(new Option(item.name, item.id));// 下拉菜单里添加元素
+                });
+                form.render("select");
+            }
+        })
+    }
 </script>
 </body>
 </html>

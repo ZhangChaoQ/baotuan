@@ -32,7 +32,6 @@ public class ViewUserController {
     @RequestMapping("/getViewUserList")
     @ResponseBody
     public Result getViewUserList(HttpServletRequest request) {
-
         int page = Integer.valueOf(request.getParameter("page"));
         int pageSize =  Integer.valueOf( request.getParameter("limit"));
         Result result = new Result();

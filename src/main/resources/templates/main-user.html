@@ -12,9 +12,9 @@
         <div class="layui-logo">爆团</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item layui-this"><a href="main">控制台</a></li>
+            <li class="layui-nav-item layui-this"><a href="main-user">控制台</a></li>
             <li class="layui-nav-item"><a href="task">任务管理</a></li>
-            <li class="layui-nav-item"><a href="user">用户管理</a></li>
+            <li class="layui-nav-item"><a href="user-list">用户管理</a></li>
             <li class="layui-nav-item"><a href="sysUser">系统管理</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -22,10 +22,6 @@
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 </a>
-                <!--<dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>-->
             </li>
             <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
@@ -57,29 +53,34 @@
         table.render({
             elem: "#table-user",
             url: "baotuan/viewUser/getViewUserList",
-            method:"GET",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType:"application/json",
             height: 500,
-            page:true,
+            page: true,
             cols: [[
                 {
                     field: "id",
-                    sort:true,
+                    sort: true,
                     title: "ID"
                 }, {
                     field: "code",
-                    sort:true,
+                    sort: true,
                     title: "编码"
                 }, {
                     field: "phone",
                     title: "电话"
                 }, {
                     field: "inviterCode",
-                    sort:true,
+                    sort: true,
                     title: "邀请人编码"
                 }, {
                     field: "createtime",
                     title: "加入时间",
-                    sort:true,
+                    sort: true,
                     templet: function (op) {
                         return op.createtime.replace("T", " ");
                     }

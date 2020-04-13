@@ -12,9 +12,9 @@
         <div class="layui-logo">爆团</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item layui-this"><a href="main">控制台</a></li>
+            <li class="layui-nav-item layui-this"><a href="main-user">控制台</a></li>
             <li class="layui-nav-item"><a href="task">任务管理</a></li>
-            <li class="layui-nav-item"><a href="user">用户管理</a></li>
+            <li class="layui-nav-item"><a href="user-list">用户管理</a></li>
             <li class="layui-nav-item"><a href="sysUser">系统管理</a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -57,33 +57,38 @@
         table.render({
             elem: "#table-user",
             url: "baotuan/viewBrokerages/getViewBrokeragesByOut",
-            method:"GET",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
             height: 500,
-            page:true,
+            page: true,
             cols: [[
                 {
                     field: "userId",
-                    sort:true,
+                    sort: true,
                     title: "购买人ID"
                 }, {
                     field: "code",
-                    sort:true,
+                    sort: true,
                     title: "购买人编码"
                 }, {
                     field: "phone",
                     title: "购买人电话"
                 }, {
                     field: "money",
-                    sort:true,
+                    sort: true,
                     title: "支付金额"
                 }, {
                     field: "payMoney",
-                    sort:true,
+                    sort: true,
                     title: "实付金额"
                 }, {
                     field: "createtime",
                     title: "到账时间",
-                    sort:true,
+                    sort: true,
                     templet: function (op) {
                         return op.createtime.replace("T", " ");
                     }

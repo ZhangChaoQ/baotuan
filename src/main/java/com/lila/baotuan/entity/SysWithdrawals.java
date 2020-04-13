@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-10
+ * @since 2020-04-13
  */
 public class SysWithdrawals extends Model<SysWithdrawals> {
 

@@ -1,6 +1,12 @@
 package com.lila.baotuan.entity;
 
+/**
+ * 支付回调的参数实体类
+ *
+ * @author zhoutingting
+ */
 public class GLpayApi {
+
     /**
      * GLpay生成的订单ID号
      */
