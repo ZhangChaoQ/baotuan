@@ -15,11 +15,10 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class ViewUserTaskServiceImpl extends ServiceImpl<ViewUserTaskMapper, ViewUserTask> implements IViewUserTaskService {
-
     /*
      * 根据id返回任务信息
      * */

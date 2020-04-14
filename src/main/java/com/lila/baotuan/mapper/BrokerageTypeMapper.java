@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 佣金类型 Mapper 接口
+ * 余额类型 Mapper 接口
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
 public interface BrokerageTypeMapper extends BaseMapper<BrokerageType> {
 

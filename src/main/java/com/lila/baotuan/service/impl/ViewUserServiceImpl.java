@@ -2,19 +2,16 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lila.baotuan.entity.User;
 import com.lila.baotuan.entity.ViewUser;
 import com.lila.baotuan.mapper.ViewUserMapper;
 import com.lila.baotuan.service.IViewUserService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.View;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,11 +20,10 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> implements IViewUserService {
-
     /*
      * 返回下级列表
      * */
@@ -79,7 +75,7 @@ public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> i
         return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("phone", phone).eq("password", MD5Util.MD5Encode(password, "UTF-8")));
     }
 
-    public Page<ViewUser> getViewUserList(int page,int pageSize) {
+    public Page<ViewUser> getViewUserList(int page, int pageSize) {
         return baseMapper.selectPage(new Page<>(page,pageSize),new QueryWrapper<ViewUser>().orderByDesc("createtime").orderByDesc("createtime"));
     }
 

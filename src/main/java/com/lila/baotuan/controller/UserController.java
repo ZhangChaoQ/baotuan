@@ -33,7 +33,7 @@ public class UserController {
     @Resource
     private ViewUserTaskServiceImpl viewUserTaskService;
     @Resource
-    private BrokeragesServiceImpl brokeragesService;
+    private BrokerageServiceImpl brokerageService;
     @Resource
     private UserTaskController userTaskController;
     @Resource
@@ -93,12 +93,13 @@ public class UserController {
     @RequestMapping("/withdrawals")
     public Result userWithdrawals(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
-        int userId = jData.getInteger("userId");
-        int money = jData.getInteger("taskId");
+        int id = jData.getInteger("id");
+        int money = jData.getInteger("money");
         Result result = new Result();
         result.setCode(true);
-        brokeragesService.insertWithdraw(userId, money);
-        result.setData(sysWithdrawalsService.insertSysWithdrawals(userId, money));
+        userService.updateMoney(id,-money);
+        brokerageService.insertWithdraw(id, money);
+        result.setData(sysWithdrawalsService.insertSysWithdrawals(id, money));
         result.setMsg("提现申请已提交，转账将于24小时内到账，请注意查收");
         return result;
     }
@@ -113,7 +114,19 @@ public class UserController {
         int taskId = jData.getInteger("taskId");
         return userTaskController.intsetUserTask(userId, taskId);
     }
-
+    /*
+     * 接受任务
+     * */
+    @RequestMapping("/getUserInfo")
+    public Result getUserInfo(HttpServletRequest request) {
+        JSONObject jData = ServiceUtil.getJsonData(request);
+        int id = jData.getInteger("id");
+        Result result=new Result();
+        result.setData(viewUserService.getViewUserById(id));
+        result.setCode(true);
+        result.setMsg("获取成功");
+        return result;
+    }
 
     /*
      * 完成任务
@@ -129,12 +142,12 @@ public class UserController {
         ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
 
         userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
-        brokeragesService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
+        brokerageService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
 
         if (null != viewUser.getUserId()) {
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
             userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
-            brokeragesService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+            brokerageService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
         }
 
         return userTaskController.updateTaskStatus(id, url);
@@ -153,10 +166,10 @@ public class UserController {
         int result = userService.updateMember(id, memberId);
 
         userService.updateMoney(viewUser.getUserId(), viewUser.getInviterMemberMoney() * 0.2);
-        brokeragesService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
+        brokerageService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
 
         userService.updateMoney(inviter.getUserId(), inviter.getInviterMemberMoney() * 0.05);
-        brokeragesService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
+        brokerageService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
         return result;
     }
 

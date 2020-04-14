@@ -15,11 +15,10 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements IMemberService {
-
     /*
      * 根据id获取会员信息
      * */

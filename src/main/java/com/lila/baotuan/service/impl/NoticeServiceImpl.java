@@ -1,10 +1,10 @@
 package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.Notice;
 import com.lila.baotuan.mapper.NoticeMapper;
 import com.lila.baotuan.service.INoticeService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +16,10 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements INoticeService {
-
     /*
      * 添加公告
      * */

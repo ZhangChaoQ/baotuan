@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 佣金类型 服务实现类
+ * 余额类型 服务实现类
  * </p>
  *
  * @author Zhang
- * @since 2020-04-10
+ * @since 2020-04-14
  */
 @Service
 public class BrokerageTypeServiceImpl extends ServiceImpl<BrokerageTypeMapper, BrokerageType> implements IBrokerageTypeService {

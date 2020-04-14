@@ -2,7 +2,7 @@ package com.lila.baotuan.controller;
 
 
 import com.lila.baotuan.entity.Result;
-import com.lila.baotuan.service.impl.ViewBrokeragesServiceImpl;
+import com.lila.baotuan.service.impl.ViewSysBrokeragesServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -20,30 +20,30 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-04-07
  */
 @Controller
-@RequestMapping("/baotuan/viewBrokerages")
-public class ViewBrokeragesController {
+@RequestMapping("/baotuan/viewSysBrokerages")
+public class ViewSysBrokeragesController {
 
     @Resource
-    private ViewBrokeragesServiceImpl viewBrokeragesService;
+    private ViewSysBrokeragesServiceImpl viewSysBrokeragesService;
 
     @ResponseBody
-    @RequestMapping("/getViewBrokeragesByIn")
-    public Result getViewBrokeragesByIn(HttpServletRequest request){
+    @RequestMapping("/getViewSysBrokeragesByIn")
+    public Result getViewSysBrokeragesByIn(HttpServletRequest request){
         int page = Integer.valueOf(request.getParameter("page"));
         int pageSize =  Integer.valueOf( request.getParameter("limit"));
         Result result = new Result();
-        result.setData(viewBrokeragesService.getViewBrokeragesByIn(page, pageSize));
+        result.setData(viewSysBrokeragesService.getViewSysBrokeragesByIn(page, pageSize));
         result.setMsg("数据获取成功");
         result.setCode(true);
         return result;
     }
     @ResponseBody
-    @RequestMapping("/getViewBrokeragesByOut")
-    public Result getViewBrokeragesByOut(HttpServletRequest request){
+    @RequestMapping("/getViewSysBrokeragesByOut")
+    public Result getViewSysBrokeragesByOut(HttpServletRequest request){
         int page = Integer.valueOf(request.getParameter("page"));
         int pageSize =  Integer.valueOf( request.getParameter("limit"));
         Result result = new Result();
-        result.setData(viewBrokeragesService.getViewBrokeragesByOut(page, pageSize));
+        result.setData(viewSysBrokeragesService.getViewSysBrokeragesByOut(page, pageSize));
         result.setMsg("数据获取成功");
         result.setCode(true);
         return result;

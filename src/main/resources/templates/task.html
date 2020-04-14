@@ -41,52 +41,63 @@
     </div>
 
     <div class="layui-body">
-        <div>
-            <button class="layui-btn" onclick="showDail">发布任务</button>
-            <!--添加任务-->
-            <div id="add-div" lay-filter="add-div" style="display: none">
-                <form lay-filter="add-task" class="layui-form">
-                    <div class="layui-form-item layui-col-xs3">
-                        <label class="layui-form-label">类型</label>
-                        <div class="layui-input-block">
-                            <select name="taskType" id="taskType" lay-filter="taskType">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-col-xs3">
-                        <label class="layui-form-label">标题</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="标题"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-col-xs3">
-                        <label class="layui-form-label">内容</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="context" lay-verify="context" autocomplete="off" placeholder="内容"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-col-xs3">
-                        <label class="layui-form-label">数量</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="number" lay-verify="number" autocomplete="off" placeholder="数量"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-col-xs3">
-                        <label class="layui-form-label">金额</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="money" lay-verify="money" autocomplete="off" placeholder="金额"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                </form>
-
+        <script type="text/html" id="toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="showOne">发布任务</button>
             </div>
-        </div>
+        </script>
         <!-- 内容主体区域 -->
         <table class="layui-table" lay-filter="table-task" id="table-task"></table>
+
+    </div>
+    <div id="add-div" lay-filter="add-div" style="display: none;">
+        <form lay-filter="add-task" class="layui-form" id="add-task" style="padding-top: 20px">
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-block">
+                    <select name="taskType" id="taskType" lay-filter="taskType">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" id="title" lay-verify="title" autocomplete="off" placeholder="标题"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                    <input type="text" name="context" id="context" lay-verify="context" autocomplete="off"
+                           placeholder="内容"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="url" id="url" lay-verify="context" autocomplete="off" placeholder="地址"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-col-xs11 ">
+                <label class="layui-form-label">数量</label>
+                <div class="layui-input-block">
+                    <input type="number" name="number" id="number" lay-verify="number" autocomplete="off"
+                           placeholder="数量"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-col-xs11">
+                <label class="layui-form-label">金额</label>
+                <div class="layui-input-block">
+                    <input type="number" name="money" id="money" lay-verify="money" autocomplete="off" placeholder="金额"
+                           class="layui-input">
+                </div>
+            </div>
+        </form>
+
     </div>
 </div>
 <script src="layui/layui.js"></script>
@@ -106,6 +117,7 @@
                 page: 1,
                 limit: 10
             },
+            toolbar: "#toolbar",
             dataType: "application/json",
             height: 500,
             page: true,
@@ -145,6 +157,11 @@
                 return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
             }
         })
+        table.on('toolbar(table-task)', function (obj) {
+            if (obj.event === 'showOne') {
+                showOne();
+            }
+        });
         getTaskType();
     });
 
@@ -158,6 +175,46 @@
                 });
                 form.render("select");
             }
+        })
+    }
+
+    function showOne() {
+        layer.open({
+            type: 1,
+            content: $('#add-div'),
+            area: ['500px', '500px'],
+            title: "添加任务",
+            btn: ['发布', '取消'],
+            btnAlign: "c",
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/task/addTask',
+                    method: "POST",
+                    data: {
+                        url: $("#url").val(),
+                        number: $("#number").val(),
+                        money: $("#money").val(),
+                        title: $("#title").val(),
+                        context: $("#context").val(),
+                    },
+                    success: function (res) {
+                        if (res.code) {
+                            layer.close(index)
+                            table.reload("table-task");
+                            $("#add-task")[0].reset();
+                        }
+                    }
+                })
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+                return false;
+            },
+            cancel: function (index, layero) {
+                layer.close(index)
+                return false;
+            }
+
         })
     }
 </script>

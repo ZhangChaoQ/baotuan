@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-10
+ * @since 2020-04-14
  */
 @Service
 public class SysBrokeragesTypeServiceImpl extends ServiceImpl<SysBrokeragesTypeMapper, SysBrokeragesType> implements ISysBrokeragesTypeService {

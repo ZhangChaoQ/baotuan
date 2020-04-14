@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * <p>
@@ -20,7 +19,7 @@ import java.util.Date;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> implements IUserTaskService {
@@ -69,7 +68,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
      * */
     public int updateTaskStatus(int id, int url) {
         UserTask userTask = getUserTaskById(id);
-        return baseMapper.update(userTask, new UpdateWrapper<UserTask>().set("task_status_id", 2).set("url", url));
+        return baseMapper.update(userTask, new UpdateWrapper<UserTask>().set("task_status_id", 2).set("url", url).eq("id",userTask.getId()));
     }
 
     /*
@@ -78,5 +77,4 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
     private UserTask getUserTaskById(int id) {
         return baseMapper.selectOne(new QueryWrapper<UserTask>().eq("id", id));
     }
-
 }

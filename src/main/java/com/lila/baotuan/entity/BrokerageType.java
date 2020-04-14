@@ -7,11 +7,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 佣金类型
+ * 余额类型
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
 public class BrokerageType extends Model<BrokerageType> {
 

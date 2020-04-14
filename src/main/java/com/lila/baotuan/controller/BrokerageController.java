@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/baotuan/brokerages")
-public class BrokeragesController {
+public class BrokerageController {
 
 }
 

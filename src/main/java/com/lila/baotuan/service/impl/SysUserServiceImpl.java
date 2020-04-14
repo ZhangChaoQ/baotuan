@@ -1,12 +1,13 @@
 package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lila.baotuan.controller.UserController;
 import com.lila.baotuan.entity.SysUser;
 import com.lila.baotuan.entity.User;
 import com.lila.baotuan.mapper.SysUserMapper;
 import com.lila.baotuan.service.ISysUserService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import javax.annotation.Resource;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
@@ -57,5 +58,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * */
     public SysUser login(String phone, String password) {
         return baseMapper.selectOne(new QueryWrapper<SysUser>().eq("login_name", phone).eq("password", MD5Util.MD5Encode(password, "UTF-8")));
+    }
+
+    public Page<SysUser> getSysUserList(int page, int limit) {
+        return baseMapper.selectPage(new Page<>(page,limit),new QueryWrapper<SysUser>().orderByDesc("id"));
     }
 }

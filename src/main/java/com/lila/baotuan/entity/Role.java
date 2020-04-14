@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
 public class Role extends Model<Role> {
 

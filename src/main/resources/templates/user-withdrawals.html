@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -39,6 +39,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
+        <table class="layui-table" lay-filter="table-withdrawals" id="table-withdrawals"></table>
     </div>
 
     <!--<div class="layui-footer">
@@ -47,11 +48,57 @@
     </div>-->
 </div>
 <script src="layui/layui.all.js"></script>
-<script>
+<script th:inline="none">
     //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
+    layui.use(['jquery', 'element', 'table'], function () {
+        const table = layui.table;
+        table.render({
+            elem: "#table-withdrawals",
+            url: "baotuan/viewSysWithdrawals/getViewSysWithdrawalsList",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
+            height: 500,
+            page: true,
+            cols: [[
+                {
+                    field: "id",
+                    sort: true,
+                    title: "ID"
+                }, {
+                    field: "code",
+                    sort: true,
+                    title: "编码"
+                }, {
+                    field: "money",
+                    title: "提款金額",
+                }, {
+                    field: "payMoney",
+                    title: "应付金额",
+                }, {
+                    field: "AlipayAccount",
+                    title: "支付宝账号"
+                }, {
+                    field: "AlipayName",
+                    title: "支付宝姓名"
+                }, {
+                    field: "AlipayUrl",
+                    title: "支付宝二维码",
 
+                }, {
+                    title: '操作',
+                    templet: function (op) {
+                        return "<a class='layui-btn layui-btn-xs' lay-event='showPay'>支付</a>";
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
     });
 </script>
 </body>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lila.baotuan.mapper.ViewSysWithdrawalsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lila.baotuan.entity.ViewSysWithdrawals">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="money" property="money" />
+        <result column="pay_money" property="payMoney" />
+        <result column="pay_status_id" property="payStatusId" />
+        <result column="createtime" property="createtime" />
+        <result column="pay_type" property="payType" />
+        <result column="pay_status_code" property="payStatusCode" />
+        <result column="pay_status_name" property="payStatusName" />
+        <result column="code" property="code" />
+        <result column="Alipay_name" property="alipayName" />
+        <result column="Alipay_account" property="alipayAccount" />
+        <result column="Alipay_url" property="alipayUrl" />
+    </resultMap>
+
+</mapper>

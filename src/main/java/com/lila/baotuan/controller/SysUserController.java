@@ -37,10 +37,21 @@ public class SysUserController {
      * 注册
      * */
     @RequestMapping("/addUser")
-    public String InsertSysUser(Model model, String phone, String password) {
+    public Result InsertSysUser(HttpServletRequest request) {
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         SysUser sysUser = sysUserService.userInsert(phone, password);
-        model.addAttribute("sysUser", sysUser);
-        return "index";
+        Result result = new Result();
+        if (null != sysUser) {
+            result.setCode(true);
+            result.setData(sysUser);
+            result.setMsg("添加成功");
+        } else {
+            result.setCode(false);
+            result.setData(null);
+            result.setMsg("添加失败");
+        }
+        return result;
     }
 
     /*
@@ -62,6 +73,17 @@ public class SysUserController {
             result.setData(null);
             result.setMsg("登录失败，请检查账号或密码是否正确");
         }
+        return result;
+    }
+    @RequestMapping("/getSysUserList")
+    @ResponseBody
+    public Result getSysUserList(HttpServletRequest request){
+        int page=Integer.valueOf(request.getParameter("page"));
+        int limit=Integer.valueOf(request.getParameter("limit"));
+        Result result=new Result();
+        result.setMsg("获取成功");
+        result.setData(sysUserService.getSysUserList(page,limit));
+        result.setCode(true);
         return result;
     }
 }

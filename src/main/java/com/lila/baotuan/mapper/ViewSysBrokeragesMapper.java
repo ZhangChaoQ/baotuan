@@ -1,6 +1,6 @@
 package com.lila.baotuan.mapper;
 
-import com.lila.baotuan.entity.ViewBrokerages;
+import com.lila.baotuan.entity.ViewSysBrokerages;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
-public interface ViewBrokeragesMapper extends BaseMapper<ViewBrokerages> {
+public interface ViewSysBrokeragesMapper extends BaseMapper<ViewSysBrokerages> {
 
 }

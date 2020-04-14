@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 转款记录  服务实现类
+ * 转款记录   会员、转款 服务实现类
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper, SysWithdrawals> implements ISysWithdrawalsService {
@@ -26,7 +26,7 @@ public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper,
      * */
     public int updatePayStatus(int id) {
         SysWithdrawals sysWithdrawals = getSysWithdrawalsById(id);
-        return baseMapper.update(sysWithdrawals, new UpdateWrapper<SysWithdrawals>().set("pay_status_id", 1));
+        return baseMapper.update(sysWithdrawals, new UpdateWrapper<SysWithdrawals>().set("pay_status_id", 1).eq("id",sysWithdrawals.getId()));
     }
 
     /*

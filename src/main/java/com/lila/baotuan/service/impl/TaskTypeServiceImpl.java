@@ -15,11 +15,10 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class TaskTypeServiceImpl extends ServiceImpl<TaskTypeMapper, TaskType> implements ITaskTypeService {
-
     public List<TaskType> getTaskTypeList() {
         return baseMapper.selectList(new QueryWrapper<TaskType>());
     }

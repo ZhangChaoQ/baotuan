@@ -2,7 +2,6 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.lila.baotuan.controller.UserController;
 import com.lila.baotuan.entity.User;
 import com.lila.baotuan.mapper.UserMapper;
 import com.lila.baotuan.service.IUserService;
@@ -18,17 +17,16 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
-
     /*
      * 修改会员等级
      * */
     public int updateMember(int id, int memberId) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("member_id", memberId));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("member_id", memberId).eq("id",user.getId()));
     }
 
     /*
@@ -36,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int updateMoney(int id, double money) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("money", user.getMoney() + money));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("money", user.getMoney() + money).eq("id",user.getId()));
     }
 
     /*
@@ -111,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public User updateAlipay(int id, String alipayAccount, int alipayUrl, String alipayName) {
         User user = getUserById(id);
-        baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayAccount).set("Alipay_url", alipayUrl).set("Alipay_name", alipayName));
+        baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayAccount).set("Alipay_url", alipayUrl).set("Alipay_name", alipayName).eq("id",user.getId()));
         return user;
     }
 
@@ -120,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int updateName(int id, String name) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("name", name));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("name", name).eq("id",user.getId()));
     }
 
     /*
@@ -146,5 +144,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = getUserById(id);
         return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", true));
     }
-
 }

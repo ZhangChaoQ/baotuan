@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-10
+ * @since 2020-04-14
  */
 public interface ISysBrokeragesTypeService extends IService<SysBrokeragesType> {
 

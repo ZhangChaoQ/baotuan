@@ -8,19 +8,16 @@ import com.lila.baotuan.service.IViewTaskService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * <p>
  * VIEW 服务实现类
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
 @Service
 public class ViewTaskServiceImpl extends ServiceImpl<ViewTaskMapper, ViewTask> implements IViewTaskService {
-
     public Page<ViewTask> getViewTaskList(int page, int limit) {
         return baseMapper.selectPage(new Page<ViewTask>(page, limit), new QueryWrapper<ViewTask>().ne("surplus", "0"));
     }

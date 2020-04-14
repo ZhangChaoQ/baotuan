@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 转款记录  服务类
+ * 转款记录   会员、转款 服务类
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 public interface ISysWithdrawalsService extends IService<SysWithdrawals> {
 

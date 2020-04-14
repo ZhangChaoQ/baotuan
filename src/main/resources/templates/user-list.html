@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -39,6 +39,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
+        <table class="layui-table" lay-filter="table-user" id="table-user"></table>
     </div>
 
     <!--<div class="layui-footer">
@@ -47,11 +48,69 @@
     </div>-->
 </div>
 <script src="layui/layui.all.js"></script>
-<script>
+<script th:inline="none">
     //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-
+    layui.use(['jquery', 'element', 'table'], function () {
+        const table = layui.table;
+        table.render({
+            elem: "#table-user",
+            url: "baotuan/viewUser/getViewUserList",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
+            height: 500,
+            page: true,
+            cols: [[
+                {
+                    field: "id",
+                    sort: true,
+                    title: "ID"
+                }, {
+                    field: "code",
+                    sort: true,
+                    title: "编码"
+                }, {
+                    field: "phone",
+                    title: "电话"
+                }, {
+                    field: "inviterCode",
+                    sort: true,
+                    title: "邀请人编码"
+                }, {
+                    field: "AlipayAccount",
+                    title: "支付宝账号",
+                }, {
+                    field: "AlipayName",
+                    title: "支付宝姓名",
+                }, {
+                    field: "enabled",
+                    title: "账号状态",
+                    templet: function (op) {
+                        if (op.enabled) {
+                            return "启用中";
+                        } else {
+                            return "禁用";
+                        }
+                    }
+                }, {
+                    fixed: 'right',
+                    title: '操作',
+                    templet: function (op) {
+                        if (op.enabled) {
+                            return "<a class='layui-btn layui-btn-xs' lay-event='enabled'>禁用</a>";
+                        } else {
+                            return "<a class='layui-btn layui-btn-xs' lay-event='enable'>启用</a>";
+                        }
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
     });
 </script>
 </body>

@@ -8,11 +8,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 转款记录 
+ * 转款记录   会员、转款
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
 public class SysWithdrawals extends Model<SysWithdrawals> {
 

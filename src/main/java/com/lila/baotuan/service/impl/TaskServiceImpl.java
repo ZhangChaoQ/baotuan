@@ -17,7 +17,7 @@ import java.util.List;
  * </p>
  *
  * @author Zhang
- * @since 2020-03-28
+ * @since 2020-04-14
  */
 @Service
 public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements ITaskService {
@@ -51,13 +51,14 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements IT
      * */
     public int insertTask(int number, String title, String context, String url, double money) {
         Task task = new Task();
-        task.setTaskTypeId(0);
+        task.setTaskTypeId(1);
         task.setTitle(title);
         task.setUrl(url);
         task.setMoney(money);
         task.setContext(context);
         task.setCreatetime(LocalDateTime.now());
         task.setSurplus(number);
+        task.setNumber(number);
         baseMapper.insert(task);
         return task.getId();
     }

@@ -26,7 +26,7 @@
 
 
 
-    <form style='display:none;' id='formpay' name='formpay' method='post' action='http://pay.ebkf.net'>
+    <form style='display:none;' id='formpay' name='formpay' method='post' action='http://pay.wsdy.com.cn'>
         <input name='goodsname' id='goodsname' type='text' value='' />
         <input name='istype' id='istype' type='text' value='' />
         <input name='key' id='key' type='text' value=''/>
@@ -49,7 +49,7 @@ $().ready(function(){
 
     $("#demoBtn1").click(function(){
         $.post(
-            "/qpay/pay",
+            "/pay/pay",
             {
                 price : $("#inputprice").val(),
                 istype : getistype(),

@@ -8,13 +8,13 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 金额记录
+ * 余额记录
  * </p>
  *
  * @author Zhang
- * @since 2020-04-10
+ * @since 2020-04-14
  */
-public class Brokerages extends Model<Brokerages> {
+public class Brokerage extends Model<Brokerage> {
 
     private static final long serialVersionUID=1L;
 
@@ -35,19 +35,14 @@ public class Brokerages extends Model<Brokerages> {
     private Double money;
 
     /**
-     * 实付金额
+     * 余额类型
      */
-    private Double payMoney;
+    private Integer brokerageTypeId;
 
     /**
      * 创建时间
      */
     private LocalDateTime createtime;
-
-    /**
-     * 分佣类型
-     */
-    private Integer brokeragesTypeId;
 
 
     public Integer getId() {
@@ -74,12 +69,12 @@ public class Brokerages extends Model<Brokerages> {
         this.money = money;
     }
 
-    public Double getPayMoney() {
-        return payMoney;
+    public Integer getBrokerageTypeId() {
+        return brokerageTypeId;
     }
 
-    public void setPayMoney(Double payMoney) {
-        this.payMoney = payMoney;
+    public void setBrokerageTypeId(Integer brokerageTypeId) {
+        this.brokerageTypeId = brokerageTypeId;
     }
 
     public LocalDateTime getCreatetime() {
@@ -90,14 +85,6 @@ public class Brokerages extends Model<Brokerages> {
         this.createtime = createtime;
     }
 
-    public Integer getBrokeragesTypeId() {
-        return brokeragesTypeId;
-    }
-
-    public void setBrokeragesTypeId(Integer brokeragesTypeId) {
-        this.brokeragesTypeId = brokeragesTypeId;
-    }
-
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -105,13 +92,12 @@ public class Brokerages extends Model<Brokerages> {
 
     @Override
     public String toString() {
-        return "Brokerages{" +
+        return "Brokerage{" +
         "id=" + id +
         ", userId=" + userId +
         ", money=" + money +
-        ", payMoney=" + payMoney +
+        ", brokerageTypeId=" + brokerageTypeId +
         ", createtime=" + createtime +
-        ", brokeragesTypeId=" + brokeragesTypeId +
         "}";
     }
 }

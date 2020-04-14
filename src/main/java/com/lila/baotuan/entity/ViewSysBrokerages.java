@@ -10,9 +10,9 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-13
+ * @since 2020-04-14
  */
-public class ViewBrokerages extends Model<ViewBrokerages> {
+public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
 
     private static final long serialVersionUID=1L;
 
@@ -154,7 +154,7 @@ public class ViewBrokerages extends Model<ViewBrokerages> {
 
     @Override
     public String toString() {
-        return "ViewBrokerages{" +
+        return "ViewSysBrokerages{" +
         "id=" + id +
         ", userId=" + userId +
         ", money=" + money +

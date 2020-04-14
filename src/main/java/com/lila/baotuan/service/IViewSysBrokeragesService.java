@@ -1,6 +1,6 @@
 package com.lila.baotuan.service;
 
-import com.lila.baotuan.entity.ViewBrokerages;
+import com.lila.baotuan.entity.ViewSysBrokerages;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-07
+ * @since 2020-04-14
  */
-public interface IViewBrokeragesService extends IService<ViewBrokerages> {
+public interface IViewSysBrokeragesService extends IService<ViewSysBrokerages> {
 
 }
