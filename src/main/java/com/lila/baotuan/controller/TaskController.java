@@ -35,11 +35,12 @@ public class TaskController {
 
     @RequestMapping("/taskList")
     @ResponseBody
-    public Result getTaskList() {
+    public Result getTaskList(HttpServletRequest request) {
+        int page=Integer.valueOf(request.getParameter("page"));
+        int limit=Integer.valueOf(request.getParameter("limit"));
         Result result = new Result();
-        List<Task> list = taskService.getTaskList();
         result.setMsg("获取成功");
-        result.setData(list);
+        result.setData(taskService.getTaskList(page,limit));
         result.setCode(true);
         return result;
     }

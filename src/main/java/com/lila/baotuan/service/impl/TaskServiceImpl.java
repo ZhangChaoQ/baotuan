@@ -2,6 +2,7 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lila.baotuan.entity.Task;
 import com.lila.baotuan.mapper.TaskMapper;
 import com.lila.baotuan.service.ITaskService;
@@ -66,7 +67,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements IT
     /*
      * 获取所有任务
      * */
-    public List<Task> getTaskList() {
-        return baseMapper.selectList(new QueryWrapper<Task>().ne("surplus", 0));
+    public Page<Task> getTaskList(int page, int limit) {
+        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<Task>().ne("surplus", 0));
     }
 }
