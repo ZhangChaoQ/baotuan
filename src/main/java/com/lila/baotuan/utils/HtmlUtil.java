@@ -3,53 +3,24 @@ package com.lila.baotuan.utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HtmlUtil {
 
-    public static String write(String htmlContext) throws IOException {
-        String HtmlName = new SimpleDateFormat("YYYYMMddhhmmssSSS").format(new Date()) + ".html";
-        String filePath = "/www/payPath/" + HtmlName;
+    public static String write(String htmlContext, String name) throws IOException {
+        String filePath = "/home/payPath/" + name + ".html";
         FileOutputStream fop = null;
-        File file;
-        try {
-
-            file = new File(filePath);
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            fop = new FileOutputStream(file);
-
-            // if file doesnt exists, then create it
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            // get the content in bytes
-            byte[] contentInBytes = htmlContext.getBytes();
-
-            fop.write(contentInBytes);
-            fop.flush();
-            fop.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fop != null) {
-                    fop.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return HtmlName;
+        OutputStreamWriter osw = null;
+        String charset = "UTF-8";
+        fop = new FileOutputStream(filePath);
+        osw = new OutputStreamWriter(fop, "gbk");
+        String context = new String(htmlContext.getBytes(charset));
+        osw.write(context);
+        osw.flush();
+        osw.close();
+        return name + ".html";
     }
 
-    public static void main(String[] args) throws IOException {
-        write("测试文件");
-    }
 }

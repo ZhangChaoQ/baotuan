@@ -1,5 +1,6 @@
 package com.lila.baotuan.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.lila.baotuan.entity.GLpayApi;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,25 +16,27 @@ public class PayUtil {
 
     private static Logger logger = LogManager.getLogger();
     @Value("${UID}")
-    public static String UID;
+    private  String UID="16582";
     @Value("${NOTIFY_URL}")
-    public static String NOTIFY_URL;
+    private  String NOTIFY_URL="http://119.8.37.167:8088/qpay/notifyPay";
     @Value("${RETURN_URL}")
-    public static String RETURN_URL;
+    private  String RETURN_URL="http://119.8.37.167:8088/qpay/returnPay";
     @Value("${TOKEN}")
-    public static String TOKEN;
+    private  String TOKEN="VZVaycFa1cuVvukwga3uqY3UGfT1pVMG";
 
-    public static Map<String, Object> payOrder(Map<String, Object> remoteMap) {
+    public  Map<String, Object> payOrder(Map<String, Object> remoteMap) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("uid", UID);
         paramMap.put("notify_url", NOTIFY_URL);
         paramMap.put("return_url", RETURN_URL);
         paramMap.putAll(remoteMap);
         paramMap.put("key", getKey(paramMap));
+        System.out.println(paramMap);
+        logger.info(JSON.toJSON(paramMap));
         return paramMap;
     }
 
-    public static String getKey(Map<String, Object> remoteMap) {
+    public String getKey(Map<String, Object> remoteMap) {
         String key = "";
         if (null != remoteMap.get("goodsname")) {
             key += remoteMap.get("goodsname");
@@ -63,7 +66,7 @@ public class PayUtil {
         return MD5Util.encryption(key);
     }
 
-    public static boolean checkPayKey(GLpayApi payAPI) {
+    public  boolean checkPayKey(GLpayApi payAPI) {
         String key = "";
         if (!StringUtils.isBlank(payAPI.getOrderid())) {
             logger.info("支付回来的订单号：" + payAPI.getOrderid());
@@ -91,7 +94,7 @@ public class PayUtil {
         return payAPI.getKey().equals(MD5Util.encryption(key));
     }
 
-    public static String getOrderIdByUUId() {
+    public  String getOrderIdByUUId() {
         int machineId = 1;// 最大支持1-9个集群机器部署
         int hashCodeV = UUID.randomUUID().toString().hashCode();
         if (hashCodeV < 0) {// 有可能是负数
@@ -101,14 +104,12 @@ public class PayUtil {
         return machineId + String.format("%01d", hashCodeV);
     }
 
-    public static String checkPrice(String price) {
+    public  String checkPrice(String price) {
         String fl = price.substring(price.indexOf(".") + 1);
         if (fl.length() == 1 && fl.equals("0"))
             return price.substring(0, price.indexOf("."));
         return price;
     }
 
-    public static void main(String[] args) {
-        System.out.println(checkPrice("0.01"));
-    }
+
 }

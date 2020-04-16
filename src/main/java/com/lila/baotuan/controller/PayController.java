@@ -7,6 +7,8 @@ import com.lila.baotuan.utils.HTTPUtil;
 import com.lila.baotuan.utils.HtmlUtil;
 import com.lila.baotuan.utils.PayUtil;
 import com.lila.baotuan.utils.ServiceUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/qpay")
 public class PayController {
-
+    private static Logger logger = LogManager.getLogger();
     @Value("${payUrl}")
-    private String payUrl;
+    private String payUrl="http://pay.wsdy.com.cn";
 
     @RequestMapping("/pay")
     @ResponseBody
@@ -34,15 +38,18 @@ public class PayController {
         String name = jData.getString("name");
         String userId = jData.getString("userId");
         String price = jData.getString("price");
-        Map<String, Object> resultMap = new HashMap<String, Object>();
         Map<String, Object> remoteMap = new HashMap<String, Object>();
+        String orderid=new SimpleDateFormat("YYYYMMddhhmmssSSS").format(new Date());
         remoteMap.put("price", price);
         remoteMap.put("istype", 1 + "");
-        remoteMap.put("orderid", PayUtil.getOrderIdByUUId());
+        remoteMap.put("orderid", orderid);
         remoteMap.put("orderuid", userId);
         remoteMap.put("goodsname", name);
-        String html = HTTPUtil.post(payUrl, PayUtil.payOrder(remoteMap));
-        String htmlName = HtmlUtil.write(html);
+        String html = HTTPUtil.post(payUrl, new PayUtil().payOrder(remoteMap));
+        logger.info(html);
+       html.replace("charset=","charset=UTF-8");
+        logger.info(html);
+        String htmlName = HtmlUtil.write(html,orderid);
         return htmlName;
     }
 
