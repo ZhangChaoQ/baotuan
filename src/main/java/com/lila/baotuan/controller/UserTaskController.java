@@ -1,18 +1,13 @@
 package com.lila.baotuan.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.lila.baotuan.entity.Result;
 import com.lila.baotuan.service.impl.TaskServiceImpl;
 import com.lila.baotuan.service.impl.UserTaskServiceImpl;
-import com.lila.baotuan.utils.ServiceUtil;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -34,7 +29,7 @@ public class UserTaskController {
     /*
      * 接取任务
      * */
-    public Result intsetUserTask(int userId,int taskId) {
+    public Result addUserTask(int userId,int taskId) {
         Result result = new Result();
         int count = taskService.updateSurplus(taskId);
         if (count == 0) {

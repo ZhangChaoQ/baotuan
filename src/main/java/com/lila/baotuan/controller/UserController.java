@@ -97,7 +97,7 @@ public class UserController {
         int money = jData.getInteger("money");
         Result result = new Result();
         result.setCode(true);
-        userService.updateMoney(id,-money);
+        userService.updateMoney(id, -money);
         brokerageService.insertWithdraw(id, money);
         result.setData(sysWithdrawalsService.insertSysWithdrawals(id, money));
         result.setMsg("提现申请已提交，转账将于24小时内到账，请注意查收");
@@ -107,21 +107,21 @@ public class UserController {
     /*
      * 接受任务
      * */
-    @RequestMapping("/insertUserTask")
-    public Result insertUserTask(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int userId = jData.getInteger("userId");
-        int taskId = jData.getInteger("taskId");
-        return userTaskController.intsetUserTask(userId, taskId);
+    @RequestMapping("/addUserTask")
+    public Result addUserTask(HttpServletRequest request) {
+        int userId = Integer.valueOf(request.getParameter("userId"));
+        int taskId = Integer.valueOf(request.getParameter("taskId"));
+        return userTaskController.addUserTask(userId, taskId);
     }
+
     /*
-     * 接受任务
+     * 获取用户信息
      * */
     @RequestMapping("/getUserInfo")
     public Result getUserInfo(HttpServletRequest request) {
         JSONObject jData = ServiceUtil.getJsonData(request);
         int id = jData.getInteger("id");
-        Result result=new Result();
+        Result result = new Result();
         result.setData(viewUserService.getViewUserById(id));
         result.setCode(true);
         result.setMsg("获取成功");
@@ -190,11 +190,10 @@ public class UserController {
     /*
      * 用戶登录
      * */
-    @RequestMapping(value = "/login")
+    @RequestMapping("/login")
     public Result login(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String phone = jData.getString("phone");
-        String password = jData.getString("password");
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
         ViewUser user = viewUserService.userLogin(phone, password);
         Result result = new Result();
         if (null != user) {

@@ -19,6 +19,7 @@ import java.util.Set;
 public class HTTPUtil {
     /**
      * 封装HTTP POST方法
+     *
      * @param
      * @param （如JSON串）
      * @return
@@ -36,8 +37,10 @@ public class HTTPUtil {
         httpPost.abort();
         return httpEntityContent;
     }
+
     /**
      * 设置请求参数
+     *
      * @param
      * @param paramMap
      * @return
@@ -46,12 +49,14 @@ public class HTTPUtil {
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         Set<Map.Entry<String, Object>> set = paramMap.entrySet();
         for (Map.Entry<String, Object> entry : set) {
-            formparams.add(new BasicNameValuePair(entry.getKey(), (String) entry.getValue()));
+            formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
         }
         return formparams;
     }
+
     /**
      * 获得响应HTTP实体内容
+     *
      * @param response
      * @return
      * @throws java.io.IOException
