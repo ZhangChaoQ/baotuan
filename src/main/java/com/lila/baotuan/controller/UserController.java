@@ -56,7 +56,7 @@ public class UserController {
     @RequestMapping("/enable")
     public int enableUser(HttpServletRequest request) {
         int id = Integer.valueOf(request.getParameter("id"));
-        return userService.enabledUser(id);
+        return userService.enableUser(id);
     }
 
     /*

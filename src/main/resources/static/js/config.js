@@ -1,6 +1,7 @@
 var app = new Object();
 //app.host = "http://192.168.0.121:8088";
 app.host = "http://119.8.37.167:8088";
+app.filePath="http://119.8.37.167";
 //app.host = "http://192.168.31.46:8088";
 
 function call(url, data, success) {
@@ -11,6 +12,19 @@ function call(url, data, success) {
         method: 'POST',
         success: function (res) {
             success(res);
+        }
+    })
+}
+
+function upload(url, formData, success) {
+    $.ajax({
+        type: "post",
+        url: app.host + url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            success(res)
         }
     })
 }
@@ -127,9 +141,9 @@ function alert(data) {
 // 整体显示到页面内
     document.getElementsByTagName("body")[0].appendChild(a);
 // 确定绑定点击事件删除标签
-     setTimeout(function(){
-         a.parentNode.removeChild(a);
-     },1000)
+    setTimeout(function () {
+        a.parentNode.removeChild(a);
+    }, 1000)
 
 }
 

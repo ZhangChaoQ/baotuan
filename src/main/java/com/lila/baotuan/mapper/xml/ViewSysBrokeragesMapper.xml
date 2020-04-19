@@ -4,6 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.lila.baotuan.entity.ViewSysBrokerages">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="money" property="money" />
+        <result column="pay_money" property="payMoney" />
+        <result column="createtime" property="createtime" />
+        <result column="code" property="code" />
+        <result column="phone" property="phone" />
+        <result column="brokerage_id" property="brokerageId" />
+        <result column="sys_brokerages_status_id" property="sysBrokeragesStatusId" />
+        <result column="sys_brokerages_status_code" property="sysBrokeragesStatusCode" />
+        <result column="sys_brokerages_status_name" property="sysBrokeragesStatusName" />
     </resultMap>
 
 </mapper>

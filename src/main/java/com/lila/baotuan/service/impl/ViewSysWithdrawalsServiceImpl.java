@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ViewSysWithdrawalsServiceImpl extends ServiceImpl<ViewSysWithdrawalsMapper, ViewSysWithdrawals> implements IViewSysWithdrawalsService {
-    public Page<ViewSysWithdrawals> getViewSysWithdrawalsList(int page, int limit) {
-        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ViewSysWithdrawals>().orderByDesc("pay_money"));
+    public Page<ViewSysWithdrawals> getViewSysWithdrawalsList(int page, int limit,boolean flag) {
+        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ViewSysWithdrawals>().eq("pay_type",flag).orderByDesc("pay_money"));
     }
 }

@@ -37,6 +37,8 @@ public class UploadFileController {
 
     @Value("${filePath}")
     private String filePath;
+    @Value("${realPath}")
+    private String realPath;
 
     @Resource
     private UploadFileServiceImpl uploadFileService;
@@ -54,8 +56,8 @@ public class UploadFileController {
         //添加日期目录
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //指定本地文件夹存储图片
-        filePath = filePath + format + "/";
-        File file = new File(filePath, fileName);
+        String refilePath = filePath + format + "/";
+        File file = new File(refilePath, fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -64,7 +66,7 @@ public class UploadFileController {
             //将图片保存到static文件夹里
             file.createNewFile();
             uploadFile.transferTo(new File(filePath + fileName));
-            String url = "/upload/" + format + "/" + fileName;
+            String url = realPath + format + "/" + fileName;
             result = this.uploadFile(url, name, size);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,5 +77,6 @@ public class UploadFileController {
     public int uploadFile(String url, String name, double size) {
         return uploadFileService.insertUploadFile(url, name, size);
     }
+
 }
 

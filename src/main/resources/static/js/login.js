@@ -41,7 +41,10 @@ function Login() {
             localStorage.setItem("taskNumber", res.data.taskNumber);
             localStorage.setItem("memberName", res.data.memberName);
             localStorage.setItem("inviterCode", res.data.inviterCode);
+            localStorage.setItem("alipayAccount", res.data.AlipayAccount);
+            localStorage.setItem("alipayName", res.data.AlipayName);
             localStorage.setItem("inviteCode", res.data.inviteCode);
+            localStorage.setItem("alipayUrl", res.data.url);
             navicatTo("task");
         }
     })

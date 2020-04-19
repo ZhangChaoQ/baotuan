@@ -26,14 +26,26 @@ public class ViewSysWithdrawalsController {
     @Resource
     private ViewSysWithdrawalsServiceImpl viewSysWithdrawalsService;
 
-    @RequestMapping("/getViewSysWithdrawalsList")
+    @RequestMapping("/getViewSysWithdrawalsByOut")
     @ResponseBody
-    public Result getViewSysWithdrawalsList(HttpServletRequest request){
-        int page=Integer.valueOf(request.getParameter("page"));
-        int limit=Integer.valueOf(request.getParameter("limit"));
-        Result result=new Result();
+    public Result getViewSysWithdrawalsByOut(HttpServletRequest request) {
+        int page = Integer.valueOf(request.getParameter("page"));
+        int limit = Integer.valueOf(request.getParameter("limit"));
+        Result result = new Result();
         result.setMsg("获取成功");
-        result.setData(viewSysWithdrawalsService.getViewSysWithdrawalsList(page,limit));
+        result.setData(viewSysWithdrawalsService.getViewSysWithdrawalsList(page, limit, true));
+        result.setCode(true);
+        return result;
+    }
+
+    @RequestMapping("/getViewSysWithdrawalsByIn")
+    @ResponseBody
+    public Result getViewSysWithdrawalsByIn(HttpServletRequest request) {
+        int page = Integer.valueOf(request.getParameter("page"));
+        int limit = Integer.valueOf(request.getParameter("limit"));
+        Result result = new Result();
+        result.setMsg("获取成功");
+        result.setData(viewSysWithdrawalsService.getViewSysWithdrawalsList(page, limit, false));
         result.setCode(true);
         return result;
     }

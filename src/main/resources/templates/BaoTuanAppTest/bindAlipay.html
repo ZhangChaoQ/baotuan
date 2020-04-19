@@ -22,18 +22,18 @@
 <div class="content">
     <div class="bt-card lab-ipt">
         <label>支付宝用户名</label>
-        <input type="text"/>
+        <input type="text" id="alipayName"/>
     </div>
     <div class="bt-card lab-ipt">
         <label>支付宝账号</label>
-        <input type="text"/>
+        <input type="text" id="alipayAccount"/>
     </div>
     <div class="bt-card upload-div">
         <div class="upload-div-div">
             <label style="float: left;">支付宝收款码</label>
             <div class="upload-btn-img">
                 <img src="../img/images/mipmap-hdpi/public_but_shangchuan.png"/>
-                <input type="file" id="file" class="filepath" onchange="changepic(this)" accept="image/*">
+                <input type="file" name="file" id="file" class="file" multiple="multiple" accept="image/*"/>
             </div>
         </div>
         <div>
@@ -48,7 +48,7 @@
         <label class="role">2.请关闭支付宝收款码收款金额限制。</label>
     </div>
     <div>
-        <button onclick="">绑定</button>
+        <button onclick="bindAlipay()">绑定</button>
     </div>
 </div>
 </body>

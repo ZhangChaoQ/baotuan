@@ -27,23 +27,12 @@ public class ViewSysBrokeragesController {
     private ViewSysBrokeragesServiceImpl viewSysBrokeragesService;
 
     @ResponseBody
-    @RequestMapping("/getViewSysBrokeragesByIn")
-    public Result getViewSysBrokeragesByIn(HttpServletRequest request){
+    @RequestMapping("/getViewSysBrokeragesList")
+    public Result getViewSysBrokeragesList(HttpServletRequest request) {
         int page = Integer.valueOf(request.getParameter("page"));
-        int pageSize =  Integer.valueOf( request.getParameter("limit"));
+        int pageSize = Integer.valueOf(request.getParameter("limit"));
         Result result = new Result();
-        result.setData(viewSysBrokeragesService.getViewSysBrokeragesByIn(page, pageSize));
-        result.setMsg("数据获取成功");
-        result.setCode(true);
-        return result;
-    }
-    @ResponseBody
-    @RequestMapping("/getViewSysBrokeragesByOut")
-    public Result getViewSysBrokeragesByOut(HttpServletRequest request){
-        int page = Integer.valueOf(request.getParameter("page"));
-        int pageSize =  Integer.valueOf( request.getParameter("limit"));
-        Result result = new Result();
-        result.setData(viewSysBrokeragesService.getViewSysBrokeragesByOut(page, pageSize));
+        result.setData(viewSysBrokeragesService.getViewSysBrokeragesList(page, pageSize));
         result.setMsg("数据获取成功");
         result.setCode(true);
         return result;

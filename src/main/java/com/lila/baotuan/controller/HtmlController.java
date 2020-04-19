@@ -35,9 +35,9 @@ public class HtmlController {
         return "user-list";
     }
 
-    @RequestMapping("/user-withdrawals")
+    @RequestMapping("/user-sysBrokerages")
     public String userWithdrawals() {
-        return "user-withdrawals";
+        return "user-sysBrokerages";
     }
 
     @RequestMapping("/sysUser")

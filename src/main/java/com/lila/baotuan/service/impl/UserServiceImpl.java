@@ -80,13 +80,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /*
-     * 登录
-     * */
-    public User userLogin(String phone, String password) {
-        return baseMapper.selectOne(new QueryWrapper<User>().eq("phone", phone).eq("password", MD5Util.MD5Encode(password, "UTF-8")));
-    }
-
-    /*
      * 注册
      * */
     public int insertUser(String password, String code, String inviteCode, String phone, int userId) {
@@ -134,7 +127,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int enabledUser(int id) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", false));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", false).eq("id", id));
     }
 
     /*
@@ -142,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int enableUser(int id) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", true));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", true).eq("id", id));
     }
 
     public boolean checkAlipay(int id) {

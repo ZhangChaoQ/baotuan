@@ -50,11 +50,13 @@
 <script src="layui/layui.all.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
+    var table, $, element;
     layui.use(['jquery', 'element', 'table'], function () {
-        const table = layui.table;
+        table = layui.table;
+        $ = layui.jquery;
         table.render({
             elem: "#table-withdrawals",
-            url: "baotuan/viewSysWithdrawals/getViewSysWithdrawalsList",
+            url: "baotuan/viewSysBrokerages/getViewSysBrokeragesList",
             method: "POST",
             data: {
                 page: 1,
@@ -91,7 +93,7 @@
                 }, {
                     title: '操作',
                     templet: function (op) {
-                        return "<a class='layui-btn layui-btn-xs' lay-event='showPay'>支付</a>";
+                        return "<a class='layui-btn layui-btn-xs' lay-event='showPay' onclick='paid(" + op.id + ")'>支付</a><a class='layui-btn layui-btn-xs' lay-event='showPay' onclick='failed(" + op.id + ")'>驳回</a>";
                     }
                 }
             ]],
@@ -100,6 +102,30 @@
             }
         })
     });
+
+    function paid(id) {
+        $.ajax({
+            url: '/baotuan/sysBrokerages/paid',
+            dataType: 'json',
+            data: {id: id},
+            method: 'POST',
+            success: function (res) {
+                table.reload('table-withdrawals');
+            }
+        })
+    }
+
+    function failed(id) {
+        $.ajax({
+            url: '/baotuan/sysBrokerages/failed',
+            dataType: 'json',
+            data: {id: id},
+            method: 'POST',
+            success: function (res) {
+                table.reload('table-withdrawals');
+            }
+        })
+    }
 </script>
 </body>
 </html>

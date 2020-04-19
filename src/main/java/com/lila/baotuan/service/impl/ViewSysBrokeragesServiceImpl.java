@@ -18,11 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ViewSysBrokeragesServiceImpl extends ServiceImpl<ViewSysBrokeragesMapper, ViewSysBrokerages> implements IViewSysBrokeragesService {
-    public Page<ViewSysBrokerages> getViewSysBrokeragesByOut(int page, int pageSize) {
-        return baseMapper.selectPage(new Page<>(page, pageSize), new QueryWrapper<ViewSysBrokerages>().eq("sys_brokerages_type_id", 2));
+    public Page<ViewSysBrokerages> getViewSysBrokeragesList(int page, int pageSize) {
+        return baseMapper.selectPage(new Page<>(page, pageSize), new QueryWrapper<ViewSysBrokerages>().eq("sys_brokerages_status_id", 1));
     }
 
-    public Page<ViewSysBrokerages> getViewSysBrokeragesByIn(int page, int pageSize) {
-        return baseMapper.selectPage(new Page<>(page, pageSize), new QueryWrapper<ViewSysBrokerages>().eq("sys_brokerages_type_id", 1));
-    }
 }
