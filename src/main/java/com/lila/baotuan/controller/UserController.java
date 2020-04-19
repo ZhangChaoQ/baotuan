@@ -38,14 +38,15 @@ public class UserController {
     private UserTaskController userTaskController;
     @Resource
     private SysWithdrawalsServiceImpl sysWithdrawalsService;
+    @Resource
+    private SysBrokeragesServiceImpl sysBrokeragesService;
 
     /*
      * 禁用账号
      * */
     @RequestMapping("/enabled")
     public int enabledUser(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         return userService.enabledUser(id);
     }
 
@@ -54,8 +55,7 @@ public class UserController {
      * */
     @RequestMapping("/enable")
     public int enableUser(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         return userService.enabledUser(id);
     }
 
@@ -64,8 +64,7 @@ public class UserController {
      * */
     @RequestMapping("/getSonList")
     public Result getSonList(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setCode(true);
         result.setData(viewUserService.getSonList(id));
@@ -78,8 +77,7 @@ public class UserController {
      * */
     @RequestMapping("/getGradSonList")
     public Result getGradSonList(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setCode(true);
         result.setData(viewUserService.getGrandSonList(id));
@@ -92,15 +90,20 @@ public class UserController {
      * */
     @RequestMapping("/withdrawals")
     public Result userWithdrawals(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
-        int money = jData.getInteger("money");
+        int id = Integer.valueOf(request.getParameter("id"));
+        int money = Integer.valueOf(request.getParameter("money"));
         Result result = new Result();
-        result.setCode(true);
-        userService.updateMoney(id, -money);
-        brokerageService.insertWithdraw(id, money);
-        result.setData(sysWithdrawalsService.insertSysWithdrawals(id, money));
-        result.setMsg("提现申请已提交，转账将于24小时内到账，请注意查收");
+        if (userService.checkAlipay(id)) {
+            result.setCode(true);
+            userService.updateMoney(id, -money);
+            int brokerageId = brokerageService.insertWithdraw(id, money);
+            result.setData(sysBrokeragesService.insertSysBrokerages(id, money, brokerageId));
+            result.setMsg("提现申请已提交，转账将于24小时内到账，请注意查收");
+        } else {
+            result.setData(null);
+            result.setMsg("请先绑定支付宝账号");
+            result.setCode(false);
+        }
         return result;
     }
 
@@ -119,8 +122,7 @@ public class UserController {
      * */
     @RequestMapping("/getUserInfo")
     public Result getUserInfo(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setData(viewUserService.getViewUserById(id));
         result.setCode(true);
@@ -133,9 +135,8 @@ public class UserController {
      * */
     @RequestMapping("/commitTask")
     public Result commitTask(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
-        String urlId = jData.getString("url");
+        int id = Integer.valueOf(request.getParameter("id"));
+        String urlId = request.getParameter("url");
         int url = -1;
         if (!urlId.equals("")) url = Integer.valueOf(urlId);
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
@@ -158,9 +159,8 @@ public class UserController {
      * */
     @RequestMapping("/toMember")
     public int toMember(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
-        int memberId = jData.getInteger("memberId");
+        int id = Integer.valueOf(request.getParameter("id"));
+        int memberId = Integer.valueOf(request.getParameter("memberId"));
         ViewUser viewUser = viewUserService.getViewUserById(id);
         ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
         int result = userService.updateMember(id, memberId);
@@ -177,14 +177,29 @@ public class UserController {
      * 用戶注冊
      * */
     @RequestMapping("/addUser")
-    public int addUser(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String phone = jData.getString("phone");
-        String password = jData.getString("password");
-        String inviteCode = jData.getString("inviteCode");
+    public Result addUser(HttpServletRequest request) {
+        Result result = new Result();
+        String phone = request.getParameter("phone");
+        String password = request.getParameter("password");
+        String inviteCode = request.getParameter("inviteCode");
+        if (userService.getCountByPhone(phone) > 0) {
+            result.setCode(false);
+            result.setData(null);
+            result.setMsg("手机号已注册，请更换手机号");
+            return result;
+        } else if (userService.getCountByInviteCode(inviteCode) == 0) {
+            result.setCode(false);
+            result.setData(null);
+            result.setMsg("邀请码不存在，请检测输入");
+            return result;
+        }
         User inviter = userService.getUserByInviteCode(inviteCode);
         int id = userService.insertUser(password, getCode(inviter), getInviteCode(), phone, inviter.getId());
-        return id;
+        ViewUser user = viewUserService.getViewUserById(id);
+        result.setCode(true);
+        result.setData(user);
+        result.setMsg("登录成功");
+        return result;
     }
 
     /*
@@ -209,15 +224,34 @@ public class UserController {
     }
 
     /*
+     * 用戶登录
+     * */
+    @RequestMapping("/loginByPhone")
+    public Result loginByPhone(HttpServletRequest request) {
+        String phone = request.getParameter("phone");
+        ViewUser user = viewUserService.userLoginByPhone(phone);
+        Result result = new Result();
+        if (null != user) {
+            result.setCode(true);
+            result.setData(user);
+            result.setMsg("登录成功");
+        } else {
+            result.setCode(false);
+            result.setData(null);
+            result.setMsg("登录失败，请检查手机号");
+        }
+        return result;
+    }
+
+    /*
      * 綁定支付宝
      * */
     @RequestMapping("/bindAlipay")
     public Result bindAlipay(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String alipayAccount = jData.getString("alipayAccount");
-        String alipayName = jData.getString("alipayName");
-        int alipayUrl = jData.getInteger("alipayUrl");
-        int id = jData.getInteger("id");
+        String alipayAccount = request.getParameter("alipayAccount");
+        String alipayName = request.getParameter("alipayName");
+        int alipayUrl = Integer.valueOf(request.getParameter("alipayUrl"));
+        int id = Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
         result.setMsg("支付宝绑定成功");
@@ -230,9 +264,8 @@ public class UserController {
      * */
     @RequestMapping("/reName")
     public String reName(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
-        String name = jData.getString("name");
+        int id = Integer.valueOf(request.getParameter("id"));
+        String name = request.getParameter("name");
         userService.updateName(id, name);
         return "index";
     }
@@ -252,29 +285,11 @@ public class UserController {
         return sb.toString();
     }
 
-    /*
-     * 检验用户邀请码
-     * */
-    @RequestMapping("/checkInviteCode")
-    public boolean checkInviteCode(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String inviteCode = jData.getString("inviteCode");
-        return userService.getCountByInviteCode(inviteCode) > 0;
-    }
 
     public boolean checkInviteCode(String inviteCode) {
         return userService.getCountByInviteCode(inviteCode) > 0;
     }
 
-    /*
-     * 检验用户重复
-     * */
-    @RequestMapping("/checkPhone")
-    public boolean check(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String phone = jData.getString("phone");
-        return userService.getCountByPhone(phone) > 0;
-    }
 
     /*
      * 获取用户编码

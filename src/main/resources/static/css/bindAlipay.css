@@ -1,0 +1,51 @@
+.lab-ipt {
+	height: 1.5rem;
+}
+.content{
+	margin-top: 3rem;
+}
+.lab-ipt>label {
+	float: left;
+	width: 30%;
+}
+
+.lab-ipt>input {
+	color: black;
+}
+
+.upload-btn-img {
+	width: 2rem;
+	height: 2rem;
+	float: left;
+	margin-left: 1rem;
+	overflow: hidden;
+}
+
+.upload-div {
+	height: 20rem;
+}
+
+.upload-div-div {
+	height: 2rem;
+}
+
+.upload-img-div {
+	width: 60%;
+	height: 18rem;
+	margin: 0 auto;
+}
+
+.filepath {
+	width: 2rem;
+	height: 2rem;
+	opacity: 0;
+	position: relative;
+	top: -2.2rem;
+	left: 0;
+	z-index: 999;
+}
+
+.roles {
+	width: 80%;
+	margin: 0 auto;
+}

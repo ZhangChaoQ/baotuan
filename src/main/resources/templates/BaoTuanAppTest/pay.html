@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<script src="../js/jquery.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/pay.js"></script>
+		<link href="../css/default.css" rel="stylesheet" type="text/css" />
+		<link href="../css/pay.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。")
+
+			});
+		</script>
+	</head>
+	<body>
+		<div class="head"><img class="back" src="../img/images/mipmap-hdpi/public_but_fanhui_b.png" />支付</div>
+		<div class="content">
+			<div class="bt-card">
+				<label id="title"></label>
+			</div>
+			<div class="bt-card">
+				<label id="payMoney"></label>
+			</div>
+			<div><button onclick="pay()">支付</button></div>
+			<form style='display:none;' id='formpay' name='formpay' method='post' action='http://pay.wsdy.com.cn'>
+				<input name='goodsname' id='goodsname' type='text' value='' />
+				<input name='istype' id='istype' type='text' value='' />
+				<input name='key' id='key' type='text' value='' />
+				<input name='notify_url' id='notify_url' type='text' value='' />
+				<input name='orderid' id='orderid' type='text' value='' />
+				<input name='orderuid' id='orderuid' type='text' value='' />
+				<input name='price' id='price' type='text' value='' />
+				<input name='return_url' id='return_url' type='text' value='' />
+				<input name='uid' id='uid' type='text' value='' />
+				<input type='submit' id='submitdemo1'>
+			</form>
+		</div>
+	</body>
+</html>

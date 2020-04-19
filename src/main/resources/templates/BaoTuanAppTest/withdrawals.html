@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<script src="../js/jquery.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/withdrawals.js"></script>
+		<link href="../css/default.css" rel="stylesheet" type="text/css" />
+		<link href="../css/withdrawals.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。")
+
+			});
+		</script>
+	</head>
+	<body>
+		<div class="head"><img class="back" src="../img/images/mipmap-hdpi/public_but_fanhui_b.png" />提现</div>
+		<div class="content">
+			<div class="bt-card lab-ipt">
+				<label>当前余额</label>
+				<label id="surplus"></label>
+			</div>
+			<div class="bt-card lab-ipt">
+				<label>提款金额</label>
+				<input type="number" id='money' />
+			</div>
+			<div class="roles">
+				规则:
+				<br />
+				<label class="role">1.提现金额需为100的整倍数</label>
+				<br />
+				<label class="role">2.提现手续费为提现金额的30%</label>
+			</div>
+			<div><button onclick="withdrawals()">提款</button></div>
+		</div>
+	</body>
+</html>

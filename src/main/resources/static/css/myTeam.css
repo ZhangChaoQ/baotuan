@@ -1,0 +1,47 @@
+.top-nav {
+	top: 2.5rem;
+	height: 2.2rem;
+}
+
+.tab-nav {
+	width: 50%;
+}
+
+.this {
+	color: #01A298;
+}
+
+.this:after {
+	content: "";
+	width: 4.625rem;
+	height: 2px;
+	background-color: #01A298;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	top: 5px;
+	border-radius: 3px;
+}
+
+.list {
+	padding-top: 2.2rem;
+}
+
+.bt-card {
+	height: 2rem;
+	font-size: 0.75rem;
+}
+
+.title {
+	float: left;
+}
+
+.money {
+	float: right;
+	line-height: 1.625rem;
+	color: #01A298;
+}
+
+.time,.phone {
+	color: #CCCCCC;
+}

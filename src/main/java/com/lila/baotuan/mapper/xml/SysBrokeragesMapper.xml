@@ -9,7 +9,8 @@
         <result column="money" property="money" />
         <result column="pay_money" property="payMoney" />
         <result column="createtime" property="createtime" />
-        <result column="sys_brokerages_type_id" property="sysBrokeragesTypeId" />
+        <result column="brokerage_id" property="brokerageId" />
+        <result column="sys_brokerages_status_id" property="sysBrokeragesStatusId" />
     </resultMap>
 
 </mapper>

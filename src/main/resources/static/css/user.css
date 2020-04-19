@@ -1,0 +1,82 @@
+.user {
+	background-color: #01A298;
+	height: 2.5rem;
+	padding: 0.75rem 0 0.75rem 0.5rem;
+	color: white;
+	margin-top: 2.5rem;
+}
+
+.head-img {
+	width: 2.5rem;
+	height: 2.5rem;
+	float: left;
+}
+
+.name-div {
+	text-indent: 0.5rem;
+	line-height: 2rem;
+	float: left;
+}
+
+.member-div {
+	float: right;
+	text-align: right;
+	width: auto;
+}
+
+.inviter {
+	width: 100%;
+	text-align: center;
+	border-top-left-radius: 0.625rem;
+	border-bottom-left-radius: 0.625rem;
+	background-color: #8bc7c47a;
+}
+
+.surplus-div {
+	margin: 0.5rem 0;
+	padding: 1rem;
+	height: 2rem;
+	line-height: 2rem;
+}
+
+.surplus {
+	color: #EE441D;
+	font-size: 1.5rem;
+	display: block;
+	float: left;
+	width: 33%;
+	text-align: center;
+}
+
+.btn-surplus {
+	width: 33%;
+	float: right;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	text-align: center;
+	margin-top: 0.25rem;
+	letter-spacing: 0;
+}
+.slogan{
+	width: 90%;
+	margin: 0 auto;
+	height: 4rem;
+	border-radius: 5px;
+	padding: 0;
+}
+.li-nav{
+	height: 1.5rem;
+	padding: 0.5rem;
+	margin-bottom: 0;
+}
+.icon{
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin-top: 0.2rem;
+}
+.icon2{
+	width: 10px;
+	height: 15px;
+	float: right;
+}

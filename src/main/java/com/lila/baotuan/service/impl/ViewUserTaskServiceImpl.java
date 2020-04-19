@@ -29,6 +29,6 @@ public class ViewUserTaskServiceImpl extends ServiceImpl<ViewUserTaskMapper, Vie
      * 根据用户id获取任务列表
      * */
     public Page<ViewUserTask> getViewUserTaskListByUserId(int page, int limit, int userId) {
-        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ViewUserTask>().eq("task_status_id", 1));
+        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ViewUserTask>().eq("task_status_id", 1).eq("user_id",userId));
     }
 }

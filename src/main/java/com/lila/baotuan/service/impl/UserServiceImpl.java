@@ -26,7 +26,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int updateMember(int id, int memberId) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("member_id", memberId).eq("id",user.getId()));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("member_id", memberId).eq("id", user.getId()));
     }
 
     /*
@@ -34,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int updateMoney(int id, double money) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("money", user.getMoney() + money).eq("id",user.getId()));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("money", user.getMoney() + money).eq("id", user.getId()));
     }
 
     /*
@@ -109,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public User updateAlipay(int id, String alipayAccount, int alipayUrl, String alipayName) {
         User user = getUserById(id);
-        baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayAccount).set("Alipay_url", alipayUrl).set("Alipay_name", alipayName).eq("id",user.getId()));
+        baseMapper.update(user, new UpdateWrapper<User>().set("Alipay_account", alipayAccount).set("Alipay_url", alipayUrl).set("Alipay_name", alipayName).eq("id", user.getId()));
         return user;
     }
 
@@ -118,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * */
     public int updateName(int id, String name) {
         User user = getUserById(id);
-        return baseMapper.update(user, new UpdateWrapper<User>().set("name", name).eq("id",user.getId()));
+        return baseMapper.update(user, new UpdateWrapper<User>().set("name", name).eq("id", user.getId()));
     }
 
     /*
@@ -143,5 +143,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public int enableUser(int id) {
         User user = getUserById(id);
         return baseMapper.update(user, new UpdateWrapper<User>().set("enabled", true));
+    }
+
+    public boolean checkAlipay(int id) {
+        int count = baseMapper.selectCount(new QueryWrapper<User>().eq("id", id).isNull("Alipay_url"));
+        return count == 0;
     }
 }

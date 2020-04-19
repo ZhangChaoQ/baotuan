@@ -46,8 +46,7 @@ public class ViewUserTaskController {
     @RequestMapping("/userTask")
     @ResponseBody
     public Result getUserTask(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id = Integer.valueOf(request.getParameter("id"));
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
         Result result = new Result();
         result.setCode(true);

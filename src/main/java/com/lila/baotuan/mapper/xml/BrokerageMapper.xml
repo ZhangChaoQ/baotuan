@@ -9,6 +9,7 @@
         <result column="money" property="money" />
         <result column="brokerage_type_id" property="brokerageTypeId" />
         <result column="createtime" property="createtime" />
+        <result column="brokerage_status_id" property="brokerageStatusId" />
     </resultMap>
 
 </mapper>

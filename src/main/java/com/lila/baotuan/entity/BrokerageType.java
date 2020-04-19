@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-14
+ * @since 2020-04-20
  */
 public class BrokerageType extends Model<BrokerageType> {
 

@@ -1,0 +1,26 @@
+.member-div {
+	padding: 0;
+	height: 5rem;
+}
+.memberList{
+	margin-top: 3rem;
+}
+.title {
+	color: #369052;
+}
+
+.vip-logo {
+	width: 15%;
+	float: left;
+	height: 100%;
+}
+
+.btn-updateusermember {
+	width: 8rem;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	letter-spacing: 0.2rem;
+	float: right;
+	background-color: #369052;
+	margin-right: 1rpx;
+}

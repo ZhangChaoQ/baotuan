@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-14
+ * @since 2020-04-20
  */
 public interface PayStatusMapper extends BaseMapper<PayStatus> {
 

@@ -64,7 +64,7 @@ public class UserTaskController {
     public Result updateTaskStatus(int id, int url) {
         Result result = new Result();
         result.setCode(true);
-        result.setMsg("全部任务已完成");
+        result.setMsg("任务已完成");
         result.setData(userTaskService.updateTaskStatus(id, url));
         return result;
     }

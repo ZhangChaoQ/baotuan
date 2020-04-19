@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/bindAlipay.js"></script>
+    <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/bindAlipay.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
+        document.addEventListener('plusready', function () {
+            //console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。")
+
+        });
+    </script>
+</head>
+
+<body>
+<div class="head"><img class="back" src="../img/images/mipmap-hdpi/public_but_fanhui_b.png"/>绑定支付宝</div>
+<div class="content">
+    <div class="bt-card lab-ipt">
+        <label>支付宝用户名</label>
+        <input type="text"/>
+    </div>
+    <div class="bt-card lab-ipt">
+        <label>支付宝账号</label>
+        <input type="text"/>
+    </div>
+    <div class="bt-card upload-div">
+        <div class="upload-div-div">
+            <label style="float: left;">支付宝收款码</label>
+            <div class="upload-btn-img">
+                <img src="../img/images/mipmap-hdpi/public_but_shangchuan.png"/>
+                <input type="file" id="file" class="filepath" onchange="changepic(this)" accept="image/*">
+            </div>
+        </div>
+        <div>
+            <div class="upload-img-div" id="upload-img"></div>
+        </div>
+    </div>
+    <div class="roles">
+        规则:
+        <br/>
+        <label class="role">1.一个付款码只可对应一个账号，如有多个封号处理。</label>
+        <br/>
+        <label class="role">2.请关闭支付宝收款码收款金额限制。</label>
+    </div>
+    <div>
+        <button onclick="">绑定</button>
+    </div>
+</div>
+</body>
+</html>

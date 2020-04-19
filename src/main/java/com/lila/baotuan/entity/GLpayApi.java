@@ -86,4 +86,15 @@ public class GLpayApi {
 		this.key = key;
 	}
 
+	@Override
+	public String toString() {
+		return "GLpayApi{" +
+				"platform_trade_no='" + platform_trade_no + '\'' +
+				", orderid='" + orderid + '\'' +
+				", price='" + price + '\'' +
+				", realprice='" + realprice + '\'' +
+				", orderuid='" + orderuid + '\'' +
+				", key='" + key + '\'' +
+				'}';
+	}
 }

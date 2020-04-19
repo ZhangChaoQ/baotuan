@@ -1,0 +1,12 @@
+.bt-card{
+	height: 2rem;
+	line-height: 2rem;
+	padding-left: 0.75rem;
+}
+button{
+	width: 80%;
+	margin: 0 10%;
+}
+.content{
+	margin-top: 3rem;
+}

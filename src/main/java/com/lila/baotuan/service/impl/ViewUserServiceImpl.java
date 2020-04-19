@@ -82,4 +82,8 @@ public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> i
     public List<ViewUser> getViewUserCountByDay() {
         return baseMapper.selectList(new QueryWrapper<ViewUser>().select("count(*) as number", "date_format(createtime,'%Y-%m-%d') as createtime").groupBy("date_format(createtime,'%Y-%m-%d')").eq("date_format(createtime,'%m')", LocalDateTime.now().getMonth()));
     }
+
+    public ViewUser userLoginByPhone(String phone) {
+        return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("phone",phone));
+    }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<script src="../js/jquery.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/myInvite.js"></script>
+		<link href="../css/default.css" rel="stylesheet" type="text/css" />
+		<link href="../css/myInvite.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。")
+
+			});
+		</script>
+	</head>
+	<body>
+		<div class="head"><img class="back" src="../img/images/mipmap-hdpi/public_but_fanhui_b.png" />我的推广</div>
+		<div class="content">
+			<div >
+				<label>我的邀请码</label>
+				<label class="invoteCode text"></label>
+				<button onclick="copyUrl()">点击复制</button>
+			</div>
+			<div>
+				<label>软件二维码</label><br>
+				<div class="downLoad"><img src="../img/download.png"></div><br>
+				<button>点击保存</button>
+			</div>
+			<div>
+				<label>Android下载地址</label><br>
+				<label class="url text"></label><br>
+				<button onclick="download()">点击下载</button>
+			</div>
+		</div>
+	</body>
+</html>

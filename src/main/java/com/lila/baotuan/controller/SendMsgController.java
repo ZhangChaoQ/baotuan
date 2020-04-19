@@ -28,8 +28,7 @@ public class SendMsgController {
     @RequestMapping("/sendmsg")
     @ResponseBody
     public Result sendMassage(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        String phone = jData.getString("phone");
+        String phone = request.getParameter("phone");
         Result result = new Result();
         String code = SendSmsUtil.getCode();
         String context = "您好，您的验证码是" + code + "，" + time + "分钟内有效。 【爆团科技】";

@@ -1,0 +1,26 @@
+.text {
+	margin: 10px auto;
+	display: block;
+	text-align: center;
+	height: 2rem;
+	line-height: 2rem;
+}
+.content{
+	margin-top: 3rem;
+}
+.downLoad {
+	width: 8rem;
+	height: 8rem;
+	margin: 0 auto;
+}
+
+button {
+	width: 80%;
+	height: 2rem;
+	line-height: 2rem;
+	margin: 0 10% 1rem;
+}
+
+.content {
+	padding: 1rem;
+}

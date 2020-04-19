@@ -61,4 +61,84 @@ public class HtmlController {
         return "main-out";
     }
 
+    @RequestMapping("/BaoTuanAppTest/member")
+    public String member() {
+        return "BaoTuanAppTest/member";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/bindAlipay")
+    public String bindAlipay() {
+        return "BaoTuanAppTest/bindAlipay";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/brokerage")
+    public String brokerage() {
+        return "BaoTuanAppTest/brokerage";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/commitTask")
+    public String commitTask() {
+        return "BaoTuanAppTest/commitTask";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/index")
+    public String applogin() {
+        return "BaoTuanAppTest/index";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/myInvite")
+    public String myInvite() {
+        return "BaoTuanAppTest/myInvite";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/myTask")
+    public String myTask() {
+        return "BaoTuanAppTest/myTask";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/myTeam")
+    public String myTeam() {
+        return "BaoTuanAppTest/myTeam";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/notic")
+    public String notic() {
+        return "BaoTuanAppTest/notic";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/noticMassage")
+    public String noticMassage() {
+        return "BaoTuanAppTest/noticMassage";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/pay")
+    public String pay() {
+        return "BaoTuanAppTest/pay";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/register")
+    public String appregister() {
+        return "BaoTuanAppTest/register";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/reset")
+    public String appreset() {
+        return "BaoTuanAppTest/reset";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/task")
+    public String apptask() {
+        return "BaoTuanAppTest/task";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/user")
+    public String user() {
+        return "BaoTuanAppTest/user";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/withdrawals")
+    public String withdrawals() {
+        return "BaoTuanAppTest/withdrawals";
+    }
+
 }

@@ -41,8 +41,7 @@ public class NoticeController {
     @RequestMapping("/getNotice")
     @ResponseBody
     public Result getNotice(HttpServletRequest request) {
-        JSONObject jData = ServiceUtil.getJsonData(request);
-        int id = jData.getInteger("id");
+        int id =Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setCode(true);
         result.setMsg("获取成功");

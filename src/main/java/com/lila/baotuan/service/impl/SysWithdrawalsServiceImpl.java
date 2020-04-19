@@ -39,14 +39,14 @@ public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper,
     /*
      * 添加转款信息
      * */
-    public int insertSysWithdrawals(int userId, double money) {
+    public int insertSysWithdrawals(int userId, double money,boolean flag) {
         SysWithdrawals sysWithdrawals = new SysWithdrawals();
         sysWithdrawals.setUserId(userId);
         sysWithdrawals.setPayStatusId(0);
         sysWithdrawals.setMoney(money);
         sysWithdrawals.setPayMoney(money * 0.7);
         sysWithdrawals.setCreatetime(LocalDateTime.now());
-        sysWithdrawals.setPayType(true);
+        sysWithdrawals.setPayType(flag);
         baseMapper.insert(sysWithdrawals);
         return sysWithdrawals.getId();
     }

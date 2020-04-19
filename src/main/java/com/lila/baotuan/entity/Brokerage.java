@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-14
+ * @since 2020-04-20
  */
 public class Brokerage extends Model<Brokerage> {
 
@@ -43,6 +43,11 @@ public class Brokerage extends Model<Brokerage> {
      * 创建时间
      */
     private LocalDateTime createtime;
+
+    /**
+     * 到款状态
+     */
+    private Integer brokerageStatusId;
 
 
     public Integer getId() {
@@ -85,6 +90,14 @@ public class Brokerage extends Model<Brokerage> {
         this.createtime = createtime;
     }
 
+    public Integer getBrokerageStatusId() {
+        return brokerageStatusId;
+    }
+
+    public void setBrokerageStatusId(Integer brokerageStatusId) {
+        this.brokerageStatusId = brokerageStatusId;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -98,6 +111,7 @@ public class Brokerage extends Model<Brokerage> {
         ", money=" + money +
         ", brokerageTypeId=" + brokerageTypeId +
         ", createtime=" + createtime +
+        ", brokerageStatusId=" + brokerageStatusId +
         "}";
     }
 }

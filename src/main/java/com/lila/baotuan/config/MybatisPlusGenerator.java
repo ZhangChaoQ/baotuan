@@ -27,8 +27,8 @@ public class MybatisPlusGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("F:\\GitProject\\BaoTuan\\src\\main\\java");//输出目录
-        //gc.setOutputDir("F:\\testProject\\src\\main\\java\\");//当前目录
+        //gc.setOutputDir("F:\\GitProject\\BaoTuan\\src\\main\\java");//输出目录
+        gc.setOutputDir("F:\\testProject\\src\\main\\java\\");//当前目录
         gc.setFileOverride(true);//覆盖文件
         gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存

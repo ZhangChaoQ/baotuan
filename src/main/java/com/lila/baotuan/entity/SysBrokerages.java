@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-14
+ * @since 2020-04-20
  */
 public class SysBrokerages extends Model<SysBrokerages> {
 
@@ -45,9 +45,14 @@ public class SysBrokerages extends Model<SysBrokerages> {
     private LocalDateTime createtime;
 
     /**
-     * 分佣类型
+     * 申请提现id
      */
-    private Integer sysBrokeragesTypeId;
+    private Integer brokerageId;
+
+    /**
+     * 到款状态
+     */
+    private Integer sysBrokeragesStatusId;
 
 
     public Integer getId() {
@@ -90,12 +95,20 @@ public class SysBrokerages extends Model<SysBrokerages> {
         this.createtime = createtime;
     }
 
-    public Integer getSysBrokeragesTypeId() {
-        return sysBrokeragesTypeId;
+    public Integer getBrokerageId() {
+        return brokerageId;
     }
 
-    public void setSysBrokeragesTypeId(Integer sysBrokeragesTypeId) {
-        this.sysBrokeragesTypeId = sysBrokeragesTypeId;
+    public void setBrokerageId(Integer brokerageId) {
+        this.brokerageId = brokerageId;
+    }
+
+    public Integer getSysBrokeragesStatusId() {
+        return sysBrokeragesStatusId;
+    }
+
+    public void setSysBrokeragesStatusId(Integer sysBrokeragesStatusId) {
+        this.sysBrokeragesStatusId = sysBrokeragesStatusId;
     }
 
     @Override
@@ -111,7 +124,8 @@ public class SysBrokerages extends Model<SysBrokerages> {
         ", money=" + money +
         ", payMoney=" + payMoney +
         ", createtime=" + createtime +
-        ", sysBrokeragesTypeId=" + sysBrokeragesTypeId +
+        ", brokerageId=" + brokerageId +
+        ", sysBrokeragesStatusId=" + sysBrokeragesStatusId +
         "}";
     }
 }

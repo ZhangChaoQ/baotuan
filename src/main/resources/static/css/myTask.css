@@ -1,0 +1,68 @@
+.notic {
+	height: 2.5rem;
+}
+.bt-card{
+	height: 3.5rem;
+}
+.myTaskLsit{
+	height: calc(100% - 106px);
+	margin-top: 2.5rem;
+	overflow: scroll;
+}
+.task-logo-img {
+	width: 30px;
+	height: 30px;
+	float: left;
+}
+
+.task-context {
+	float: left;
+	width: 85%;
+	padding-left: 10px;
+	height: 2rem;
+}
+
+.text>h4 {
+	margin: 0;
+	width: auto;
+	float: left;
+}
+
+.money {
+	float: right;
+	color: #4AA566;
+}
+
+.surplus {
+	border: 1px solid #4AA667;
+	color: #4AA667;
+	border-radius: 10px;
+	width: 80px;
+	display: block;
+	text-align: center;
+}
+
+.task-money {
+	float: right;
+	width: 89%;
+	padding-left: 10px;
+	height: 2rem;
+}
+
+.btn-div {
+	height: 1.5rem;
+	width: 60%;
+	float: right;
+}
+
+button.btn-addusertask {
+	letter-spacing: 0;
+	background-color: #4AA667;
+	height: 1.5rem;
+	line-height: 1.1rem;
+	width: auto;
+	font-size: 0.9rem;
+	float: right;
+    margin-left: 10px;
+	padding: 0.2rem;
+}

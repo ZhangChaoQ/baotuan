@@ -1,0 +1,14 @@
+.notic{
+	margin: 0.5rem auto 1rem;
+	text-align: center;
+}
+.time{
+	color: #CCCCCC;
+}
+.title{
+	font-size: 1.2rem;
+}
+.context{
+	margin: 1rem;
+	text-indent: 2rem;
+}

@@ -1,0 +1,76 @@
+input{
+	width: 12rem;
+}
+.content {
+	background-image: url(../img/images/mipmap-hdpi/bg.png);
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.logo {
+	text-align: center;
+	font-weight: bold;
+	font-size: 1rem;
+	line-height: 2rem;
+	padding: 3rem 0;
+	color: #01A298;
+}
+
+.logo-img {
+	width: 4.5rem;
+	height: 4.5rem;
+	margin: 0 auto;
+}
+
+.login-form {
+	width: 92%;
+	height: 5.5rem;
+	margin: 0 auto;
+	background-color: #01A298;
+	color: white;
+	line-height: 2.5rem;
+	border-radius: 5px;
+}
+
+.icon {
+	width: 19px;
+	height: 19px;
+	line-height: 3.125rem;
+	float: left;
+	padding: 0 10px;
+}
+
+.lab-ipt {
+	width: 95%;
+	margin: 0 auto;
+	border-bottom: 1px solid white;
+}
+
+.btn-div {
+	width: 92.5%;
+	margin: 0 auto;
+	padding: 1.5rem 0;
+}
+
+.reset {
+	text-align: center;
+}
+
+.register {
+	position: fixed;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	text-align: center;
+	bottom: 0;
+	height: 75px;
+	width: 8.5rem;
+}
+
+input#verCodeBtn {
+	width: 90px;
+	border: 1px solid white;
+	border-radius: 15px;
+	font-size: 0.5rem;
+}
