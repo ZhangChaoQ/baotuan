@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 50720
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 20/04/2020 13:24:29
+ Date: 20/04/2020 20:54:38
 */
 
 SET NAMES utf8mb4;
@@ -30,18 +30,7 @@ CREATE TABLE `brokerage`  (
   `brokerage_status_id` int(11) NULL DEFAULT 2 COMMENT '到款状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '余额记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of brokerage
--- ----------------------------
-INSERT INTO `brokerage` VALUES (1, 1, 98.49, 4, '2020-04-19 09:45:54', 2);
-INSERT INTO `brokerage` VALUES (2, 1, 98.49, 4, '2020-04-19 09:47:20', 2);
-INSERT INTO `brokerage` VALUES (3, 1, 108.78, 4, '2020-04-19 15:55:02', 2);
-INSERT INTO `brokerage` VALUES (4, 1, 108.78, 4, '2020-04-19 15:55:07', 2);
-INSERT INTO `brokerage` VALUES (5, 1, 1088.78, 4, '2020-04-19 15:57:10', 2);
-INSERT INTO `brokerage` VALUES (6, 1, 120.54, 4, '2020-04-19 18:28:51', 2);
-INSERT INTO `brokerage` VALUES (7, 1, 120.54, 4, '2020-04-19 18:32:49', 2);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '余额记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for brokerage_status
@@ -53,14 +42,7 @@ CREATE TABLE `brokerage_status`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '到款状态' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of brokerage_status
--- ----------------------------
-INSERT INTO `brokerage_status` VALUES (1, 'Unpaid', '待支付', '用户发起提现');
-INSERT INTO `brokerage_status` VALUES (2, 'Paid', '支付完成', '提现到账');
-INSERT INTO `brokerage_status` VALUES (3, 'Failed', '支付失败', '驳回申请');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '到款状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for brokerage_type
@@ -78,9 +60,9 @@ CREATE TABLE `brokerage_type`  (
 -- Records of brokerage_type
 -- ----------------------------
 INSERT INTO `brokerage_type` VALUES (1, 'Withdraw', '提现记录', NULL);
-INSERT INTO `brokerage_type` VALUES (2, 'Brokerage', '分佣奖励', NULL);
-INSERT INTO `brokerage_type` VALUES (3, 'Invite', '邀请奖励', NULL);
-INSERT INTO `brokerage_type` VALUES (4, 'Task', '任务奖励', NULL);
+INSERT INTO `brokerage_type` VALUES (2, 'Task', '任务奖励', NULL);
+INSERT INTO `brokerage_type` VALUES (3, 'Brokerage', '分佣奖励', NULL);
+INSERT INTO `brokerage_type` VALUES (4, 'Invite', '邀请奖励', NULL);
 
 -- ----------------------------
 -- Table structure for member
@@ -136,14 +118,13 @@ CREATE TABLE `pay_status`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态说明',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pay_status
 -- ----------------------------
 INSERT INTO `pay_status` VALUES (1, 'Unpaid', '待支付', '用户发起提现');
 INSERT INTO `pay_status` VALUES (2, 'Paid', '支付完成', '提现到账');
-INSERT INTO `pay_status` VALUES (3, 'Failed', '支付失败', '驳回申请');
 
 -- ----------------------------
 -- Table structure for permission
@@ -204,14 +185,7 @@ CREATE TABLE `sys_brokerages_status`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态说明',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_brokerages_status
--- ----------------------------
-INSERT INTO `sys_brokerages_status` VALUES (1, 'Unpaid', '待支付', '用户发起提现');
-INSERT INTO `sys_brokerages_status` VALUES (2, 'Paid', '支付完成', '提现到账');
-INSERT INTO `sys_brokerages_status` VALUES (3, 'Failed', '支付失败', '驳回申请');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -228,7 +202,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, '18501350323', '18501350323', '00354c49b4a97da913f2a76f437b07f4');
+INSERT INTO `sys_user` VALUES (1, '18501350323', '18501350323', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -275,25 +249,7 @@ CREATE TABLE `task`  (
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `task_type_id`(`task_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of task
--- ----------------------------
-INSERT INTO `task` VALUES (1, '抖音测试', '点赞+关注', 100, 5, 100.50, 'https://v.douyin.com/72wmSN/', 1, '2020-03-06 11:50:23');
-INSERT INTO `task` VALUES (2, '抖音测试2', '点赞+关注', 100, 6, 100.50, 'https://v.douyin.com/72wWSN/', 1, '2020-03-17 20:13:15');
-INSERT INTO `task` VALUES (3, 'a', 'a', 111, 107, 111.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 01:49:53');
-INSERT INTO `task` VALUES (4, '1', '1', 111, 107, 111.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 01:51:59');
-INSERT INTO `task` VALUES (5, '11', '111', 1111, 1107, 1111.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-12 09:54:13');
-INSERT INTO `task` VALUES (6, '1', '11', 123, 119, 123.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 01:56:31');
-INSERT INTO `task` VALUES (7, '123', '123', 123, 120, 123.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 09:59:30');
-INSERT INTO `task` VALUES (8, '111', '111', 111, 107, 111.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 01:59:58');
-INSERT INTO `task` VALUES (9, '125', '15', 235, 233, 46123.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-10 10:00:48');
-INSERT INTO `task` VALUES (10, '123', '123', 12312, 12310, 124124.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 02:01:37');
-INSERT INTO `task` VALUES (11, '123', '123', 123, 121, 4124.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 02:06:59');
-INSERT INTO `task` VALUES (12, '1234', '123', 123, 121, 123.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-13 02:08:49');
-INSERT INTO `task` VALUES (13, '124', '213', 4213, 4211, 12412.00, 'https://v.douyin.com/3kabce/', 1, '2020-04-12 10:12:00');
-INSERT INTO `task` VALUES (14, '1', '1', 1, 1, 1.00, '1', 1, '2020-04-15 08:34:33');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for task_status
@@ -341,13 +297,7 @@ CREATE TABLE `upload_file`  (
   `size` double NULL DEFAULT NULL COMMENT '上传文件大小',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of upload_file
--- ----------------------------
-INSERT INTO `upload_file` VALUES (1, 'bg', '/upload/2020-04-20/ff63e38a-3e1f-4f8c-ac60-59674bdf9a3e.png', 8228, '2020-04-19 21:12:12');
-INSERT INTO `upload_file` VALUES (2, 'bg', '/upload/2020-04-20/3a7a4337-9cc8-46de-a940-5406471c913e.png', 8228, '2020-04-19 21:14:29');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user
@@ -377,8 +327,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '张超群', '0-0A-00001', '18501350323', '00354c49b4a97da913f2a76f437b07f4', 'xklSaN', NULL, 'asd', 'asd', -1, 4.02, 3, 1, '2020-03-24 17:12:41');
-INSERT INTO `user` VALUES (2, '13070186672', '0A1-0B-00001', '13070186672', 'e10adc3949ba59abbe56e057f20f883e', 'cwqADl', 1, NULL, NULL, NULL, 0.00, 1, 0, '2020-04-16 04:51:56');
+INSERT INTO `user` VALUES (1, '张超群', '0-0A-00001', '18501350323', 'e10adc3949ba59abbe56e057f20f883e', 'xklSaN', -1, '13246', '1233465', -1, 1390.01, 2, 1, '2020-03-28 17:12:41');
 
 -- ----------------------------
 -- Table structure for user_task
@@ -395,19 +344,7 @@ CREATE TABLE `user_task`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `task_id`(`task_id`) USING BTREE,
   INDEX `task_status_id`(`task_status_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user_task
--- ----------------------------
-INSERT INTO `user_task` VALUES (1, 1, 1, 2, '2020-04-17 22:03:32', -1);
-INSERT INTO `user_task` VALUES (2, 1, 2, 2, '2020-04-17 22:03:34', -1);
-INSERT INTO `user_task` VALUES (3, 1, 3, 2, '2020-04-17 22:03:35', -1);
-INSERT INTO `user_task` VALUES (4, 1, 4, 2, '2020-04-17 22:03:37', -1);
-INSERT INTO `user_task` VALUES (5, 1, 5, 2, '2020-04-17 22:03:39', -1);
-INSERT INTO `user_task` VALUES (6, 1, 6, 2, '2020-04-17 14:03:43', -1);
-INSERT INTO `user_task` VALUES (7, 1, 7, 1, '2020-04-18 06:03:45', NULL);
-INSERT INTO `user_task` VALUES (8, 1, 8, 1, '2020-04-18 06:03:47', NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- View structure for view_sys_brokerages
