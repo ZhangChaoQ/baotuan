@@ -2,7 +2,7 @@ $(function () {
     if (localStorage.getItem("alipayUrl") != null) {
         $("#alipayName").val(localStorage.getItem("alipayName"));
         $("#alipayAccount").val(localStorage.getItem("alipayAccount"));
-        $("#upload-img").html("<img src='" + app.filePath + objUrl + "' ></img>")
+        $("#upload-img").html("<img src='" + app.filePath + localStorage.getItem("alipayUrl") + "' ></img>")
     }
     $("#file").change(function () {
         var objUrl = getObjectURL(this.files[0]);//获取文件信息
