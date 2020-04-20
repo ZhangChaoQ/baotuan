@@ -35,5 +35,5 @@ function toReset() {
 }
 
 function toLogin() {
-    navicatTo('index.html');
+    navicatTo('index');
 }

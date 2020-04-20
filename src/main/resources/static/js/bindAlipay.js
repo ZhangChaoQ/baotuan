@@ -8,7 +8,7 @@ $(function () {
         var objUrl = getObjectURL(this.files[0]);//获取文件信息
         console.log("objUrl = " + objUrl);
         if (objUrl) {
-            $("#upload-img").html("<img src='" + app.filePath + objUrl + "' ></img>")
+            $("#upload-img").html("<img src='" + objUrl + "' ></img>")
         }
     })
 })
@@ -26,6 +26,9 @@ function bindAlipay() {
         data.alipayAccount = $("#alipayAccount").val();
         call('/baotuan/user/bindAlipay', data, function (res) {
             alert(res.msg);
+            setTimeout(function () {
+                self.location = document.referrer;
+            }, 1000)
         })
     })
 }

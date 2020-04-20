@@ -142,4 +142,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         int count = baseMapper.selectCount(new QueryWrapper<User>().eq("id", id).isNull("Alipay_url"));
         return count == 0;
     }
+
 }

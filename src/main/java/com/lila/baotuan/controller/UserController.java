@@ -1,12 +1,11 @@
 package com.lila.baotuan.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lila.baotuan.entity.Result;
 import com.lila.baotuan.entity.User;
 import com.lila.baotuan.entity.ViewUser;
 import com.lila.baotuan.entity.ViewUserTask;
 import com.lila.baotuan.service.impl.*;
-import com.lila.baotuan.utils.ServiceUtil;
+import com.lila.baotuan.utils.MD5Util;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -145,7 +144,7 @@ public class UserController {
         userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
         brokerageService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
 
-        if (null != viewUser.getUserId()) {
+        if (-1 != viewUser.getUserId()) {
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
             userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
             brokerageService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
@@ -311,6 +310,10 @@ public class UserController {
             count = "0" + count;
         }
         return sup + "-" + number + "" + letter + "-" + count;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MD5Util.MD5Encode("123456", "UTF-8"));
     }
 }
 

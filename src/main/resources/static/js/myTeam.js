@@ -6,6 +6,7 @@ $(function () {
         $(this).addClass("this");
         List = [];
         page = 1;
+        index=$(this).index()+1;
         getList();
     })
     getList();

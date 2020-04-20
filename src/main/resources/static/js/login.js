@@ -1,5 +1,5 @@
 $(function () {
-
+    if (localStorage.getItem("userId") != "undefined" && localStorage.getItem("userId") != null) navicatTo("task");
 })
 
 function checkPhone(phone) {
@@ -46,6 +46,8 @@ function Login() {
             localStorage.setItem("inviteCode", res.data.inviteCode);
             localStorage.setItem("alipayUrl", res.data.url);
             navicatTo("task");
+        } else {
+            alert(res.msg)
         }
     })
 }

@@ -18,6 +18,9 @@ function withdrawals() {
         data.money = money;
         call('/baotuan/user/withdrawals', data, function (res) {
             alert(res.msg)
+            setTimeout(function () {
+                self.location = document.referrer;
+            }, 1000)
         })
     }
 }

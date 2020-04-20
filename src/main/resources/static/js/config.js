@@ -1,7 +1,9 @@
 var app = new Object();
 //app.host = "http://192.168.0.121:8088";
 app.host = "http://119.8.37.167:8088";
-app.filePath="http://119.8.37.167";
+app.host="http://192.168.0.108:8088"
+app.filePath = "http://119.8.37.167";
+
 //app.host = "http://192.168.31.46:8088";
 
 function call(url, data, success) {
@@ -65,16 +67,20 @@ $(function () {
     $("#nav-user").click(function () {
         navicatTo("user")
     })
-    var h = $(window).height();
+    var winHeight = $(window).height();  //获取当前页面高度
     $(window).resize(function () {
-        if ($(window).height() < h) {
+        var thisHeight = $(this).height();
+        if (winHeight - thisHeight > 100) {
+            //键盘弹出
             $('.register').hide();
         } else {
+            //键盘收起
             $('.register').show();
+
         }
     })
     $(".back").click(function () {
-        window.history.back();
+        self.location=document.referrer;
     })
 })
 

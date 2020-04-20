@@ -7,7 +7,7 @@ $(function () {
         $(this).addClass("this");
         List = [];
         page = 1;
-        index = $(this).index + 1;
+        index = $(this).index() + 1;
         getList();
     })
     getList();
@@ -36,7 +36,10 @@ function bindList() {
             "		<label >" + typeName[index] + "</label><br>" +
             "		<label class='time'>" + new Date(DateTimeFormatter(List[i].createtime)).Format("yyyy-MM-dd") + "</label>" +
             "	</div>" +
-            "	<label class='money'>" + List[i].money + "</label>" +
+            "	<div class = 'title' >" +
+            "   	<label class='money'>" + List[i].money + "</label>" +
+            "   	<label class='status'>" + List[i].money + "</label>" +
+            "	</div>" +
             "</div>";
         $("#list").append(html)
     }

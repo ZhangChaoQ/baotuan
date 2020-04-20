@@ -121,8 +121,48 @@
                 return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
             }
         })
+        table.on('toolbar(table-sysUser)', function (obj) {
+            if (obj.event === 'showOne') {
+                showOne();
+            }
+        });
     });
+    function showOne() {
+        layer.open({
+            type: 1,
+            content: $('#add-div'),
+            area: ['500px', '500px'],
+            title: "添加管理员",
+            btn: ['添加', '取消'],
+            btnAlign: "c",
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/sysUser/addUser',
+                    method: "POST",
+                    data: {
+                        phone: $("#phone").val(),
+                        password: $("#password").val(),
+                    },
+                    success: function (res) {
+                        if (res.code) {
+                            layer.close(index)
+                            table.reload("table-sysUser");
+                            $("#add-task")[0].reset();
+                        }
+                    }
+                })
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+                return false;
+            },
+            cancel: function (index, layero) {
+                layer.close(index)
+                return false;
+            }
 
+        })
+    }
 </script>
 </body>
 </html>

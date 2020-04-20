@@ -36,14 +36,14 @@ function commit() {
         var formData = new FormData();//这里需要实例化一个FormData来进行文件上传
         formData.append(type, $("#file")[0].files[0]);
         upload('/baotuan/uploadFile/upload', formData, function (res) {
-			if(res==-1)alert("图片上传失败，请重试")
+            if (res == -1) alert("图片上传失败，请重试")
             const data = new Object();
             data.id = getParam("id");
             data.url = res;
             call('/baotuan/user/commitTask', data, function (res) {
                 alert(res.msg)
                 setTimeout(function () {
-                    window.history.back();
+                    self.location = document.referrer;
                 }, 1000)
             })
         })
@@ -54,7 +54,7 @@ function commit() {
         call('/baotuan/user/commitTask', data, function (res) {
             alert(res.msg)
             setTimeout(function () {
-                window.history.back();
+                self.location = document.referrer;
             }, 1000)
         })
     }
