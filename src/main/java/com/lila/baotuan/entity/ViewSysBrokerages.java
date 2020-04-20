@@ -2,6 +2,7 @@ package com.lila.baotuan.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 /**
@@ -70,6 +71,24 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
      * 支付状态名称
      */
     private String sysBrokeragesStatusName;
+
+    /**
+     * 支付宝用户名
+     */
+    @TableField("Alipay_name")
+    private String alipayName;
+
+    /**
+     * 支付宝账号
+     */
+    @TableField("Alipay_account")
+    private String alipayAccount;
+
+    /**
+     * 支付宝二维码
+     */
+    @TableField("Alipay_url")
+    private Integer alipayUrl;
 
 
     public Integer getId() {
@@ -160,6 +179,30 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
         this.sysBrokeragesStatusName = sysBrokeragesStatusName;
     }
 
+    public String getAlipayName() {
+        return alipayName;
+    }
+
+    public void setAlipayName(String alipayName) {
+        this.alipayName = alipayName;
+    }
+
+    public String getAlipayAccount() {
+        return alipayAccount;
+    }
+
+    public void setAlipayAccount(String alipayAccount) {
+        this.alipayAccount = alipayAccount;
+    }
+
+    public Integer getAlipayUrl() {
+        return alipayUrl;
+    }
+
+    public void setAlipayUrl(Integer alipayUrl) {
+        this.alipayUrl = alipayUrl;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -179,6 +222,9 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
         ", sysBrokeragesStatusId=" + sysBrokeragesStatusId +
         ", sysBrokeragesStatusCode=" + sysBrokeragesStatusCode +
         ", sysBrokeragesStatusName=" + sysBrokeragesStatusName +
+        ", alipayName=" + alipayName +
+        ", alipayAccount=" + alipayAccount +
+        ", alipayUrl=" + alipayUrl +
         "}";
     }
 }

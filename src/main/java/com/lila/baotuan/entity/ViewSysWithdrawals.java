@@ -2,7 +2,6 @@ package com.lila.baotuan.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 /**
@@ -68,22 +67,9 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
     private String code;
 
     /**
-     * 支付宝用户名
+     * 用户姓名
      */
-    @TableField("Alipay_name")
-    private String alipayName;
-
-    /**
-     * 支付宝账号
-     */
-    @TableField("Alipay_account")
-    private String alipayAccount;
-
-    /**
-     * 支付宝二维码
-     */
-    @TableField("Alipay_url")
-    private Integer alipayUrl;
+    private String name;
 
 
     public Integer getId() {
@@ -166,28 +152,12 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
         this.code = code;
     }
 
-    public String getAlipayName() {
-        return alipayName;
+    public String getName() {
+        return name;
     }
 
-    public void setAlipayName(String alipayName) {
-        this.alipayName = alipayName;
-    }
-
-    public String getAlipayAccount() {
-        return alipayAccount;
-    }
-
-    public void setAlipayAccount(String alipayAccount) {
-        this.alipayAccount = alipayAccount;
-    }
-
-    public Integer getAlipayUrl() {
-        return alipayUrl;
-    }
-
-    public void setAlipayUrl(Integer alipayUrl) {
-        this.alipayUrl = alipayUrl;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -208,9 +178,7 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
         ", payStatusCode=" + payStatusCode +
         ", payStatusName=" + payStatusName +
         ", code=" + code +
-        ", alipayName=" + alipayName +
-        ", alipayAccount=" + alipayAccount +
-        ", alipayUrl=" + alipayUrl +
+        ", name=" + name +
         "}";
     }
 }

@@ -15,6 +15,9 @@
         <result column="sys_brokerages_status_id" property="sysBrokeragesStatusId" />
         <result column="sys_brokerages_status_code" property="sysBrokeragesStatusCode" />
         <result column="sys_brokerages_status_name" property="sysBrokeragesStatusName" />
+        <result column="Alipay_name" property="alipayName" />
+        <result column="Alipay_account" property="alipayAccount" />
+        <result column="Alipay_url" property="alipayUrl" />
     </resultMap>
 
 </mapper>

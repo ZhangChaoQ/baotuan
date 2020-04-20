@@ -14,9 +14,7 @@
         <result column="pay_status_code" property="payStatusCode" />
         <result column="pay_status_name" property="payStatusName" />
         <result column="code" property="code" />
-        <result column="Alipay_name" property="alipayName" />
-        <result column="Alipay_account" property="alipayAccount" />
-        <result column="Alipay_url" property="alipayUrl" />
+        <result column="name" property="name" />
     </resultMap>
 
 </mapper>
