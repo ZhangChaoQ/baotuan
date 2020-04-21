@@ -224,7 +224,9 @@ public class UserController {
     @RequestMapping("/loginByPhone")
     public Result loginByPhone(HttpServletRequest request) {
         String phone = request.getParameter("phone");
-        ViewUser user = viewUserService.userLoginByPhone(phone);
+        String password = request.getParameter("password");
+        int userId = userService.uploadPasswordByPhone(phone, password);
+        ViewUser user = viewUserService.getViewUserById(userId);
         Result result = new Result();
         if (null != user) {
             if (!user.getEnabled()) {

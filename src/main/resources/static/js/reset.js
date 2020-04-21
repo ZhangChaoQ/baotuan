@@ -34,7 +34,7 @@ $(function () {
             const data = new Object();
             data.phone = phone;
             call('/baotuan/sendMsg/sendmsg', data, function (res) {
-                mailcode = rest.data.data.code;
+                mailcode = res.data.data.code;
             })
         }
     });
@@ -42,11 +42,13 @@ $(function () {
 
 function Login() {
     const phone = $("#phone").val()
-    const code = $("#password").val()
+    const code = $("#code").val()
+    const password = $("#password").val()
     const data = new Object();
     data.phone = phone;
+    data.password = password;
     if (checkPhone(phone)) {
-        if (mailcode.equals(code)) {
+        if (mailcode == code) {
             call('/baotuan/user/loginByPhone', data, function (res) {
                 alert(JSON.stringify(res.data));
                 if (res.code) {

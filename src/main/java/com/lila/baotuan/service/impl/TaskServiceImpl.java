@@ -67,7 +67,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements IT
      * 获取所有任务
      * */
     public Page<Task> getTaskList(int page, int limit) {
-        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<Task>().ne("surplus", 0));
+        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<Task>().ne("surplus", 0).eq("enabled",1));
     }
 
     public int updateEnabled(int id) {

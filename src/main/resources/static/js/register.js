@@ -1,10 +1,33 @@
+var mailcode = '';
+$(function () {
+    $("#verCodeBtn").click(function () {
+        const phone = $("#phone").val()
+        if (checkPhone(phone)) {
+            const data = new Object();
+            data.phone = phone;
+            call('/baotuan/sendMsg/sendmsg', data, function (res) {
+                mailcode = res.data.data.code;
+            })
+        }
+    });
+})
+
 function Login() {
     const phone = $("#phone").val();
     const data = new Object();
+    const co = $("#code").val();
     data.phone = phone;
     data.password = $("#password").val();
     data.inviteCode = $("#inviteCode").val();
     if (checkPhone(phone)) {
+        if (mailcode == '') {
+            alert('请输入验证码');
+            return;
+        }
+        if (mailcode != co) {
+            alert('验证码错误');
+            return;
+        }
         call('/baotuan/user/addUser', data, function (res) {
             if (res.code) {
                 localStorage.setItem("memberId", res.data.memberId);

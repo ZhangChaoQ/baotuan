@@ -2,10 +2,10 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.User;
 import com.lila.baotuan.mapper.UserMapper;
 import com.lila.baotuan.service.IUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
@@ -150,5 +150,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public boolean getUserEnabled(int id) {
         return baseMapper.selectOne(new QueryWrapper<User>().eq("id", id)).getEnabled();
+    }
+
+    public int uploadPasswordByPhone(String phone, String password) {
+        User user = getUserByPhone(phone);
+        baseMapper.update(user, new UpdateWrapper<User>().set("password", MD5Util.MD5Encode(password, "UTF-8")));
+        return user.getId();
+    }
+
+    private User getUserByPhone(String phone) {
+        return baseMapper.selectOne(new QueryWrapper<User>().eq("phone", phone));
     }
 }

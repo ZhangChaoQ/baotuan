@@ -1,25 +1,16 @@
 package com.lila.baotuan.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.lila.baotuan.entity.Result;
-import com.lila.baotuan.entity.UploadFile;
 import com.lila.baotuan.service.impl.UploadFileServiceImpl;
-import com.lila.baotuan.utils.ServiceUtil;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -54,9 +45,8 @@ public class UploadFileController {
         //重新生成文件名
         fileName = UUID.randomUUID() + suffixName;
         //添加日期目录
-        String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //指定本地文件夹存储图片
-        String refilePath = filePath + format + "/";
+        String refilePath = filePath + "/";
         File file = new File(refilePath, fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -66,7 +56,7 @@ public class UploadFileController {
             //将图片保存到static文件夹里
             file.createNewFile();
             uploadFile.transferTo(new File(filePath + fileName));
-            String url = realPath + format + "/" + fileName;
+            String url = realPath + fileName;
             result = this.uploadFile(url, name, size);
         } catch (Exception e) {
             e.printStackTrace();
