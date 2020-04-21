@@ -39,6 +39,11 @@ public class Notice extends Model<Notice> {
      */
     private LocalDateTime createtime;
 
+    /**
+     * 发布状态
+     */
+    private Boolean enabled;
+
 
     public Integer getId() {
         return id;
@@ -72,6 +77,14 @@ public class Notice extends Model<Notice> {
         this.createtime = createtime;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -84,6 +97,7 @@ public class Notice extends Model<Notice> {
         ", title=" + title +
         ", context=" + context +
         ", createtime=" + createtime +
+        ", enabled=" + enabled +
         "}";
     }
 }

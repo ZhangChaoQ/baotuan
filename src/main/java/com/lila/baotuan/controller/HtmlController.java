@@ -45,10 +45,13 @@ public class HtmlController {
         return "user-sysBrokerages";
     }
 
-    @RequestMapping("/sysUser")
+    @RequestMapping("/sys-user")
     public String sysUser() {
-        return "sysUser";
+        return "sys-user";
     }
+
+    @RequestMapping("/sys-notice")
+    public String sysNotice() { return "sys-notice"; }
 
     @RequestMapping("/main-user")
     public String main() {

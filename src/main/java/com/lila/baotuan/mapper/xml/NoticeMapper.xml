@@ -8,6 +8,7 @@
         <result column="title" property="title" />
         <result column="context" property="context" />
         <result column="createtime" property="createtime" />
+        <result column="enabled" property="enabled" />
     </resultMap>
 
 </mapper>

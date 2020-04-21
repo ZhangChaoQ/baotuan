@@ -14,11 +14,11 @@
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="main-user">控制台</a></li>
             //用户、收益、转账图表
-            <li class="layui-nav-item  layui-this"><a href="task">任务管理</a></li>
+            <li class="layui-nav-item"><a href="task">任务管理</a></li>
             //任务发布
             <li class="layui-nav-item"><a href="user-list">用户管理</a></li>
             //用户禁用、转账
-            <li class="layui-nav-item"><a href="sys-user">系统管理</a></li>
+            <li class="layui-nav-item layui-this"><a href="sys-user">系统管理</a></li>
             //管理员、权限
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -35,7 +35,8 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-this"><a href="task">任务大厅</a></li>
+                <li class="layui-nav-item"><a href="sys-user">用户管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="sys-notice">公告管理</a></li>
             </ul>
         </div>
     </div>
@@ -43,22 +44,15 @@
     <div class="layui-body">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm" lay-event="showOne">发布任务</button>
+                <button class="layui-btn layui-btn-sm" lay-event="showOne">发布公共</button>
             </div>
         </script>
         <!-- 内容主体区域 -->
-        <table class="layui-table" lay-filter="table-task" id="table-task"></table>
+        <table class="layui-table" lay-filter="table-notice" id="table-notice"></table>
 
     </div>
     <div id="add-div" lay-filter="add-div" style="display: none;">
         <form lay-filter="add-task" class="layui-form" id="add-task" style="padding-top: 20px">
-            <div class="layui-form-item  layui-col-xs11">
-                <label class="layui-form-label">类型</label>
-                <div class="layui-input-block">
-                    <select name="taskType" id="taskType" lay-filter="taskType">
-                    </select>
-                </div>
-            </div>
             <div class="layui-form-item  layui-col-xs11">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
@@ -69,31 +63,9 @@
             <div class="layui-form-item  layui-col-xs11">
                 <label class="layui-form-label">内容</label>
                 <div class="layui-input-block">
-                    <input type="text" name="context" id="context" lay-verify="context" autocomplete="off"
-                           placeholder="内容"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item  layui-col-xs11">
-                <label class="layui-form-label">地址</label>
-                <div class="layui-input-block">
-                    <input type="text" name="url" id="url" lay-verify="context" autocomplete="off" placeholder="地址"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item layui-col-xs11 ">
-                <label class="layui-form-label">数量</label>
-                <div class="layui-input-block">
-                    <input type="number" name="number" id="number" lay-verify="number" autocomplete="off"
-                           placeholder="数量"
-                           class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item layui-col-xs11">
-                <label class="layui-form-label">金额</label>
-                <div class="layui-input-block">
-                    <input type="number" name="money" id="money" lay-verify="money" autocomplete="off" placeholder="金额"
-                           class="layui-input">
+                    <textarea type="text" name="context" id="context" lay-verify="context" autocomplete="off"
+                              placeholder="内容"
+                              class="layui-input"></textarea>
                 </div>
             </div>
         </form>
@@ -115,8 +87,8 @@
         }
 
         table.render({
-            elem: "#table-task",
-            url: "baotuan/viewTask/getViewTaskList",
+            elem: "#table-notice",
+            url: "baotuan/notice/getPageNoticeList",
             method: "POST",
             data: {
                 page: 1,
@@ -138,17 +110,6 @@
                 }, {
                     field: "context",
                     title: "内容"
-                }, {
-                    field: "surplus",
-                    title: "剩余数量"
-                }, {
-                    field: "number",
-                    sort: true,
-                    title: "任务数量"
-                }, {
-                    field: "money",
-                    sort: true,
-                    title: "任务奖励(元)"
                 }, {
                     field: "enabled",
                     sort: true,
@@ -181,12 +142,12 @@
                 return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
             }
         })
-        table.on('toolbar(table-task)', function (obj) {
+        table.on('toolbar(table-notice)', function (obj) {
             if (obj.event === 'showOne') {
                 showOne();
             }
         });
-        table.on('tool(table-task)', function (obj) {
+        table.on('tool(table-notice)', function (obj) {
             var data = obj.data;
             if (obj.event === 'delete') {
                 del(data);
@@ -198,45 +159,29 @@
 
             }
         });
-        getTaskType();
     });
 
-    function getTaskType() {
-        $.ajax({
-            url: 'baotuan/taskType/getTaskTypeList',
-            method: 'POST',
-            success: function (res) {
-                $.each(res.data, function (index, item) {
-                    $('#taskType').append(new Option(item.name, item.id));// 下拉菜单里添加元素
-                });
-                form.render("select");
-            }
-        })
-    }
 
     function showOne() {
         layer.open({
             type: 1,
             content: $('#add-div'),
             area: ['500px', '500px'],
-            title: "添加任务",
+            title: "发布公告",
             btn: ['确认', '取消'],
             btnAlign: "c",
             yes: function (index, layero) {
                 $.ajax({
-                    url: 'baotuan/task/addTask',
+                    url: 'baotuan/notice/insertNotice',
                     method: "POST",
                     data: {
-                        url: $("#url").val(),
-                        number: $("#number").val(),
-                        money: $("#money").val(),
                         title: $("#title").val(),
                         context: $("#context").val(),
                     },
                     success: function (res) {
                         if (res.code) {
                             layer.close(index)
-                            table.reload("table-task");
+                            table.reload("table-notice");
                             $("#add-task")[0].reset();
                         }
                     }
@@ -260,12 +205,12 @@
             btn: ['确认', '取消'], //可以无限个按钮
             yes: function (index, layero) {
                 $.ajax({
-                    url: 'baotuan/task/deleteTask',
+                    url: 'baotuan/notice/deleteNotice',
                     method: 'POST',
                     data: {id: data.id},
                     success: function (res) {
                         layer.msg(res.msg)
-                        table.reload("table-task");
+                        table.reload("table-notice");
                     }
                 })
                 layer.close(index);
@@ -274,27 +219,21 @@
     }
 
     function update(data) {
-        $("#url").val(data.url);
-        $("#number").val(data.number);
-        $("#money").val(data.money);
         $("#title").val(data.title);
         $("#context").val(data.context);
         layer.open({
             type: 1,
             content: $('#add-div'),
             area: ['500px', '500px'],
-            title: "修改任务",
+            title: "修改公告",
             btn: ['确认', '取消'],
             btnAlign: "c",
             yes: function (index, layero) {
                 $.ajax({
-                    url: 'baotuan/task/updateTask',
+                    url: 'baotuan/notice/updateNotice',
                     method: "POST",
                     data: {
                         id: data.id,
-                        url: $("#url").val(),
-                        number: $("#number").val(),
-                        money: $("#money").val(),
                         title: $("#title").val(),
                         context: $("#context").val(),
                     },
@@ -302,7 +241,7 @@
                         layer.msg(res.msg);
                         if (res.code) {
                             layer.close(index)
-                            table.reload("table-task");
+                            table.reload("table-notice");
                             $("#add-task")[0].reset();
                         }
                     }
@@ -326,12 +265,12 @@
             btn: ['确认', '取消'], //可以无限个按钮
             yes: function (index, layero) {
                 $.ajax({
-                    url: 'baotuan/task/updateEnabled',
+                    url: 'baotuan/notice/updateEnabled',
                     method: 'POST',
                     data: {id: data.id},
                     success: function (res) {
                         layer.msg(res.msg)
-                        table.reload("table-task");
+                        table.reload("table-notice");
                     }
                 })
                 layer.close(index);
