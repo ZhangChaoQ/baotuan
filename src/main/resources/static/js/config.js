@@ -1,7 +1,7 @@
 var app = new Object();
 //app.host = "http://192.168.0.121:8088";
 app.host = "http://119.8.37.167:8088";
-app.host = "http://192.168.0.108:8088"
+//app.host = "http://192.168.0.108:8088"
 app.filePath = "http://119.8.37.167";
 
 //app.host = "http://192.168.31.46:8088";

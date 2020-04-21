@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 21/04/2020 16:43:58
+ Date: 21/04/2020 19:20:42
 */
 
 SET NAMES utf8mb4;
@@ -81,10 +81,11 @@ DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '公告id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `context` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `context` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `enabled` tinyint(1) NULL DEFAULT 0 COMMENT '发布状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for pay_status
