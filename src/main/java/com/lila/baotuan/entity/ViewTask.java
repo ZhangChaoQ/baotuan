@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-20
+ * @since 2020-04-21
  */
 public class ViewTask extends Model<ViewTask> {
 
@@ -70,6 +70,11 @@ public class ViewTask extends Model<ViewTask> {
      * 任务类型名称
      */
     private String taskTypeName;
+
+    /**
+     * 任务发布状态
+     */
+    private Boolean enabled;
 
 
     public Integer getId() {
@@ -160,6 +165,14 @@ public class ViewTask extends Model<ViewTask> {
         this.taskTypeName = taskTypeName;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -179,6 +192,7 @@ public class ViewTask extends Model<ViewTask> {
         ", createtime=" + createtime +
         ", taskTypeCode=" + taskTypeCode +
         ", taskTypeName=" + taskTypeName +
+        ", enabled=" + enabled +
         "}";
     }
 }

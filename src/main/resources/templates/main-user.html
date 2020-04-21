@@ -48,8 +48,17 @@
 <script src="layui/layui.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
-    layui.use(['jquery', 'element', 'table'], function () {
-        const table = layui.table;
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
+        table = layui.table;
+        $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-user",
             url: "baotuan/viewUser/getViewUserList",
@@ -58,7 +67,7 @@
                 page: 1,
                 limit: 10
             },
-            dataType:"application/json",
+            dataType: "application/json",
             height: 500,
             page: true,
             cols: [[
@@ -92,5 +101,6 @@
         })
     });
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

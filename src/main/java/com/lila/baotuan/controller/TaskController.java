@@ -2,20 +2,13 @@ package com.lila.baotuan.controller;
 
 
 import com.lila.baotuan.entity.Result;
-import com.lila.baotuan.entity.Task;
 import com.lila.baotuan.service.impl.TaskServiceImpl;
-import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -32,6 +25,44 @@ public class TaskController {
 
     @Resource
     private TaskServiceImpl taskService;
+
+
+    @RequestMapping("/updateTask")
+    @ResponseBody
+    public Result updateTask(HttpServletRequest request) {
+        int id=Integer.valueOf(request.getParameter("id"));
+        int number = Integer.valueOf(request.getParameter("number"));
+        String title = request.getParameter("title");
+        String context = request.getParameter("context");
+        String url = request.getParameter("url");
+        double money = Double.parseDouble(request.getParameter("money"));
+        Result result = new Result();
+        result.setMsg("修改成功");
+        result.setData(taskService.updateTask(id,number,title,context,url,money));
+        result.setCode(true);
+        return result;
+    }
+    @RequestMapping("/deleteTask")
+    @ResponseBody
+    public Result deleteTask(HttpServletRequest request) {
+        int id=Integer.valueOf(request.getParameter("id"));
+        Result result = new Result();
+        result.setMsg("删除成功");
+        result.setData(taskService.deleteTask(id));
+        result.setCode(true);
+        return result;
+    }
+
+    @RequestMapping("/updateEnabled")
+    @ResponseBody
+    public Result updateEnabled(HttpServletRequest request) {
+        int id=Integer.valueOf(request.getParameter("id"));
+        Result result = new Result();
+        result.setMsg("发布成功");
+        result.setData(taskService.updateEnabled(id));
+        result.setCode(true);
+        return result;
+    }
 
     @RequestMapping("/taskList")
     @ResponseBody

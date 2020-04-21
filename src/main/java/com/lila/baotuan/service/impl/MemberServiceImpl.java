@@ -30,8 +30,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return baseMapper.selectList(new QueryWrapper<Member>().ne("id", 1));
     }
 
-    public int getMemberIdByPrice(int price) {
-        System.out.println(price);
-        return baseMapper.selectOne(new QueryWrapper<Member>().eq("money", price)).getId();
+    public Member getMemberIdByPrice(int price) {
+        return baseMapper.selectOne(new QueryWrapper<Member>().eq("money", price));
     }
 }

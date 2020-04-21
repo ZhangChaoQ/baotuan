@@ -26,6 +26,7 @@ function getList() {
 }
 
 var typeName = ['', '提款记录', '任务奖励', '分佣奖励', '邀请奖励']
+var payStatusMame = ['', '支付成功', '申請驳回', '等待审核']
 
 function bindList() {
     $("#list").empty();
@@ -36,10 +37,10 @@ function bindList() {
             "		<label >" + typeName[index] + "</label><br>" +
             "		<label class='time'>" + new Date(DateTimeFormatter(List[i].createtime)).Format("yyyy-MM-dd") + "</label>" +
             "	</div>" +
-            "	<div class = 'title' >" +
-            "   	<label class='money'>" + List[i].money + "</label>" +
-            "   	<label class='status'>" + List[i].money + "</label>" +
-            "	</div>" +
+            "	<div class = 'status' >" +
+            "   	<label class='money " + (index == 1 ? 'red' : '') + "'>" + (index == 1 ? '-' : '+') + List[i].money + "</label><br>";
+        if (index == 1) html += "   	<label class='status'>" + payStatusMame[List[i].brokerageStatusId] + "</label>";
+        html += "	</div>" +
             "</div>";
         $("#list").append(html)
     }

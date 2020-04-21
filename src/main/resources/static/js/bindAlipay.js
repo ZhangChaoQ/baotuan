@@ -1,5 +1,5 @@
 $(function () {
-    if (localStorage.getItem("alipayUrl") != null) {
+    if (localStorage.getItem("alipayUrl") != "null") {
         $("#alipayName").val(localStorage.getItem("alipayName"));
         $("#alipayAccount").val(localStorage.getItem("alipayAccount"));
         $("#upload-img").html("<img src='" + app.filePath + localStorage.getItem("alipayUrl") + "' ></img>")
@@ -26,9 +26,11 @@ function bindAlipay() {
         data.alipayAccount = $("#alipayAccount").val();
         call('/baotuan/user/bindAlipay', data, function (res) {
             alert(res.msg);
-            setTimeout(function () {
-                self.location = document.referrer;
-            }, 1000)
+            if (res.code) {
+                setTimeout(function () {
+                    self.location = document.referrer;
+                }, 1000)
+            }
         })
     })
 }

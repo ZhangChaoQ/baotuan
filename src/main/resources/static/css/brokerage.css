@@ -1,36 +1,52 @@
 .top-nav {
-	top: 2.5rem;
-	height: 2.2rem;
+    top: 2.5rem;
+    height: 2.2rem;
 }
-.this{
-	color: #01A298;
+
+.this {
+    color: #01A298;
 }
+
 .this:after {
-	content: "";
-	width: 4.625rem;
-	height: 2px;
-	background-color: #01A298;
-	position: relative;
-	display: block;
-	margin: 0 auto;
-	top: 5px;
-	border-radius: 3px;
+    content: "";
+    width: 4.625rem;
+    height: 2px;
+    background-color: #01A298;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    top: 5px;
+    border-radius: 3px;
 }
-.list{
-	margin-top: 5rem;
+
+.list {
+    margin-top: 5rem;
 }
-.bt-card{
-	height: 2rem;
-	font-size: 0.75rem;
+
+.bt-card {
+    height: 2rem;
+    font-size: 0.75rem;
 }
-.title{
-float: left;	
+
+.title {
+    float: left;
 }
-.money{
-	float: right;
-	line-height: 1.625rem;
-	color: #01A298;
+
+.money {
+    float: right;
+    line-height: 1.625rem;
+    color: #01A298;
 }
-.time{
-	color: #CCCCCC;
+
+.time {
+    color: #CCCCCC;
+}
+
+.status {
+    float: right;
+}
+
+.red {
+    color: #EE441D;
+	line-height: 1rem;
 }

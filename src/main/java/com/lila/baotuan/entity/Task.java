@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-20
+ * @since 2020-04-21
  */
 public class Task extends Model<Task> {
 
@@ -63,6 +63,11 @@ public class Task extends Model<Task> {
      * 发布时间
      */
     private LocalDateTime createtime;
+
+    /**
+     * 任务发布状态
+     */
+    private Boolean enabled;
 
 
     public Integer getId() {
@@ -137,6 +142,14 @@ public class Task extends Model<Task> {
         this.createtime = createtime;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -154,6 +167,7 @@ public class Task extends Model<Task> {
         ", url=" + url +
         ", taskTypeId=" + taskTypeId +
         ", createtime=" + createtime +
+        ", enabled=" + enabled +
         "}";
     }
 }

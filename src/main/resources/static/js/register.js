@@ -14,7 +14,7 @@ function Login() {
                 localStorage.setItem("memberName", res.data.memberName);
                 localStorage.setItem("inviterCode", res.data.inviterCode);
                 localStorage.setItem("inviteCode", res.data.inviteCode);
-                location.href = "task.html";
+                navicatTo("task")
             } else {
                 alert(res.msg)
             }

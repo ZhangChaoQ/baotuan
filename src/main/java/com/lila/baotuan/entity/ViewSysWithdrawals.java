@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-20
+ * @since 2020-04-21
  */
 public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
 
@@ -70,6 +70,11 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
      * 用户姓名
      */
     private String name;
+
+    /**
+     * 电话/登录账号
+     */
+    private String phone;
 
 
     public Integer getId() {
@@ -160,6 +165,14 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
         this.name = name;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -179,6 +192,7 @@ public class ViewSysWithdrawals extends Model<ViewSysWithdrawals> {
         ", payStatusName=" + payStatusName +
         ", code=" + code +
         ", name=" + name +
+        ", phone=" + phone +
         "}";
     }
 }

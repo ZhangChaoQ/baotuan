@@ -27,7 +27,7 @@
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
     </div>
 
@@ -102,13 +102,18 @@
 </div>
 <script src="layui/layui.js"></script>
 <script th:inline="none">
-    var element, table, layer, $, form;
-    layui.use(['element', 'table', 'layer', 'jquery', 'form'], function () {
-        element = layui.element;
+    var $, table, layer,form;
+    layui.use(['jquery', 'element', 'table','layer','form'], function () {
         table = layui.table;
+        $ = layui.jquery;
         layer = layui.layer;
         form = layui.form;
-        $ = layui.jquery;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-task",
             url: "baotuan/viewTask/getViewTaskList",
@@ -145,11 +150,30 @@
                     sort: true,
                     title: "任务奖励(元)"
                 }, {
+                    field: "enabled",
+                    sort: true,
+                    title: "发布状态",
+                    templet: function (op) {
+                        return op.enabled ? "已发布" : "未发布";
+                    }
+                }, {
                     field: "createtime",
                     title: "发布时间",
                     sort: true,
                     templet: function (op) {
                         return op.createtime.replace("T", " ");
+                    }
+                }, {
+                    fixed: 'right',
+                    title: '操作',
+                    templet: function (op) {
+                        if (!op.enabled) {
+                            return "<a class='layui-btn layui-btn-xs' lay-event='enabled' onclick='enabled(" + op.id + ")'>发布</a>" +
+                                "<a class='layui-btn layui-btn-xs' lay-event='update' onclick='enable(" + op.id + ")'>修改</a>" +
+                                "<a class='layui-btn layui-btn-xs' lay-event='delete' onclick='enable(" + op.id + ")'>删除</a>";
+                        } else {
+                            return "";
+                        }
                     }
                 }
             ]],
@@ -160,6 +184,18 @@
         table.on('toolbar(table-task)', function (obj) {
             if (obj.event === 'showOne') {
                 showOne();
+            }
+        });
+        table.on('tool(table-task)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'delete') {
+                del(data);
+            } else if (obj.event === 'update') {
+                update(data);
+            } else if (obj.event === 'enabled') {
+                enabled(data);
+            } else {
+
             }
         });
         getTaskType();
@@ -184,7 +220,7 @@
             content: $('#add-div'),
             area: ['500px', '500px'],
             title: "添加任务",
-            btn: ['发布', '取消'],
+            btn: ['确认', '取消'],
             btnAlign: "c",
             yes: function (index, layero) {
                 $.ajax({
@@ -217,6 +253,92 @@
 
         })
     }
+
+    function del(data) {
+        layer.confirm('刪除后不可恢复，是否删除？', {
+            title: "确认删除",
+            btn: ['确认', '取消'], //可以无限个按钮
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/task/deleteTask',
+                    method: 'POST',
+                    data: {id: data.id},
+                    success: function (res) {
+                        layer.msg(res.msg)
+                        table.reload("table-task");
+                    }
+                })
+                layer.close(index);
+            }
+        });
+    }
+
+    function update(data) {
+        $("#url").val(data.url);
+        $("#number").val(data.number);
+        $("#money").val(data.money);
+        $("#title").val(data.title);
+        $("#context").val(data.context);
+        layer.open({
+            type: 1,
+            content: $('#add-div'),
+            area: ['500px', '500px'],
+            title: "修改任务",
+            btn: ['确认', '取消'],
+            btnAlign: "c",
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/task/updateTask',
+                    method: "POST",
+                    data: {
+                        id: data.id,
+                        url: $("#url").val(),
+                        number: $("#number").val(),
+                        money: $("#money").val(),
+                        title: $("#title").val(),
+                        context: $("#context").val(),
+                    },
+                    success: function (res) {
+                        layer.msg(res.msg);
+                        if (res.code) {
+                            layer.close(index)
+                            table.reload("table-task");
+                            $("#add-task")[0].reset();
+                        }
+                    }
+                })
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+                return false;
+            },
+            cancel: function (index, layero) {
+                layer.close(index)
+                return false;
+            }
+
+        })
+    }
+
+    function enabled(data) {
+        layer.confirm('发布后不可修改、删除，是否确认发布？', {
+            title: "确认发布",
+            btn: ['确认', '取消'], //可以无限个按钮
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/task/updateEnabled',
+                    method: 'POST',
+                    data: {id: data.id},
+                    success: function (res) {
+                        layer.msg(res.msg)
+                        table.reload("table-task");
+                    }
+                })
+                layer.close(index);
+            }
+        });
+    }
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

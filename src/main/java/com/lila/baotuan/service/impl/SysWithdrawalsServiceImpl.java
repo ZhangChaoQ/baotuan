@@ -1,11 +1,10 @@
 package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.SysWithdrawals;
 import com.lila.baotuan.mapper.SysWithdrawalsMapper;
 import com.lila.baotuan.service.ISysWithdrawalsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,14 +21,6 @@ import java.time.LocalDateTime;
 public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper, SysWithdrawals> implements ISysWithdrawalsService {
 
     /*
-     * 完成转款
-     * */
-    public int updatePayStatus(int id) {
-        SysWithdrawals sysWithdrawals = getSysWithdrawalsById(id);
-        return baseMapper.update(sysWithdrawals, new UpdateWrapper<SysWithdrawals>().set("pay_status_id", 1).eq("id",sysWithdrawals.getId()));
-    }
-
-    /*
      * 根据id 获取转款信息
      * */
     public SysWithdrawals getSysWithdrawalsById(int id) {
@@ -39,10 +30,10 @@ public class SysWithdrawalsServiceImpl extends ServiceImpl<SysWithdrawalsMapper,
     /*
      * 添加转款信息
      * */
-    public int insertSysWithdrawals(int userId, double money,boolean flag) {
+    public int insertSysWithdrawals(int userId, double money, boolean flag) {
         SysWithdrawals sysWithdrawals = new SysWithdrawals();
         sysWithdrawals.setUserId(userId);
-        sysWithdrawals.setPayStatusId(0);
+        sysWithdrawals.setPayStatusId(2);
         sysWithdrawals.setMoney(money);
         sysWithdrawals.setPayMoney(money);
         sysWithdrawals.setCreatetime(LocalDateTime.now());

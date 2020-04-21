@@ -15,6 +15,7 @@
         <result column="createtime" property="createtime" />
         <result column="task_type_code" property="taskTypeCode" />
         <result column="task_type_name" property="taskTypeName" />
+        <result column="enabled" property="enabled" />
     </resultMap>
 
 </mapper>

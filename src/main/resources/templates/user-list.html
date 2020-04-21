@@ -23,7 +23,7 @@
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
     </div>
 
@@ -50,10 +50,17 @@
 <script src="layui/layui.all.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
-    var table, $, element;
-    layui.use(['jquery', 'element', 'table'], function () {
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
         table = layui.table;
         $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-user",
             url: "baotuan/viewUser/getViewUserList",
@@ -139,5 +146,6 @@
         })
     }
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

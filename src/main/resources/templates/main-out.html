@@ -52,8 +52,17 @@
 <script src="layui/layui.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
-    layui.use(['jquery', 'element', 'table'], function () {
-        const table = layui.table;
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
+        table = layui.table;
+        $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-user",
             url: "baotuan/viewSysWithdrawals/getViewSysWithdrawalsByOut",
@@ -69,14 +78,14 @@
                 {
                     field: "userId",
                     sort: true,
-                    title: "购买人ID"
+                    title: "提现人ID"
                 }, {
                     field: "code",
                     sort: true,
-                    title: "购买人编码"
+                    title: "提现人编码"
                 }, {
                     field: "phone",
-                    title: "购买人电话"
+                    title: "提现人电话"
                 }, {
                     field: "money",
                     sort: true,
@@ -100,5 +109,6 @@
         })
     });
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

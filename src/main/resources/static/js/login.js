@@ -43,8 +43,8 @@ function Login() {
             localStorage.setItem("inviterCode", res.data.inviterCode);
             localStorage.setItem("alipayAccount", res.data.alipayAccount);
             localStorage.setItem("alipayName", res.data.alipayName);
-            localStorage.setItem("inviteCode", res.data.inviteCode);
             localStorage.setItem("alipayUrl", res.data.url);
+            localStorage.setItem("inviteCode", res.data.inviteCode);
             navicatTo("task");
         } else {
             alert(res.msg)

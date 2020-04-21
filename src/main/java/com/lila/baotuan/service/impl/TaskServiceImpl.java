@@ -3,14 +3,13 @@ package com.lila.baotuan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.Task;
 import com.lila.baotuan.mapper.TaskMapper;
 import com.lila.baotuan.service.ITaskService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>
@@ -69,5 +68,19 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements IT
      * */
     public Page<Task> getTaskList(int page, int limit) {
         return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<Task>().ne("surplus", 0));
+    }
+
+    public int updateEnabled(int id) {
+        Task task = getTaskById(id);
+        return baseMapper.update(task, new UpdateWrapper<Task>().set("enabled", true).eq("id", id));
+    }
+
+    public int deleteTask(int id) {
+        return baseMapper.deleteById(id);
+    }
+
+    public int updateTask(int id, int number, String title, String context, String url, double money) {
+        Task task = getTaskById(id);
+        return baseMapper.update(task, new UpdateWrapper<Task>().set("number", number).set("title", title).set("context", context).set("url", url).set("money", money).eq("id", id));
     }
 }

@@ -33,6 +33,9 @@ function getUserInfo() {
         $("#name").html('用户名：' + res.data.name);
         $("#surplus").html(res.data.money);
         localStorage.setItem("surplus", res.data.money)
+        localStorage.setItem("alipayAccount", res.data.alipayAccount);
+        localStorage.setItem("alipayName", res.data.alipayName);
+        localStorage.setItem("alipayUrl", res.data.url);
     })
 }
 

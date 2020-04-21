@@ -15,6 +15,7 @@
         <result column="pay_status_name" property="payStatusName" />
         <result column="code" property="code" />
         <result column="name" property="name" />
+        <result column="phone" property="phone" />
     </resultMap>
 
 </mapper>

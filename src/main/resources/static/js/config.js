@@ -1,7 +1,7 @@
 var app = new Object();
 //app.host = "http://192.168.0.121:8088";
 app.host = "http://119.8.37.167:8088";
-app.host="http://192.168.0.108:8088"
+app.host = "http://192.168.0.108:8088"
 app.filePath = "http://119.8.37.167";
 
 //app.host = "http://192.168.31.46:8088";
@@ -80,8 +80,19 @@ $(function () {
         }
     })
     $(".back").click(function () {
-        self.location=document.referrer;
+        self.location = document.referrer;
     })
+    var lo = location.href;
+    if ((lo.indexOf("index") == -1 && lo.indexOf("rest") == -1 && lo.indexOf("register") == -1) && (localStorage.getItem("userId") == "undefined" || localStorage.getItem("userId") == null)) {
+        navicatTo("index");
+    } else {
+        var data = new Object();
+        data.id = localStorage.getItem("userId");
+        call('/baotuan/user/isenabled', data, function (res) {
+            if (res.data) navicatTo("task");
+            else navicatTo("index");
+        })
+    }
 })
 
 function navicatTo(url) {

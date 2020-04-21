@@ -36,9 +36,18 @@ public class UserController {
     @Resource
     private UserTaskController userTaskController;
     @Resource
-    private SysWithdrawalsServiceImpl sysWithdrawalsService;
-    @Resource
     private SysBrokeragesServiceImpl sysBrokeragesService;
+
+    @RequestMapping("/isEnabled")
+    public Result isenabled(HttpServletRequest request) {
+        int id = Integer.valueOf(request.getParameter("id"));
+        Result result = new Result();
+        result.setMsg("");
+        result.setCode(true);
+        result.setData(userService.getUserEnabled(id));
+        return result;
+    }
+
 
     /*
      * 禁用账号
@@ -154,25 +163,6 @@ public class UserController {
     }
 
     /*
-     * 成为会员
-     * */
-    @RequestMapping("/toMember")
-    public int toMember(HttpServletRequest request) {
-        int id = Integer.valueOf(request.getParameter("id"));
-        int memberId = Integer.valueOf(request.getParameter("memberId"));
-        ViewUser viewUser = viewUserService.getViewUserById(id);
-        ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
-        int result = userService.updateMember(id, memberId);
-
-        userService.updateMoney(viewUser.getUserId(), viewUser.getInviterMemberMoney() * 0.2);
-        brokerageService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
-
-        userService.updateMoney(inviter.getUserId(), inviter.getInviterMemberMoney() * 0.05);
-        brokerageService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
-        return result;
-    }
-
-    /*
      * 用戶注冊
      * */
     @RequestMapping("/addUser")
@@ -211,9 +201,15 @@ public class UserController {
         ViewUser user = viewUserService.userLogin(phone, password);
         Result result = new Result();
         if (null != user) {
-            result.setCode(true);
-            result.setData(user);
-            result.setMsg("登录成功");
+            if (!user.getEnabled()) {
+                result.setCode(false);
+                result.setData(null);
+                result.setMsg("登录失败，该账号已禁用，请联系管理员");
+            } else {
+                result.setCode(true);
+                result.setData(user);
+                result.setMsg("登录成功");
+            }
         } else {
             result.setCode(false);
             result.setData(null);
@@ -231,9 +227,15 @@ public class UserController {
         ViewUser user = viewUserService.userLoginByPhone(phone);
         Result result = new Result();
         if (null != user) {
-            result.setCode(true);
-            result.setData(user);
-            result.setMsg("登录成功");
+            if (!user.getEnabled()) {
+                result.setCode(false);
+                result.setData(null);
+                result.setMsg("登录失败，该账号已禁用，请联系管理员");
+            } else {
+                result.setCode(true);
+                result.setData(user);
+                result.setMsg("登录成功");
+            }
         } else {
             result.setCode(false);
             result.setData(null);
@@ -247,14 +249,20 @@ public class UserController {
      * */
     @RequestMapping("/bindAlipay")
     public Result bindAlipay(HttpServletRequest request) {
+        Result result = new Result();
         String alipayAccount = request.getParameter("alipayAccount");
         String alipayName = request.getParameter("alipayName");
         int alipayUrl = Integer.valueOf(request.getParameter("alipayUrl"));
         int id = Integer.valueOf(request.getParameter("id"));
-        Result result = new Result();
-        result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
-        result.setMsg("支付宝绑定成功");
-        result.setCode(true);
+        if (userService.getAliPayCount(alipayAccount, alipayName)) {
+            result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
+            result.setMsg("支付宝绑定成功");
+            result.setCode(true);
+        } else {
+            result.setData(null);
+            result.setMsg("该支付宝账号已绑定，请更换账号");
+            result.setCode(true);
+        }
         return result;
     }
 

@@ -28,7 +28,7 @@ function bindList() {
         let html =
             "<div class='bt-card'>" +
             "	<div class = 'title' >" +
-            "		<label >" + List[i].code + "< /label><br>" +
+            "		<label >" + List[i].code + "</label><br>" +
             "		<label>" + format(List[i].phone) + "</label>&nbsp;&nbsp;&nbsp;&nbsp;" +
             "		<label class='time'>" + DateTimeFormatter(List[i].createtime) + "</label>" +
             "	</div>" +

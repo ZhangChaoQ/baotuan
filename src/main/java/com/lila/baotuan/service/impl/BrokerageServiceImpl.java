@@ -3,15 +3,13 @@ package com.lila.baotuan.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.Brokerage;
-import com.lila.baotuan.entity.SysBrokerages;
 import com.lila.baotuan.mapper.BrokerageMapper;
 import com.lila.baotuan.service.IBrokerageService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>
@@ -42,7 +40,7 @@ public class BrokerageServiceImpl extends ServiceImpl<BrokerageMapper, Brokerage
         Brokerage.setMoney(money);
         Brokerage.setCreatetime(LocalDateTime.now());
         Brokerage.setBrokerageTypeId(1);
-        Brokerage.setBrokerageStatusId(1);
+        Brokerage.setBrokerageStatusId(3);
         baseMapper.insert(Brokerage);
         return Brokerage.getId();
 
@@ -56,8 +54,8 @@ public class BrokerageServiceImpl extends ServiceImpl<BrokerageMapper, Brokerage
         Brokerage.setUserId(id);
         Brokerage.setMoney(money);
         Brokerage.setCreatetime(LocalDateTime.now());
-        Brokerage.setBrokerageTypeId(2);
-        Brokerage.setBrokerageStatusId(2);
+        Brokerage.setBrokerageTypeId(3);
+        Brokerage.setBrokerageStatusId(1);
         baseMapper.insert(Brokerage);
         return Brokerage.getId();
     }
@@ -70,8 +68,8 @@ public class BrokerageServiceImpl extends ServiceImpl<BrokerageMapper, Brokerage
         Brokerage.setUserId(id);
         Brokerage.setMoney(money);
         Brokerage.setCreatetime(LocalDateTime.now());
-        Brokerage.setBrokerageTypeId(3);
-        Brokerage.setBrokerageStatusId(2);
+        Brokerage.setBrokerageTypeId(4);
+        Brokerage.setBrokerageStatusId(1);
         baseMapper.insert(Brokerage);
         return Brokerage.getId();
     }
@@ -84,19 +82,19 @@ public class BrokerageServiceImpl extends ServiceImpl<BrokerageMapper, Brokerage
         Brokerage.setUserId(id);
         Brokerage.setMoney(money);
         Brokerage.setCreatetime(LocalDateTime.now());
-        Brokerage.setBrokerageTypeId(4);
-        Brokerage.setBrokerageStatusId(2);
+        Brokerage.setBrokerageTypeId(2);
+        Brokerage.setBrokerageStatusId(1);
         baseMapper.insert(Brokerage);
         return Brokerage.getId();
     }
 
     public int paidById(int id) {
         Brokerage brokerage = getById(id);
-        return baseMapper.update(brokerage, new UpdateWrapper<Brokerage>().set("brokerage_status_id", 2).eq("id", id));
+        return baseMapper.update(brokerage, new UpdateWrapper<Brokerage>().set("brokerage_status_id", 1).eq("id", id));
     }
 
     public int failedById(int id) {
         Brokerage brokerage = getById(id);
-        return baseMapper.update(brokerage, new UpdateWrapper<Brokerage>().set("brokerage_status_id", 3).eq("id", id));
+        return baseMapper.update(brokerage, new UpdateWrapper<Brokerage>().set("brokerage_status_id", 2).eq("id", id));
     }
 }

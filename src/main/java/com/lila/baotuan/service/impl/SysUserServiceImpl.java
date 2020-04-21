@@ -41,7 +41,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setUserId(-1);
         user.setName(phone);
         user.setPassword(MD5Util.MD5Encode(password, "UTF-8"));
-        String count = userService.getCountByUserId(-1) + "";
+        String count = userService.getCountByUserId(-1)+1 + "";
         for (int i = count.length(); i < 5; i++) {
             count = "0" + count;
         }

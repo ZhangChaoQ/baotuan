@@ -1,10 +1,9 @@
 package com.lila.baotuan.controller;
 
 import com.lila.baotuan.entity.GLpayApi;
-import com.lila.baotuan.entity.Result;
-import com.lila.baotuan.service.impl.MemberServiceImpl;
-import com.lila.baotuan.service.impl.SysWithdrawalsServiceImpl;
-import com.lila.baotuan.service.impl.UserServiceImpl;
+import com.lila.baotuan.entity.Member;
+import com.lila.baotuan.entity.ViewUser;
+import com.lila.baotuan.service.impl.*;
 import com.lila.baotuan.utils.PayUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +29,10 @@ public class PayController {
     private static Logger logger = LogManager.getLogger();
     @Value("${payUrl}")
     private String payUrl = "http://pay.wsdy.com.cn";
-
+    @Resource
+    private BrokerageServiceImpl brokerageService;
+    @Resource
+    private ViewUserServiceImpl viewUserService;
     @Resource
     private UserServiceImpl userService;
     @Resource
@@ -65,8 +66,23 @@ public class PayController {
             String price = payAPI.getPrice().substring(0, payAPI.getPrice().indexOf("."));
             logger.info(price);
             price = "599";
-            userService.updateMember(Integer.valueOf(payAPI.getOrderuid()), memberService.getMemberIdByPrice(Integer.valueOf(price)));
-            sysWithdrawalsService.insertSysWithdrawals(Integer.valueOf(payAPI.getOrderuid()), Integer.valueOf(price), false);
+            int userId = Integer.valueOf(payAPI.getOrderuid());
+            Member member = memberService.getMemberIdByPrice(Integer.valueOf(price));
+            /*修改会员等级*/
+            userService.updateMember(userId, member.getId());
+            /*上级获取分佣*/
+            ViewUser viewUser = viewUserService.getViewUserById(userId);
+            if (-1 != viewUser.getUserId()) {
+                userService.updateMoney(viewUser.getUserId(), viewUser.getInviterMemberMoney() * 0.2);
+                brokerageService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
+                ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
+                if (-1 != inviter.getUserId()) {
+                    userService.updateMoney(inviter.getUserId(), inviter.getInviterMemberMoney() * 0.05);
+                    brokerageService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
+                }
+            }
+            /*添加进账*/
+           sysWithdrawalsService.insertSysWithdrawals(Integer.valueOf(payAPI.getOrderuid()), Integer.valueOf(price), false);
             return "OK";
         } else {
             return "fail";

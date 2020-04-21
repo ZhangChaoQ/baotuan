@@ -48,11 +48,20 @@
 <script src="layui/layui.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
-    layui.use(['jquery', 'element', 'table'], function () {
-        const table = layui.table;
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
+        table = layui.table;
+        $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-user",
-            url: "baotuan/viewSysWithdrawals/getViewSysWithdrawalsByOut",
+            url: "baotuan/viewSysWithdrawals/getViewSysWithdrawalsByIn",
             method: "POST",
             data: {
                 page: 1,

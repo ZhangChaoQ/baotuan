@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-20
+ * @since 2020-04-21
  */
 public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
 
@@ -89,6 +89,11 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
      */
     @TableField("Alipay_url")
     private Integer alipayUrl;
+
+    /**
+     * 上传路径
+     */
+    private String fileUrl;
 
 
     public Integer getId() {
@@ -203,6 +208,14 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
         this.alipayUrl = alipayUrl;
     }
 
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -225,6 +238,7 @@ public class ViewSysBrokerages extends Model<ViewSysBrokerages> {
         ", alipayName=" + alipayName +
         ", alipayAccount=" + alipayAccount +
         ", alipayUrl=" + alipayUrl +
+        ", fileUrl=" + fileUrl +
         "}";
     }
 }

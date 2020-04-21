@@ -18,6 +18,7 @@
         <result column="Alipay_name" property="alipayName" />
         <result column="Alipay_account" property="alipayAccount" />
         <result column="Alipay_url" property="alipayUrl" />
+        <result column="file_url" property="fileUrl" />
     </resultMap>
 
 </mapper>

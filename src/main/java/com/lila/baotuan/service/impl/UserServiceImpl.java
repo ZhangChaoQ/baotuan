@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setInviteCode(inviteCode);
         user.setPhone(phone);
         user.setName(phone);
-        user.setMemberId(0);
+        user.setMemberId(1);
         user.setUserId(userId);
         user.setCreatetime(LocalDateTime.now());
         baseMapper.insert(user);
@@ -143,4 +143,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return count == 0;
     }
 
+    public boolean getAliPayCount(String alipayAccount, String alipayName) {
+        int count = baseMapper.selectCount(new QueryWrapper<User>().eq("Alipay_account", alipayAccount).eq("Alipay_name", alipayName));
+        return count == 0;
+    }
+
+    public boolean getUserEnabled(int id) {
+        return baseMapper.selectOne(new QueryWrapper<User>().eq("id", id)).getEnabled();
+    }
 }

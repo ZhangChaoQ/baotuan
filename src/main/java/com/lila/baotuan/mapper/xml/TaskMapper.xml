@@ -13,6 +13,7 @@
         <result column="url" property="url" />
         <result column="task_type_id" property="taskTypeId" />
         <result column="createtime" property="createtime" />
+        <result column="enabled" property="enabled" />
     </resultMap>
 
 </mapper>

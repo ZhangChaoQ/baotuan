@@ -23,7 +23,7 @@
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
     </div>
 
@@ -41,7 +41,9 @@
         <!-- 内容主体区域 -->
         <table class="layui-table" lay-filter="table-withdrawals" id="table-withdrawals"></table>
     </div>
-
+    <div id="ewm" style="display: none;">
+        <img src="https://i.loli.net/2019/06/01/5cf29027ea78726804.png" style="width: 200px;height: auto">
+    </div>
     <!--<div class="layui-footer">
         &lt;!&ndash; 底部固定区域 &ndash;&gt;
         © layui.com - 底部固定区域
@@ -50,10 +52,17 @@
 <script src="layui/layui.all.js"></script>
 <script th:inline="none">
     //JavaScript代码区域
-    var table, $, element;
-    layui.use(['jquery', 'element', 'table'], function () {
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
         table = layui.table;
         $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-withdrawals",
             url: "baotuan/viewSysBrokerages/getViewSysBrokeragesList",
@@ -73,22 +82,25 @@
                 }, {
                     field: "code",
                     sort: true,
-                    title: "编码"
+                    title: "用户编码"
                 }, {
                     field: "money",
-                    title: "提款金額",
+                    title: "提款金額（元）",
                 }, {
                     field: "payMoney",
-                    title: "应付金额",
+                    title: "应付金额（元）",
                 }, {
-                    field: "AlipayAccount",
+                    field: "alipayAccount",
                     title: "支付宝账号"
                 }, {
-                    field: "AlipayName",
+                    field: "alipayName",
                     title: "支付宝姓名"
                 }, {
-                    field: "AlipayUrl",
+                    field: "fileUrl",
                     title: "支付宝二维码",
+                    templet: function (op) {
+                        return "<a onclick='show(\"" + op.fileUrl + "\")'>点击查看</a>";
+                    }
 
                 }, {
                     title: '操作',
@@ -126,6 +138,21 @@
             }
         })
     }
+
+    function show(url) {
+        $("#ewm img").attr("src", "http://119.8.37.167" + url);
+        //弹出层
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: '200px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: $('#ewm')
+        })
+    }
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

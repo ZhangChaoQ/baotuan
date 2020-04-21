@@ -2,16 +2,15 @@ package com.lila.baotuan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.entity.ViewUser;
 import com.lila.baotuan.mapper.ViewUserMapper;
 import com.lila.baotuan.service.IViewUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -50,33 +49,12 @@ public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> i
         return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("id", id));
     }
 
-    /*
-     * 根据会员id返回用户列表
-     * */
-    public List<ViewUser> getViewUserByMemberId(int memberId) {
-        return baseMapper.selectList(new QueryWrapper<ViewUser>().eq("member_id", memberId));
-    }
-
-    /*
-     * 根据用户id返回用户子集
-     * */
-    public List<ViewUser> getViewUserByUserId(int userId) {
-        return baseMapper.selectList(new QueryWrapper<ViewUser>().eq("user_id", userId));
-    }
-
-    /*
-     * 根据用户ids返回用户子集
-     * */
-    public List<ViewUser> getViewUserByUserIds(Collection<Integer> userIds) {
-        return baseMapper.selectList(new QueryWrapper<ViewUser>().in("user_id", userIds));
-    }
-
     public ViewUser userLogin(String phone, String password) {
         return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("phone", phone).eq("password", MD5Util.MD5Encode(password, "UTF-8")));
     }
 
     public Page<ViewUser> getViewUserList(int page, int pageSize) {
-        return baseMapper.selectPage(new Page<>(page,pageSize),new QueryWrapper<ViewUser>().orderByDesc("createtime").orderByDesc("createtime"));
+        return baseMapper.selectPage(new Page<>(page, pageSize), new QueryWrapper<ViewUser>().orderByDesc("createtime").orderByDesc("createtime"));
     }
 
     public List<ViewUser> getViewUserCountByDay() {
@@ -84,6 +62,6 @@ public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> i
     }
 
     public ViewUser userLoginByPhone(String phone) {
-        return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("phone",phone));
+        return baseMapper.selectOne(new QueryWrapper<ViewUser>().eq("phone", phone));
     }
 }

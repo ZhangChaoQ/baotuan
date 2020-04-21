@@ -35,7 +35,7 @@
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
         </ul>
     </div>
 
@@ -84,13 +84,17 @@
 </div>
 <script src="layui/layui.all.js"></script>
 <script th:inline="none">
-    var element, table, layer, $, form;
-    layui.use(['element', 'table', 'layer', 'jquery', 'form'], function () {
-        element = layui.element;
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table','layer'], function () {
         table = layui.table;
-        layer = layui.layer;
-        form = layui.form;
         $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
         table.render({
             elem: "#table-sysUser",
             url: "baotuan/sysUser/getSysUserList",
@@ -164,5 +168,6 @@
         })
     }
 </script>
+<script th:inline="none" src="js/admin.js"></script>
 </body>
 </html>

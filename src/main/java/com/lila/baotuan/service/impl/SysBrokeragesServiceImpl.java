@@ -27,13 +27,13 @@ public class SysBrokeragesServiceImpl extends ServiceImpl<SysBrokeragesMapper, S
 
     public SysBrokerages paidById(int id) {
         SysBrokerages sysBrokerages = getSysBrokeragesById(id);
-        baseMapper.update(sysBrokerages, new UpdateWrapper<SysBrokerages>().set("sys_brokerages_status_id", 2).eq("id", id));
+        baseMapper.update(sysBrokerages, new UpdateWrapper<SysBrokerages>().set("sys_brokerages_status_id", 1).eq("id", id));
         return sysBrokerages;
     }
 
     public SysBrokerages failedById(int id) {
         SysBrokerages sysBrokerages = getSysBrokeragesById(id);
-        baseMapper.update(sysBrokerages, new UpdateWrapper<SysBrokerages>().set("sys_brokerages_status_id", 3).eq("id", id));
+        baseMapper.update(sysBrokerages, new UpdateWrapper<SysBrokerages>().set("sys_brokerages_status_id", 2).eq("id", id));
         return sysBrokerages;
     }
 
@@ -42,9 +42,9 @@ public class SysBrokeragesServiceImpl extends ServiceImpl<SysBrokeragesMapper, S
         sysBrokerages.setBrokerageId(brokerageId);
         sysBrokerages.setCreatetime(LocalDateTime.now());
         sysBrokerages.setMoney(money);
-        sysBrokerages.setPayMoney(money * 0.7);
+        sysBrokerages.setPayMoney(money*0.7);
         sysBrokerages.setUserId(id);
-        sysBrokerages.setSysBrokeragesStatusId(1);
+        sysBrokerages.setSysBrokeragesStatusId(3);
         baseMapper.insert(sysBrokerages);
         return sysBrokerages.getId();
     }
