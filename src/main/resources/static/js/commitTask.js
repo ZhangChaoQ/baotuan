@@ -43,7 +43,7 @@ function commit() {
             call('/baotuan/user/commitTask', data, function (res) {
                 alert(res.msg)
                 setTimeout(function () {
-                    self.location = document.referrer;
+                    navicatTo("myTask")
                 }, 1000)
             })
         })
@@ -54,7 +54,7 @@ function commit() {
         call('/baotuan/user/commitTask', data, function (res) {
             alert(res.msg)
             setTimeout(function () {
-                self.location = document.referrer;
+                navicatTo("myTask")
             }, 1000)
         })
     }

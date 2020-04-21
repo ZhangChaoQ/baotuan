@@ -1,6 +1,6 @@
 var mailcode = '';
 $(function () {
-    $("#verCodeBtn").click(function () {
+    /*$("#verCodeBtn").click(function () {
         const phone = $("#phone").val()
         if (checkPhone(phone)) {
             const data = new Object();
@@ -9,7 +9,7 @@ $(function () {
                 mailcode = res.data.data.code;
             })
         }
-    });
+    });*/
 })
 
 function Login() {
@@ -20,14 +20,14 @@ function Login() {
     data.password = $("#password").val();
     data.inviteCode = $("#inviteCode").val();
     if (checkPhone(phone)) {
-        if (mailcode == '') {
+       /* if (mailcode == '') {
             alert('请输入验证码');
             return;
         }
         if (mailcode != co) {
             alert('验证码错误');
             return;
-        }
+        }*/
         call('/baotuan/user/addUser', data, function (res) {
             if (res.code) {
                 localStorage.setItem("memberId", res.data.memberId);

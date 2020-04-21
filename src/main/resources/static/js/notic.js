@@ -24,5 +24,5 @@ function bindList() {
 }
 
 function toMassage(id) {
-    navicatTo("noticMassage?id=" + id)
+    navicatTo("noticeMassage?id=" + id)
 }

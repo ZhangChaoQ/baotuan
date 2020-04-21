@@ -85,13 +85,6 @@ $(function () {
     var lo = location.href;
     if ((lo.indexOf("index") == -1 && lo.indexOf("reset") == -1 && lo.indexOf("register") == -1) && (localStorage.getItem("userId") == "undefined" || localStorage.getItem("userId") == null)) {
         navicatTo("index");
-    } else {
-        var data = new Object();
-        data.id = localStorage.getItem("userId");
-        call('/baotuan/user/isenabled', data, function (res) {
-            if (res.data) navicatTo("task");
-            else navicatTo("index");
-        })
     }
 })
 

@@ -39,7 +39,7 @@ public class UserController {
     private SysBrokeragesServiceImpl sysBrokeragesService;
 
     @RequestMapping("/isEnabled")
-    public Result isenabled(HttpServletRequest request) {
+    public Result isEnabled(HttpServletRequest request) {
         int id = Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
         result.setMsg("");
@@ -256,14 +256,21 @@ public class UserController {
         String alipayName = request.getParameter("alipayName");
         int alipayUrl = Integer.valueOf(request.getParameter("alipayUrl"));
         int id = Integer.valueOf(request.getParameter("id"));
-        if (userService.getAliPayCount(alipayAccount, alipayName)) {
+        User user = userService.getUserById(id);
+        if (user.getAlipayUrl() != null) {
             result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
             result.setMsg("支付宝绑定成功");
             result.setCode(true);
         } else {
-            result.setData(null);
-            result.setMsg("该支付宝账号已绑定，请更换账号");
-            result.setCode(true);
+            if (userService.getAliPayCount(alipayAccount, alipayName)) {
+                result.setData(userService.updateAlipay(id, alipayAccount, alipayUrl, alipayName));
+                result.setMsg("支付宝绑定成功");
+                result.setCode(true);
+            } else {
+                result.setData(null);
+                result.setMsg("该支付宝账号已绑定，请更换账号");
+                result.setCode(true);
+            }
         }
         return result;
     }

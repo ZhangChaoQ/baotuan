@@ -114,7 +114,7 @@ public class HtmlController {
         return "BaoTuanAppTest/notic";
     }
 
-    @RequestMapping("/BaoTuanAppTest/noticMassage")
+    @RequestMapping("/BaoTuanAppTest/noticeMassage")
     public String noticMassage() {
         return "BaoTuanAppTest/noticMassage";
     }

@@ -21,7 +21,8 @@ $(function () {
     $("#myInvite").click(function () {
         navicatTo("myInvite");
     })
-
+    var height = $(window).innerHeight() - parseInt($(".head").css("height").replace("px",""))- parseInt($(".user").css("height").replace("px",""))- parseInt($(".slogan").css("height").replace("px",""))- parseInt($(".surplus-div").css("height").replace("px",""))- parseInt($(".tab-div").css("height").replace("px",""))-100;
+    $(".list").css("height", height);
 })
 
 function getUserInfo() {
@@ -36,9 +37,15 @@ function getUserInfo() {
         localStorage.setItem("alipayAccount", res.data.alipayAccount);
         localStorage.setItem("alipayName", res.data.alipayName);
         localStorage.setItem("alipayUrl", res.data.url);
+        if (!res.data.enabled) navicatTo("index");
     })
 }
 
 function toWithdrawals() {
     navicatTo("withdrawals");
+}
+
+function loginOut() {
+    localStorage.removeItem("userId");
+    navicatTo("index")
 }

@@ -19,7 +19,7 @@ function withdrawals() {
         call('/baotuan/user/withdrawals', data, function (res) {
             alert(res.msg)
             setTimeout(function () {
-                self.location = document.referrer;
+                navicatTo("user");
             }, 1000)
         })
     }

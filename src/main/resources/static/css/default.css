@@ -54,9 +54,9 @@ button {
 	background-size: 4% 60%;
 	text-align: center;
 	color: white;
-	letter-spacing: 1rem;
+	letter-spacing: 0.15rem;
 	font-size: 1.2rem;
-	line-height: 0.15rem;
+	line-height: 2.5rem;
 	position: fixed;
 	width: 100%;
 	top: 0;

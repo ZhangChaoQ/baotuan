@@ -3,7 +3,6 @@ $(function () {
         $("#alipayName").val(localStorage.getItem("alipayName"));
         $("#alipayAccount").val(localStorage.getItem("alipayAccount"));
         $("#upload-img").html("<img src='" + app.filePath + localStorage.getItem("alipayUrl") + "' ></img>")
-        $("button").hide();
     }
     $("#file").change(function () {
         var objUrl = getObjectURL(this.files[0]);//获取文件信息
@@ -29,7 +28,7 @@ function bindAlipay() {
             alert(res.msg);
             if (res.code) {
                 setTimeout(function () {
-                    self.location = document.referrer;
+                    navicatTo("user")
                 }, 1000)
             }
         })
