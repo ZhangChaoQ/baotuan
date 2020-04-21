@@ -11,7 +11,27 @@ $(function () {
         getList();
     })
     getList();
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(window).outerHeight(true);
+        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+            getNextPage();
+        }
+    });
 })
+
+function getNextPage() {
+    page++;
+    data.userId = localStorage.getItem("userId");
+    data.page = page;
+    data.limit = 10;
+    data.typeId = index;
+    call('/baotuan/brokerage/getBrokerageList', data, function (res) {
+        List = List.concat(res.data.records)
+        bindList();
+    })
+}
 
 function getList() {
     const data = new Object()

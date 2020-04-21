@@ -26,20 +26,21 @@ public class ViewUserServiceImpl extends ServiceImpl<ViewUserMapper, ViewUser> i
     /*
      * 返回下级列表
      * */
-    public List<ViewUser> getSonList(int id) {
-        return baseMapper.selectList(new QueryWrapper<ViewUser>().eq("user_id", id));
+    public Page<ViewUser> getSonList(int id, int page, int limit) {
+        return baseMapper.selectPage(new Page<>(page, limit), new QueryWrapper<ViewUser>().eq("user_id", id));
     }
 
     /*
      * 返回子级列表
      * */
-    public List<ViewUser> getGrandSonList(int id) {
-        List<ViewUser> userList = new ArrayList<>();
+    public Page<ViewUser> getGrandSonList(int id, int page, int limit) {
+        List<Integer> userList = new ArrayList<>();
         List<ViewUser> users = baseMapper.selectList(new QueryWrapper<ViewUser>().eq("user_id", id));
         for (ViewUser user : users) {
-            userList.addAll(baseMapper.selectList(new QueryWrapper<ViewUser>().eq("user_id", user.getId())));
+            userList.add(user.getUserId());
         }
-        return userList;
+
+        return baseMapper.selectPage(new Page<ViewUser>(page, limit), new QueryWrapper<ViewUser>().in("user_id", userList));
     }
 
     /*

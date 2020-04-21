@@ -2,6 +2,14 @@ var taskList = [];
 var page = 1
 $(function () {
     getTaskList();
+    $(window).scroll(function() {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(window).outerHeight(true);
+        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+            getNextPage();
+        }
+    });
 })
 
 //添加任务

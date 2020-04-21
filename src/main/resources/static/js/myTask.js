@@ -2,6 +2,14 @@ var userTaskList = [];
 var page = 1;
 $(function () {
     getMyTaskList()
+    $(window).scroll(function() {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(window).outerHeight(true);
+        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+            getNextPage();
+        }
+    });
 })
 
 function getMyTaskList() {

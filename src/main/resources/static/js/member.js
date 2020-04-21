@@ -1,7 +1,16 @@
 var memberList = [];
 $(function () {
     getMemberList();
+    getUserInfo();
 })
+
+function getUserInfo() {
+    const data = new Object();
+    data.id = localStorage.getItem("userId")
+    call('/baotuan/user/getUserInfo', data, function (res) {
+        localStorage.setItem("memberId", res.data.memberId);
+    })
+}
 
 function getMemberList() {
     const data = new Object();

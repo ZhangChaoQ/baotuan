@@ -5,6 +5,7 @@ import com.lila.baotuan.entity.User;
 import com.lila.baotuan.entity.ViewUser;
 import com.lila.baotuan.entity.ViewUserTask;
 import com.lila.baotuan.service.impl.*;
+import com.lila.baotuan.utils.DoubleUtil;
 import com.lila.baotuan.utils.MD5Util;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,9 +74,11 @@ public class UserController {
     @RequestMapping("/getSonList")
     public Result getSonList(HttpServletRequest request) {
         int id = Integer.valueOf(request.getParameter("id"));
+        int page = Integer.valueOf(request.getParameter("page"));
+        int limit = Integer.valueOf(request.getParameter("limit"));
         Result result = new Result();
         result.setCode(true);
-        result.setData(viewUserService.getSonList(id));
+        result.setData(viewUserService.getSonList(id,page,limit));
         result.setMsg("获取成功");
         return result;
     }
@@ -86,9 +89,11 @@ public class UserController {
     @RequestMapping("/getGradSonList")
     public Result getGradSonList(HttpServletRequest request) {
         int id = Integer.valueOf(request.getParameter("id"));
+        int page = Integer.valueOf(request.getParameter("page"));
+        int limit = Integer.valueOf(request.getParameter("limit"));
         Result result = new Result();
         result.setCode(true);
-        result.setData(viewUserService.getGrandSonList(id));
+        result.setData(viewUserService.getGrandSonList(id,page,limit));
         result.setMsg("获取成功");
         return result;
     }
@@ -150,13 +155,13 @@ public class UserController {
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
         ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
 
-        userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
-        brokerageService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney() * 0.98);
+        userService.updateMoney(viewUser.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.98));
+        brokerageService.insertTask(viewUser.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.98));
 
         if (-1 != viewUser.getUserId()) {
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
-            userService.updateMoney(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
-            brokerageService.insertBrokerage(inviter.getId(), viewUserTask.getTaskMoney() * 0.02);
+            userService.updateMoney(inviter.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.02));
+            brokerageService.insertBrokerage(inviter.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.02));
         }
 
         return userTaskController.updateTaskStatus(id, url);

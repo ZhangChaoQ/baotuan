@@ -16,9 +16,16 @@ $(function () {
 function bindAlipay() {
     var type = "file";
     var formData = new FormData();//这里需要实例化一个FormData来进行文件上传
+    if ($("#file")[0].files.length == 0) {
+        alert("请更换收款码图片");
+        return;
+    }
     formData.append(type, $("#file")[0].files[0]);
     upload('/baotuan/uploadFile/upload', formData, function (res) {
-        if (res == -1) alert("图片上传失败，请重试")
+        if (res == -1) {
+            alert("图片上传失败，请重试")
+            return;
+        }
         const data = new Object();
         data.id = localStorage.getItem("userId");
         data.alipayUrl = res;
@@ -32,6 +39,7 @@ function bindAlipay() {
                 }, 1000)
             }
         })
+
     })
 }
 

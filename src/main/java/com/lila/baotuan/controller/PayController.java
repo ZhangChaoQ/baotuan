@@ -4,6 +4,7 @@ import com.lila.baotuan.entity.GLpayApi;
 import com.lila.baotuan.entity.Member;
 import com.lila.baotuan.entity.ViewUser;
 import com.lila.baotuan.service.impl.*;
+import com.lila.baotuan.utils.DoubleUtil;
 import com.lila.baotuan.utils.PayUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,16 +74,16 @@ public class PayController {
             /*上级获取分佣*/
             ViewUser viewUser = viewUserService.getViewUserById(userId);
             if (-1 != viewUser.getUserId()) {
-                userService.updateMoney(viewUser.getUserId(), viewUser.getInviterMemberMoney() * 0.2);
-                brokerageService.insertInvite(viewUser.getId(), viewUser.getInviterMemberMoney() * 0.2);
+                userService.updateMoney(viewUser.getUserId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
+                brokerageService.insertInvite(viewUser.getId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
                 ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
                 if (-1 != inviter.getUserId()) {
-                    userService.updateMoney(inviter.getUserId(), inviter.getInviterMemberMoney() * 0.05);
-                    brokerageService.insertInvite(viewUser.getId(), inviter.getInviterMemberMoney() * 0.05);
+                    userService.updateMoney(inviter.getUserId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
+                    brokerageService.insertInvite(viewUser.getId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
                 }
             }
             /*添加进账*/
-           sysWithdrawalsService.insertSysWithdrawals(Integer.valueOf(payAPI.getOrderuid()), Integer.valueOf(price), false);
+            sysWithdrawalsService.insertSysWithdrawals(Integer.valueOf(payAPI.getOrderuid()), Integer.valueOf(price), false);
             return "OK";
         } else {
             return "fail";
