@@ -155,8 +155,8 @@ public class UserController {
         ViewUserTask viewUserTask = viewUserTaskService.getViewUserTaskById(id);
         ViewUser viewUser = viewUserService.getViewUserById(viewUserTask.getUserId());
 
-        userService.updateMoney(viewUser.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.98));
-        brokerageService.insertTask(viewUser.getId(), DoubleUtil.mul(viewUserTask.getTaskMoney(), 0.98));
+        userService.updateMoney(viewUser.getId(), viewUserTask.getTaskMoney());
+        brokerageService.insertTask(viewUser.getId(), viewUserTask.getTaskMoney());
 
         if (-1 != viewUser.getUserId()) {
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
