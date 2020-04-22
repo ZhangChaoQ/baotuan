@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : 119.8.37.167_3306
  Source Server Type    : MySQL
- Source Server Version : 50720
- Source Host           : localhost:3306
+ Source Server Version : 50725
+ Source Host           : 119.8.37.167:3306
  Source Schema         : baotuan
 
  Target Server Type    : MySQL
- Target Server Version : 50720
+ Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 21/04/2020 19:20:42
+ Date: 22/04/2020 10:20:05
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `brokerage`  (
   `brokerage_status_id` int(11) NULL DEFAULT 2 COMMENT '到款状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '余额记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '余额记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for brokerage_status
@@ -45,6 +45,13 @@ CREATE TABLE `brokerage_status`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '到款状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of brokerage_status
+-- ----------------------------
+INSERT INTO `brokerage_status` VALUES (1, 'Success', '申请成功', NULL);
+INSERT INTO `brokerage_status` VALUES (2, 'Failed', '申请驳回', NULL);
+INSERT INTO `brokerage_status` VALUES (3, 'Unpaid', '等待审核', NULL);
+
+-- ----------------------------
 -- Table structure for brokerage_type
 -- ----------------------------
 DROP TABLE IF EXISTS `brokerage_type`;
@@ -55,6 +62,14 @@ CREATE TABLE `brokerage_type`  (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '余额类型' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of brokerage_type
+-- ----------------------------
+INSERT INTO `brokerage_type` VALUES (1, 'Withdraw', '提现记录', NULL);
+INSERT INTO `brokerage_type` VALUES (2, 'Task', '任务奖励', NULL);
+INSERT INTO `brokerage_type` VALUES (3, 'Brokerage', '分佣奖励', NULL);
+INSERT INTO `brokerage_type` VALUES (4, 'Invite', '邀请奖励', NULL);
 
 -- ----------------------------
 -- Table structure for member
@@ -75,6 +90,14 @@ CREATE TABLE `member`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of member
+-- ----------------------------
+INSERT INTO `member` VALUES (1, 'Regular', '普通会员', '无权益', 0.00, 0.00, 0, NULL, NULL);
+INSERT INTO `member` VALUES (2, 'Low', '初级会员', '每天可接8个任务', 299.00, 299.00, 8, NULL, NULL);
+INSERT INTO `member` VALUES (3, 'Middle', '中级会员', '每天可接15个任务', 599.00, 300.00, 15, NULL, NULL);
+INSERT INTO `member` VALUES (4, 'High', '高级会员', '每天可接25个任务', 999.00, 400.00, 25, NULL, NULL);
+
+-- ----------------------------
 -- Table structure for notice
 -- ----------------------------
 DROP TABLE IF EXISTS `notice`;
@@ -85,7 +108,7 @@ CREATE TABLE `notice`  (
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `enabled` tinyint(1) NULL DEFAULT 0 COMMENT '发布状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for pay_status
@@ -98,6 +121,12 @@ CREATE TABLE `pay_status`  (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态说明',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pay_status
+-- ----------------------------
+INSERT INTO `pay_status` VALUES (1, 'Unpaid', '待支付', '用户发起提现');
+INSERT INTO `pay_status` VALUES (2, 'Paid', '支付完成', '提现到账');
 
 -- ----------------------------
 -- Table structure for permission
@@ -146,7 +175,7 @@ CREATE TABLE `sys_brokerages`  (
   `sys_brokerages_status_id` int(11) NULL DEFAULT NULL COMMENT '到款状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '金额记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '金额记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_brokerages_status
@@ -161,6 +190,13 @@ CREATE TABLE `sys_brokerages_status`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of sys_brokerages_status
+-- ----------------------------
+INSERT INTO `sys_brokerages_status` VALUES (1, 'Success', '支付成功', NULL);
+INSERT INTO `sys_brokerages_status` VALUES (2, 'Failed', '请求驳回', NULL);
+INSERT INTO `sys_brokerages_status` VALUES (3, 'Unpaid', '等待审核', NULL);
+
+-- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
@@ -170,7 +206,12 @@ CREATE TABLE `sys_user`  (
   `login_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录账号',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台用户' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES (1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -199,7 +240,7 @@ CREATE TABLE `sys_withdrawals`  (
   `pay_type` tinyint(1) NULL DEFAULT 0 COMMENT '0转入 1支出',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '转款记录   会员、转款' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '转款记录   会员、转款' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for task
@@ -218,7 +259,7 @@ CREATE TABLE `task`  (
   `enabled` tinyint(1) NULL DEFAULT 0 COMMENT '任务发布状态',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `task_type_id`(`task_type_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for task_status
@@ -233,6 +274,12 @@ CREATE TABLE `task_status`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of task_status
+-- ----------------------------
+INSERT INTO `task_status` VALUES (1, 'Unfinished', '未完成', NULL);
+INSERT INTO `task_status` VALUES (2, 'Finish', '已完成', NULL);
+
+-- ----------------------------
 -- Table structure for task_type
 -- ----------------------------
 DROP TABLE IF EXISTS `task_type`;
@@ -245,6 +292,11 @@ CREATE TABLE `task_type`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of task_type
+-- ----------------------------
+INSERT INTO `task_type` VALUES (1, 'DY_video', '抖音', '抖音视频');
+
+-- ----------------------------
 -- Table structure for upload_file
 -- ----------------------------
 DROP TABLE IF EXISTS `upload_file`;
@@ -255,7 +307,7 @@ CREATE TABLE `upload_file`  (
   `size` double NULL DEFAULT NULL COMMENT '上传文件大小',
   `createtime` datetime(0) NULL DEFAULT NULL COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user
@@ -280,7 +332,12 @@ CREATE TABLE `user`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `zfb_url`(`Alipay_url`) USING BTREE,
   INDEX `member_id`(`member_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', '0-0A-00001', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'h530Bq', -1, NULL, NULL, NULL, 0.00, 1, 0, '2020-04-22 10:17:05');
 
 -- ----------------------------
 -- Table structure for user_task
@@ -297,7 +354,7 @@ CREATE TABLE `user_task`  (
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `task_id`(`task_id`) USING BTREE,
   INDEX `task_status_id`(`task_status_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- View structure for view_sys_brokerages

@@ -9,6 +9,7 @@ function getUserInfo() {
     data.id = localStorage.getItem("userId")
     call('/baotuan/user/getUserInfo', data, function (res) {
         localStorage.setItem("memberId", res.data.memberId);
+        localStorage.setItem("userMemberMoney", res.data.userMemberMoney);
     })
 }
 

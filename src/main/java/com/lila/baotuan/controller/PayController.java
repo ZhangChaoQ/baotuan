@@ -66,7 +66,7 @@ public class PayController {
         if (PayUtil.checkPayKey(payAPI)) {
             String price = payAPI.getPrice().substring(0, payAPI.getPrice().indexOf("."));
             logger.info(price);
-            price = "599";
+            //price = "599";
             int userId = Integer.valueOf(payAPI.getOrderuid());
             Member member = memberService.getMemberIdByPrice(Integer.valueOf(price));
             /*修改会员等级*/

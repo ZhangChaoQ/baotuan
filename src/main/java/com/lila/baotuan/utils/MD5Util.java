@@ -1,8 +1,5 @@
 package com.lila.baotuan.utils;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.DigestUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,8 +40,8 @@ public class MD5Util {
         return resultString;
     }
 
-    private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+    private static final String hexDigits[] = {"0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     private static String bytes2hex(byte[] bytes) {
         StringBuffer sb = new StringBuffer();
@@ -58,6 +55,7 @@ public class MD5Util {
         }
         return sb.toString();
     }
+
     public static String getMd5String(String strSrc) {
         try {
             // 确定计算方法
@@ -69,6 +67,7 @@ public class MD5Util {
         }
         return null;
     }
+
     public static String encryption(String plain) {
         String re_md5 = new String();
         try {
@@ -94,5 +93,9 @@ public class MD5Util {
             e.printStackTrace();
         }
         return re_md5;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(MD5Encode("admin", "UTF-8"));
     }
 }
