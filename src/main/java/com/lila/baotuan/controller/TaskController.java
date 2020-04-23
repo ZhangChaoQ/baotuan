@@ -3,9 +3,8 @@ package com.lila.baotuan.controller;
 
 import com.lila.baotuan.entity.Result;
 import com.lila.baotuan.service.impl.TaskServiceImpl;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ import java.util.Random;
  * @author Zhang
  * @since 2020-03-28
  */
-@Controller
+@RestController
 @RequestMapping("/baotuan/task")
 public class TaskController {
 
@@ -28,7 +27,6 @@ public class TaskController {
 
 
     @RequestMapping("/updateTask")
-    @ResponseBody
     public Result updateTask(HttpServletRequest request) {
         int id=Integer.valueOf(request.getParameter("id"));
         int number = Integer.valueOf(request.getParameter("number"));
@@ -43,7 +41,6 @@ public class TaskController {
         return result;
     }
     @RequestMapping("/deleteTask")
-    @ResponseBody
     public Result deleteTask(HttpServletRequest request) {
         int id=Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
@@ -54,7 +51,6 @@ public class TaskController {
     }
 
     @RequestMapping("/updateEnabled")
-    @ResponseBody
     public Result updateEnabled(HttpServletRequest request) {
         int id=Integer.valueOf(request.getParameter("id"));
         Result result = new Result();
@@ -65,7 +61,6 @@ public class TaskController {
     }
 
     @RequestMapping("/taskList")
-    @ResponseBody
     public Result getTaskList(HttpServletRequest request) {
         int page=Integer.valueOf(request.getParameter("page"));
         int limit=Integer.valueOf(request.getParameter("limit"));
@@ -77,7 +72,6 @@ public class TaskController {
     }
 
     @RequestMapping("addTask")
-    @ResponseBody
     public Result addTask(HttpServletRequest request) {
         int number = Integer.valueOf(request.getParameter("number"));
         String title = request.getParameter("title");
@@ -100,7 +94,6 @@ public class TaskController {
     }
 
     @RequestMapping("addTaskList")
-    @ResponseBody
     public Result addTaskList(HttpServletRequest request) {
         int count = Integer.valueOf(request.getParameter("count"));
         int number = Integer.valueOf(request.getParameter("number"));

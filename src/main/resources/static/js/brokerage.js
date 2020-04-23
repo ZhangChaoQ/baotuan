@@ -1,6 +1,8 @@
 var page = 1;
 var index = 1;
 var List = [];
+var limit=20;
+var nowHeight=$(window).height();
 $(function () {
     $(".tab-nav").click(function () {
         $(".this").removeClass("this");
@@ -11,21 +13,22 @@ $(function () {
         getList();
     })
     getList();
-    $(window).scroll(function () {
+    $("#list").scroll(function() {
         var scrollTop = $(this).scrollTop();
         var scrollHeight = $(document).height();
-        var windowHeight = $(window).outerHeight(true);
-        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+        if (scrollTop + scrollHeight > nowHeight) { //判断滑动到底部了
             getNextPage();
+            nowHeight+=scrollHeight;
         }
     });
 })
 
 function getNextPage() {
     page++;
+    const data = new Object()
     data.userId = localStorage.getItem("userId");
     data.page = page;
-    data.limit = 10;
+    data.limit = limit;
     data.typeId = index;
     call('/baotuan/brokerage/getBrokerageList', data, function (res) {
         List = List.concat(res.data.records)
@@ -37,7 +40,7 @@ function getList() {
     const data = new Object()
     data.userId = localStorage.getItem("userId");
     data.page = page;
-    data.limit = 10;
+    data.limit = limit;
     data.typeId = index;
     call('/baotuan/brokerage/getBrokerageList', data, function (res) {
         List = List.concat(res.data.records)

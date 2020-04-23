@@ -25,6 +25,8 @@
 
 .list {
 	padding-top: 5rem;
+	overflow: scroll;
+	height: calc(100% - 77px);
 }
 
 .bt-card {

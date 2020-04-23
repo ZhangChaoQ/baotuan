@@ -1,13 +1,14 @@
 var taskList = [];
 var page = 1
+var nowHeight=$(window).height();
 $(function () {
     getTaskList();
-    $(window).scroll(function() {
+    $("#taskList").scroll(function() {
         var scrollTop = $(this).scrollTop();
         var scrollHeight = $(document).height();
-        var windowHeight = $(window).outerHeight(true);
-        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+        if (scrollTop + scrollHeight > nowHeight) { //判断滑动到底部了
             getNextPage();
+            nowHeight+=scrollHeight;
         }
     });
 })

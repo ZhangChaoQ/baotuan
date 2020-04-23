@@ -21,11 +21,15 @@ function toReset() {
 function Login() {
     const phone = $("#phone").val();
     const password = $("#password").val();
+
+
     if (phone.length == 0) {
         alert('请输入手机号')
         return;
     }
-    if (!checkPhone(phone)) return;
+    if (phone != 'admin') {
+        if (!checkPhone(phone)) return;
+    }
     if (password.length == 0) {
         alert('请输入密码');
         return;

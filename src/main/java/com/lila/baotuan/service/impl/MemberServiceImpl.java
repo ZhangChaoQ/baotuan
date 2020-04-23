@@ -30,7 +30,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return baseMapper.selectList(new QueryWrapper<Member>().ne("id", 1));
     }
 
-    public Member getMemberIdByPrice(int price) {
+    public Member getMemberIdByPrice(double price) {
         return baseMapper.selectOne(new QueryWrapper<Member>().eq("money", price));
     }
 }

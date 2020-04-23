@@ -39,7 +39,7 @@ function commit() {
             if (res == -1) alert("图片上传失败，请重试")
             const data = new Object();
             data.id = getParam("id");
-            data.url = res;
+            data.url = res.data.id;
             call('/baotuan/user/commitTask', data, function (res) {
                 alert(res.msg)
                 setTimeout(function () {

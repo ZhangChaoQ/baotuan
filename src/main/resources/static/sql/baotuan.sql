@@ -11,7 +11,7 @@
  Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 22/04/2020 10:20:05
+ Date: 23/04/2020 17:22:09
 */
 
 SET NAMES utf8mb4;
@@ -111,6 +111,34 @@ CREATE TABLE `notice`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '公告' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for pay_img
+-- ----------------------------
+DROP TABLE IF EXISTS `pay_img`;
+CREATE TABLE `pay_img`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付图片地址',
+  `enabled` tinyint(1) NULL DEFAULT 0 COMMENT '当前可用 0：不可用 1：可用',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '支付图片' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for pay_info
+-- ----------------------------
+DROP TABLE IF EXISTS `pay_info`;
+CREATE TABLE `pay_info`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '购买内容',
+  `pay_money` double(255, 2) NULL DEFAULT NULL COMMENT '应付金额',
+  `pay_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付单号',
+  `pay_status_id` int(11) NULL DEFAULT NULL COMMENT '审核状态',
+  `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '失败理由',
+  `createtime` datetime(0) NULL DEFAULT NULL COMMENT '提交时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '购买核对' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for pay_status
 -- ----------------------------
 DROP TABLE IF EXISTS `pay_status`;
@@ -120,13 +148,14 @@ CREATE TABLE `pay_status`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态名称',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付状态说明',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付状态' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pay_status
 -- ----------------------------
 INSERT INTO `pay_status` VALUES (1, 'Unpaid', '待支付', '用户发起提现');
 INSERT INTO `pay_status` VALUES (2, 'Paid', '支付完成', '提现到账');
+INSERT INTO `pay_status` VALUES (3, 'Failed', '失败', '驳回');
 
 -- ----------------------------
 -- Table structure for permission
@@ -357,33 +386,39 @@ CREATE TABLE `user_task`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户任务记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- View structure for view_pay_info
+-- ----------------------------
+DROP VIEW IF EXISTS `view_pay_info`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_pay_info` AS select `pay_info`.`id` AS `id`,`pay_info`.`user_id` AS `user_id`,`pay_info`.`pay_money` AS `pay_money`,`pay_info`.`pay_code` AS `pay_code`,`pay_info`.`pay_status_id` AS `pay_status_id`,`pay_info`.`createtime` AS `createtime`,`pay_info`.`content` AS `content`,`pay_info`.`reason` AS `reason`,`user`.`name` AS `name`,`user`.`code` AS `code`,`user`.`phone` AS `phone`,`user`.`Alipay_name` AS `Alipay_name`,`user`.`Alipay_account` AS `Alipay_account`,`pay_status`.`code` AS `pay_status_code`,`pay_status`.`name` AS `pay_status_name` from ((`pay_info` left join `user` on((`pay_info`.`user_id` = `user`.`id`))) left join `pay_status` on((`pay_info`.`pay_status_id` = `pay_status`.`id`)));
+
+-- ----------------------------
 -- View structure for view_sys_brokerages
 -- ----------------------------
 DROP VIEW IF EXISTS `view_sys_brokerages`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_sys_brokerages` AS select `sys_brokerages`.`id` AS `id`,`sys_brokerages`.`user_id` AS `user_id`,`sys_brokerages`.`money` AS `money`,`sys_brokerages`.`pay_money` AS `pay_money`,`sys_brokerages`.`createtime` AS `createtime`,`user`.`code` AS `code`,`user`.`phone` AS `phone`,`sys_brokerages`.`brokerage_id` AS `brokerage_id`,`sys_brokerages`.`sys_brokerages_status_id` AS `sys_brokerages_status_id`,`sys_brokerages_status`.`code` AS `sys_brokerages_status_code`,`sys_brokerages_status`.`name` AS `sys_brokerages_status_name`,`user`.`Alipay_name` AS `Alipay_name`,`user`.`Alipay_account` AS `Alipay_account`,`user`.`Alipay_url` AS `Alipay_url`,`upload_file`.`url` AS `file_url` from (((`sys_brokerages` left join `user` on((`sys_brokerages`.`user_id` = `user`.`id`))) left join `sys_brokerages_status` on((`sys_brokerages`.`sys_brokerages_status_id` = `sys_brokerages_status`.`id`))) left join `upload_file` on((`user`.`Alipay_url` = `upload_file`.`id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_sys_brokerages` AS select `sys_brokerages`.`id` AS `id`,`sys_brokerages`.`user_id` AS `user_id`,`sys_brokerages`.`money` AS `money`,`sys_brokerages`.`pay_money` AS `pay_money`,`sys_brokerages`.`createtime` AS `createtime`,`user`.`code` AS `code`,`user`.`phone` AS `phone`,`sys_brokerages`.`brokerage_id` AS `brokerage_id`,`sys_brokerages`.`sys_brokerages_status_id` AS `sys_brokerages_status_id`,`sys_brokerages_status`.`code` AS `sys_brokerages_status_code`,`sys_brokerages_status`.`name` AS `sys_brokerages_status_name`,`user`.`Alipay_name` AS `Alipay_name`,`user`.`Alipay_account` AS `Alipay_account`,`user`.`Alipay_url` AS `Alipay_url`,`upload_file`.`url` AS `file_url` from (((`sys_brokerages` left join `user` on((`sys_brokerages`.`user_id` = `user`.`id`))) left join `sys_brokerages_status` on((`sys_brokerages`.`sys_brokerages_status_id` = `sys_brokerages_status`.`id`))) left join `upload_file` on((`user`.`Alipay_url` = `upload_file`.`id`)));
 
 -- ----------------------------
 -- View structure for view_sys_withdrawals
 -- ----------------------------
 DROP VIEW IF EXISTS `view_sys_withdrawals`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_sys_withdrawals` AS select `sys_withdrawals`.`id` AS `id`,`sys_withdrawals`.`user_id` AS `user_id`,`sys_withdrawals`.`money` AS `money`,`sys_withdrawals`.`pay_money` AS `pay_money`,`sys_withdrawals`.`pay_status_id` AS `pay_status_id`,`sys_withdrawals`.`createtime` AS `createtime`,`sys_withdrawals`.`pay_type` AS `pay_type`,`pay_status`.`code` AS `pay_status_code`,`pay_status`.`name` AS `pay_status_name`,`user`.`code` AS `code`,`user`.`name` AS `name`,`user`.`phone` AS `phone` from ((`sys_withdrawals` left join `pay_status` on((`sys_withdrawals`.`pay_status_id` = `pay_status`.`id`))) left join `user` on((`sys_withdrawals`.`user_id` = `user`.`id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_sys_withdrawals` AS select `sys_withdrawals`.`id` AS `id`,`sys_withdrawals`.`user_id` AS `user_id`,`sys_withdrawals`.`money` AS `money`,`sys_withdrawals`.`pay_money` AS `pay_money`,`sys_withdrawals`.`pay_status_id` AS `pay_status_id`,`sys_withdrawals`.`createtime` AS `createtime`,`sys_withdrawals`.`pay_type` AS `pay_type`,`pay_status`.`code` AS `pay_status_code`,`pay_status`.`name` AS `pay_status_name`,`user`.`code` AS `code`,`user`.`name` AS `name`,`user`.`phone` AS `phone` from ((`sys_withdrawals` left join `pay_status` on((`sys_withdrawals`.`pay_status_id` = `pay_status`.`id`))) left join `user` on((`sys_withdrawals`.`user_id` = `user`.`id`)));
 
 -- ----------------------------
 -- View structure for view_task
 -- ----------------------------
 DROP VIEW IF EXISTS `view_task`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_task` AS select `task`.`id` AS `id`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`number` AS `number`,`task`.`surplus` AS `surplus`,`task`.`money` AS `money`,`task`.`url` AS `url`,`task`.`task_type_id` AS `task_type_id`,`task`.`createtime` AS `createtime`,`task_type`.`code` AS `task_type_code`,`task_type`.`name` AS `task_type_name`,`task`.`enabled` AS `enabled` from (`task` left join `task_type` on((`task`.`task_type_id` = `task_type`.`id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_task` AS select `task`.`id` AS `id`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`number` AS `number`,`task`.`surplus` AS `surplus`,`task`.`money` AS `money`,`task`.`url` AS `url`,`task`.`task_type_id` AS `task_type_id`,`task`.`createtime` AS `createtime`,`task_type`.`code` AS `task_type_code`,`task_type`.`name` AS `task_type_name`,`task`.`enabled` AS `enabled` from (`task` left join `task_type` on((`task`.`task_type_id` = `task_type`.`id`)));
 
 -- ----------------------------
 -- View structure for view_user
 -- ----------------------------
 DROP VIEW IF EXISTS `view_user`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user` AS select `user`.`id` AS `id`,`user`.`code` AS `code`,`user`.`name` AS `name`,`user`.`phone` AS `phone`,`user`.`password` AS `password`,`user`.`invite_code` AS `invite_code`,`user`.`user_id` AS `user_id`,`user`.`Alipay_name` AS `Alipay_name`,`user`.`Alipay_account` AS `Alipay_account`,`user`.`Alipay_url` AS `Alipay_url`,`user`.`money` AS `money`,`user`.`member_id` AS `member_id`,`user`.`enabled` AS `enabled`,`user`.`createtime` AS `createtime`,`member`.`code` AS `member_code`,`member`.`name` AS `member_name`,`member`.`money` AS `user_member_money`,`member`.`task_number` AS `task_number`,`inviter`.`code` AS `inviter_code`,`inviter`.`invite_code` AS `inviter_invite_code`,`inviter_member`.`code` AS `inviter_member_code`,`inviter_member`.`name` AS `inviter_member_name`,`inviter_member`.`money` AS `inviter_member_money`,`upload_file`.`url` AS `url` from ((((`user` left join `member` on((`user`.`member_id` = `member`.`id`))) left join `user` `inviter` on((`user`.`user_id` = `inviter`.`id`))) left join `member` `inviter_member` on((`inviter`.`member_id` = `inviter_member`.`id`))) left join `upload_file` on((`user`.`Alipay_url` = `upload_file`.`id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_user` AS select `user`.`id` AS `id`,`user`.`code` AS `code`,`user`.`name` AS `name`,`user`.`phone` AS `phone`,`user`.`password` AS `password`,`user`.`invite_code` AS `invite_code`,`user`.`user_id` AS `user_id`,`user`.`Alipay_name` AS `Alipay_name`,`user`.`Alipay_account` AS `Alipay_account`,`user`.`Alipay_url` AS `Alipay_url`,`user`.`money` AS `money`,`user`.`member_id` AS `member_id`,`user`.`enabled` AS `enabled`,`user`.`createtime` AS `createtime`,`member`.`code` AS `member_code`,`member`.`name` AS `member_name`,`member`.`money` AS `user_member_money`,`member`.`task_number` AS `task_number`,`inviter`.`code` AS `inviter_code`,`inviter`.`invite_code` AS `inviter_invite_code`,`inviter_member`.`code` AS `inviter_member_code`,`inviter_member`.`name` AS `inviter_member_name`,`inviter_member`.`money` AS `inviter_member_money`,`upload_file`.`url` AS `url` from ((((`user` left join `member` on((`user`.`member_id` = `member`.`id`))) left join `user` `inviter` on((`user`.`user_id` = `inviter`.`id`))) left join `member` `inviter_member` on((`inviter`.`member_id` = `inviter_member`.`id`))) left join `upload_file` on((`user`.`Alipay_url` = `upload_file`.`id`)));
 
 -- ----------------------------
 -- View structure for view_user_task
 -- ----------------------------
 DROP VIEW IF EXISTS `view_user_task`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_user_task` AS select `user_task`.`id` AS `id`,`user_task`.`user_id` AS `user_id`,`user_task`.`task_id` AS `task_id`,`user_task`.`task_status_id` AS `task_status_id`,`user`.`money` AS `user_money`,`task`.`money` AS `task_money`,`user`.`user_id` AS `invite_id`,`task`.`createtime` AS `createtime`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`url` AS `url`,`user_task`.`createtime` AS `user_task_createtime`,`user_task`.`url` AS `upload_file_id`,`upload_file`.`name` AS `name`,`upload_file`.`url` AS `file_url`,`upload_file`.`size` AS `size`,`upload_file`.`createtime` AS `upload_time`,`task_status`.`name` AS `task_status_name`,`task_status`.`code` AS `task_status_code` from ((((`user_task` left join `user` on((`user_task`.`user_id` = `user`.`id`))) left join `task` on((`user_task`.`task_id` = `task`.`id`))) left join `upload_file` on((`user_task`.`url` = `upload_file`.`id`))) left join `task_status` on((`user_task`.`task_status_id` = `task_status`.`id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `view_user_task` AS select `user_task`.`id` AS `id`,`user_task`.`user_id` AS `user_id`,`user_task`.`task_id` AS `task_id`,`user_task`.`task_status_id` AS `task_status_id`,`user`.`money` AS `user_money`,`task`.`money` AS `task_money`,`user`.`user_id` AS `invite_id`,`task`.`createtime` AS `createtime`,`task`.`title` AS `title`,`task`.`context` AS `context`,`task`.`url` AS `url`,`user_task`.`createtime` AS `user_task_createtime`,`user_task`.`url` AS `upload_file_id`,`upload_file`.`name` AS `name`,`upload_file`.`url` AS `file_url`,`upload_file`.`size` AS `size`,`upload_file`.`createtime` AS `upload_time`,`task_status`.`name` AS `task_status_name`,`task_status`.`code` AS `task_status_code` from ((((`user_task` left join `user` on((`user_task`.`user_id` = `user`.`id`))) left join `task` on((`user_task`.`task_id` = `task`.`id`))) left join `upload_file` on((`user_task`.`url` = `upload_file`.`id`))) left join `task_status` on((`user_task`.`task_status_id` = `task_status`.`id`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

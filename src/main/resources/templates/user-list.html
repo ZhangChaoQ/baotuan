@@ -33,6 +33,7 @@
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-this"><a href="user-list">用户列表</a></li>
                 <li class="layui-nav-item"><a href="user-sysBrokerages">用户提现</a></li>
+                <li class="layui-nav-item"><a href="user-pay">用户支付</a></li>
             </ul>
         </div>
     </div>
@@ -51,7 +52,7 @@
 <script th:inline="none">
     //JavaScript代码区域
     var $, table, layer;
-    layui.use(['jquery', 'element', 'table','layer'], function () {
+    layui.use(['jquery', 'element', 'table', 'layer'], function () {
         table = layui.table;
         $ = layui.jquery;
         layer = layui.layer;
@@ -114,6 +115,7 @@
                         if (op.enabled) {
                             return "<a class='layui-btn layui-btn-xs' lay-event='enabled' onclick='enabled(" + op.id + ")'>禁用</a>";
                         } else {
+                            if (op.phone == "admin") return "";
                             return "<a class='layui-btn layui-btn-xs' lay-event='enable' onclick='enable(" + op.id + ")'>启用</a>";
                         }
                     }

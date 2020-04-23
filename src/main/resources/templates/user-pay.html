@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>爆团</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">爆团</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="main-user">控制台</a></li>
+            <li class="layui-nav-item"><a href="task">任务管理</a></li>
+            <li class="layui-nav-item layui-this"><a href="user-list">用户管理</a></li>
+            <li class="layui-nav-item"><a href="sys-user">系统管理</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a href="user-list">用户列表</a></li>
+                <li class="layui-nav-item"><a href="user-sysBrokerages">用户提现</a></li>
+                <li class="layui-nav-item layui-this"><a href="user-pay">用户支付</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <table class="layui-table" lay-filter="table-payInfo" id="table-payInfo"></table>
+    </div>
+    <div id="add-div" lay-filter="add-div" style="display: none;">
+        <form lay-filter="add-task" class="layui-form" id="add-task" style="padding-top: 20px">
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">驳回理由</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reason" id="reason" lay-verify="reason" autocomplete="off"
+                           placeholder="驳回理由"
+                           class="layui-input">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--<div class="layui-footer">
+        &lt;!&ndash; 底部固定区域 &ndash;&gt;
+        © layui.com - 底部固定区域
+    </div>-->
+</div>
+<script src="layui/layui.all.js"></script>
+<script th:inline="none">
+    //JavaScript代码区域
+    var $, table, layer;
+    layui.use(['jquery', 'element', 'table', 'layer'], function () {
+        table = layui.table;
+        $ = layui.jquery;
+        layer = layui.layer;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
+        table.render({
+            elem: "#table-payInfo",
+            url: "baotuan/viewPayInfo/getViewPayInfoList",
+            method: "POST",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
+            height: 500,
+            page: true,
+            cols: [[
+                {
+                    field: "id",
+                    sort: true,
+                    title: "ID",
+                    width: 100
+                }, {
+                    field: "code",
+                    sort: true,
+                    title: "用户编码"
+                }, {
+                    field: "payMoney",
+                    title: "应付金额（元）",
+                }, {
+                    field: "content",
+                    title: "购买内容",
+                }, {
+                    field: "payCode",
+                    title: "支付单号",
+                    minWidth: 300
+                }, {
+                    field: "alipayAccount",
+                    title: "支付宝账号"
+                }, {
+                    field: "alipayName",
+                    title: "支付宝姓名"
+                }, {
+                    title: '操作',
+                    templet: function (op) {
+                        return "<a class='layui-btn layui-btn-xs' lay-event='paid'>确认收款</a>" +
+                            "<a class='layui-btn layui-btn-xs' lay-event='failed'>驳回</a>";
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
+        table.on('tool(table-payInfo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'paid') {
+                paid(data.id);
+            } else if (obj.event === 'failed') {
+                failed(data.id);
+            } else {
+
+            }
+        });
+    });
+
+    function paid(id) {
+        layer.confirm('是否已核对订单号?', {btn:['已核对','未核对'],icon: 3, title:'提示'}, function(index){
+            $.ajax({
+                url: '/baotuan/payInfo/success',
+                dataType: 'json',
+                data: {id: id},
+                method: 'POST',
+                success: function (res) {
+                    table.reload("table-payInfo");
+                }
+            })
+            layer.close(index);
+        });
+    }
+
+    function failed(id) {
+        layer.open({
+            type: 1,
+            content: $('#add-div'),
+            area: ['500px', '500px'],
+            title: "驳回",
+            btn: ['确认', '取消'],
+            btnAlign: "c",
+            yes: function (index, layero) {
+                $.ajax({
+                    url: '/baotuan/payInfo/fail',
+                    dataType: 'json',
+                    data: {id: id, reason: $("#reason").val()},
+                    method: 'POST',
+                    success: function (res) {
+                        layer.close(index)
+                        table.reload("table-payInfo");
+                    }
+                })
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+                return false;
+            },
+            cancel: function (index, layero) {
+                layer.close(index)
+                return false;
+            }
+
+        })
+    }
+</script>
+<script th:inline="none" src="js/admin.js"></script>
+</body>
+</html>

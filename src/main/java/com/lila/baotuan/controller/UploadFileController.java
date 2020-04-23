@@ -1,6 +1,8 @@
 package com.lila.baotuan.controller;
 
 
+import com.lila.baotuan.entity.Result;
+import com.lila.baotuan.entity.UploadFile;
 import com.lila.baotuan.service.impl.UploadFileServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,7 @@ public class UploadFileController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public int uploadFile(@RequestParam("file") MultipartFile uploadFile) {
+    public Result uploadFile(@RequestParam("file") MultipartFile uploadFile) {
         String fileName = uploadFile.getOriginalFilename();
         String name = fileName.substring(0, fileName.indexOf("."));
         double size = uploadFile.getSize();
@@ -51,20 +53,25 @@ public class UploadFileController {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        int result = -1;
+        Result result=new Result();
         try {
             //将图片保存到static文件夹里
             file.createNewFile();
             uploadFile.transferTo(new File(filePath + fileName));
             String url = realPath + fileName;
-            result = this.uploadFile(url, name, size);
+            result.setData(this.uploadFile(url, name, size));
+            result.setCode(true);
+            result.setMsg("上传成功");
         } catch (Exception e) {
             e.printStackTrace();
+            result.setData(null);
+            result.setCode(false);
+            result.setMsg("上传失败");
         }
         return result;
     }
 
-    public int uploadFile(String url, String name, double size) {
+    public UploadFile uploadFile(String url, String name, double size) {
         return uploadFileService.insertUploadFile(url, name, size);
     }
 

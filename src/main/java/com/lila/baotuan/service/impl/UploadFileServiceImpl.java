@@ -22,13 +22,13 @@ public class UploadFileServiceImpl extends ServiceImpl<UploadFileMapper, UploadF
     /*
      * 添加上传
      * */
-    public int insertUploadFile(String url, String name, double size) {
+    public UploadFile insertUploadFile(String url, String name, double size) {
         UploadFile uploadFile = new UploadFile();
         uploadFile.setCreatetime(LocalDateTime.now());
         uploadFile.setName(name);
         uploadFile.setSize(size);
         uploadFile.setUrl(url);
         baseMapper.insert(uploadFile);
-        return uploadFile.getId();
+        return uploadFile;
     }
 }

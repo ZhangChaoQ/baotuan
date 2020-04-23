@@ -51,13 +51,14 @@ public class HtmlController {
     }
 
     @RequestMapping("/sys-notice")
-    public String sysNotice() { return "sys-notice"; }
+    public String sysNotice() {
+        return "sys-notice";
+    }
 
     @RequestMapping("/main-user")
     public String main() {
         return "main-user";
     }
-
 
     @RequestMapping("/main-in")
     public String mainIn() {
@@ -67,6 +68,17 @@ public class HtmlController {
     @RequestMapping("/main-out")
     public String mainOut() {
         return "main-out";
+    }
+
+
+    @RequestMapping("/user-pay")
+    public String userPay() {
+        return "user-pay";
+    }
+
+    @RequestMapping("/sys-payImg")
+    public String sysPayImg() {
+        return "sys-payImg";
     }
 
     @RequestMapping("/BaoTuanAppTest/member")
@@ -89,8 +101,13 @@ public class HtmlController {
         return "BaoTuanAppTest/commitTask";
     }
 
-    @RequestMapping("/BaoTuanAppTest/index")
+    @RequestMapping("/BaoTuanAppTest/")
     public String applogin() {
+        return "BaoTuanAppTest/index";
+    }
+
+    @RequestMapping("/BaoTuanAppTest/index")
+    public String applogin2() {
         return "BaoTuanAppTest/index";
     }
 
@@ -148,5 +165,11 @@ public class HtmlController {
     public String withdrawals() {
         return "BaoTuanAppTest/withdrawals";
     }
+
+    @RequestMapping("/BaoTuanAppTest/pay2")
+    public String pay2() {
+        return "BaoTuanAppTest/pay2";
+    }
+
 
 }

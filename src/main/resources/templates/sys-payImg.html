@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>爆团</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">爆团</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="main-user">控制台</a></li>
+            <li class="layui-nav-item"><a href="task">任务管理</a></li>
+            <li class="layui-nav-item"><a href="user-list">用户管理</a></li>
+            <li class="layui-nav-item layui-this"><a href="sys-user">系统管理</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="login">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a href="sys-user">用户管理</a></li>
+                <li class="layui-nav-item layui-this"><a href="sys-payImg">收款管理</a></li>
+                <li class="layui-nav-item"><a href="sys-notice">公告管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <script type="text/html" id="toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="showOne">上传收款码</button>
+            </div>
+        </script>
+        <!-- 内容主体区域 -->
+        <table class="layui-table" lay-filter="table-payImg" id="table-payImg"></table>
+    </div>
+    <div id="ewm" style="display: none;">
+        <img src="#" style="width: 200px;height: auto">
+    </div>
+    <div id="add-div" lay-filter="add-div" style="display: none;">
+        <form lay-filter="add-task" class="layui-form" id="add-task" style="padding-top: 20px">
+            <div class="layui-form-item  layui-col-xs11">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="description" id="description" lay-verify="description" autocomplete="off"
+                           placeholder="备注"
+                           class="layui-input">
+                </div>
+            </div>
+            <br>
+            <label style="text-align: center;display:block;color: #CCCCCC;">注：请去除收款码边框再上传，如下测试二维码</label>
+            <div class="layui-form-item  layui-col-xs11">
+                <div class="layui-input-block">
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test1">上传收款码</button>
+                        <div class="layui-upload-list" style="margin: 10px 30px;">
+                            <img class="layui-upload-img" id="demo1" style="width: 230px;height: 230px"
+                                 src="img/test.png">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--<div class="layui-footer">
+        &lt;!&ndash; 底部固定区域 &ndash;&gt;
+        © layui.com - 底部固定区域
+    </div>-->
+</div>
+<script src="layui/layui.all.js"></script>
+<script th:inline="none">
+    //JavaScript代码区域
+    var $, table, layer, upload;
+    var url = '';
+    layui.use(['jquery', 'element', 'table', 'layer', 'upload'], function () {
+        table = layui.table;
+        $ = layui.jquery;
+        layer = layui.layer;
+        upload = layui.upload;
+
+        var sysUserId = localStorage.getItem("sysUserId");
+        if (sysUserId == "undefined" || sysUserId == null) {
+            location.href = "login";
+        }
+
+        table.render({
+            elem: "#table-payImg",
+            url: "baotuan/payImg/getPayImgList",
+            method: "POST",
+            toolbar: "#toolbar",
+            data: {
+                page: 1,
+                limit: 10
+            },
+            dataType: "application/json",
+            height: 500,
+            page: true,
+            cols: [[
+                {
+                    field: "id",
+                    sort: true,
+                    title: "ID"
+                }, {
+                    field: "description",
+                    title: "备注"
+                }, {
+
+                    field: "enabled",
+                    title: "启用状态",
+                    templet: function (op) {
+                        return op.enabled ? "启用中" : "禁用";
+                    }
+                }, {
+                    field: "url",
+                    title: "支付宝二维码",
+                    templet: function (op) {
+                        return "<a onclick='show(\"" + op.url + "\")'>点击查看</a>";
+                    }
+                }, {
+                    title: '操作',
+                    templet: function (op) {
+                        var del = "<a class='layui-btn layui-btn-xs' lay-event='showPay' onclick='del(" + op.id + ")'>删除</a>";
+                        if (!op.enabled) return "<a class='layui-btn layui-btn-xs' lay-event='showPay' onclick='enabled(" + op.id + ")'>启用</a>" + del;
+                        else return del;
+                    }
+                }
+            ]],
+            parseData: function (res) {
+                return {"code": res.code ? 0 : 1, "msg": res.msg, "count": res.data.total, "data": res.data.records}
+            }
+        })
+        table.on('toolbar(table-payImg)', function (obj) {
+            if (obj.event === 'showOne') {
+                showOne();
+            }
+        });
+        var uploadInst = upload.render({
+            elem: '#test1',
+            url: 'baotuan/uploadFile/upload', //改成您自己的上传接口
+            accept: "image/*",
+            before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            },
+            done: function (res) {
+                if (res.code) {
+                    url = res.data.url;
+                }
+            },
+            error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+
+    function enabled(id) {
+        $.ajax({
+            url: '/baotuan/payImg/enabled',
+            dataType: 'json',
+            data: {id: id},
+            method: 'POST',
+            success: function (res) {
+                layer.msg(res.msg);
+                table.reload('table-payImg');
+            }
+        })
+    }
+
+    function showOne() {
+        layer.open({
+            type: 1,
+            content: $('#add-div'),
+            area: ['500px', '500px'],
+            title: "上传收款码",
+            btn: ['确认', '取消'],
+            btnAlign: "c",
+            yes: function (index, layero) {
+                $.ajax({
+                    url: 'baotuan/payImg/addPayImg',
+                    method: "POST",
+                    data: {
+                        url: url,
+                        description: $("#description").val(),
+                    },
+                    success: function (res) {
+                        if (res.code) {
+                            layer.close(index)
+                            table.reload("table-payImg");
+                        }
+                    }
+                })
+            },
+            btn2: function (index, layero) {
+                layer.close(index)
+                return false;
+            },
+            cancel: function (index, layero) {
+                layer.close(index)
+                return false;
+            }
+
+        })
+    }
+
+    function show(url) {
+        $("#ewm img").attr("src", "http://119.8.37.167" + url);
+        //弹出层
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: '200px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: $('#ewm')
+        })
+    }
+
+    function del(id) {
+        $.ajax({
+            url: 'baotuan/payImg/del',
+            method: "POST",
+            data: {id: id},
+            success: function (res) {
+                if (res.code) {
+                    layer.close(index)
+                    table.reload("table-payImg");
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

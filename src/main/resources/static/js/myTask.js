@@ -1,13 +1,15 @@
 var userTaskList = [];
 var page = 1;
+var limit=20;
+var nowHeight=$(window).height();
 $(function () {
     getMyTaskList()
-    $(window).scroll(function() {
+    $("#myTaskLsit").scroll(function() {
         var scrollTop = $(this).scrollTop();
         var scrollHeight = $(document).height();
-        var windowHeight = $(window).outerHeight(true);
-        if (scrollTop + windowHeight === scrollHeight) { //判断滑动到底部了
+        if (scrollTop + scrollHeight > nowHeight) { //判断滑动到底部了
             getNextPage();
+            nowHeight+=scrollHeight;
         }
     });
 })
@@ -16,7 +18,7 @@ function getMyTaskList() {
     const data = new Object();
     data.id = localStorage.getItem("userId");
     data.page = page;
-    data.limit = 10;
+    data.limit = limit;
     call('/baotuan/viewUserTask/userTaskList', data, function (res) {
         if (res.data.records.length == 0) alert('无任务，请前往任务大厅接取任务');
         userTaskList = userTaskList.concat(res.data.records);
@@ -28,7 +30,7 @@ function getNextPage() {
     page++;
     data.id = localStorage.getItem("userId");
     data.page = page;
-    data.limit = 10;
+    data.limit = limit;
     call('/baotuan/viewUserTask/userTaskList', data, function (res) {
         if (res.data.total == userTaskList.length) return;
         userTaskList = userTaskList.concat(res.data.records);

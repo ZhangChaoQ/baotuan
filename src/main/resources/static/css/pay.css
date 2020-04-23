@@ -1,12 +1,24 @@
-.bt-card{
-	height: 2rem;
-	line-height: 2rem;
-	padding-left: 0.75rem;
+.bt-card {
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 0.75rem;
 }
-button{
-	width: 80%;
-	margin: 0 10%;
+
+button {
+    width: 80%;
+    margin: 0 10%;
 }
-.content{
-	margin-top: 3rem;
+
+.content {
+    margin-top: 3rem;
+}
+
+input {
+    color: black;
+    width: 100%;
+}
+
+input::-webkit-input-placeholder {
+    color: black;
+    font-size: 1rem;
 }
