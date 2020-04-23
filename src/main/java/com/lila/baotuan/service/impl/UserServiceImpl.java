@@ -154,7 +154,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public int uploadPasswordByPhone(String phone, String password) {
         User user = getUserByPhone(phone);
-        baseMapper.update(user, new UpdateWrapper<User>().set("password", MD5Util.MD5Encode(password, "UTF-8")));
+        baseMapper.update(user, new UpdateWrapper<User>().set("password", MD5Util.MD5Encode(password, "UTF-8")).eq("id",user.getId()));
         return user.getId();
     }
 
