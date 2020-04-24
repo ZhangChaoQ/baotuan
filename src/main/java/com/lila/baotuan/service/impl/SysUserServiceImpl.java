@@ -11,6 +11,7 @@ import com.lila.baotuan.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -48,7 +49,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setMemberId(1);
         user.setPhone(phone);
         user.setCode("0-0A-" + count);
-        user.setEnabled(true);
+        user.setEnabled(false);
+        user.setCreatetime(LocalDateTime.now());
         user.setInviteCode(getInviteCode());
         userService.insertUser(user);
         return sysUser;
