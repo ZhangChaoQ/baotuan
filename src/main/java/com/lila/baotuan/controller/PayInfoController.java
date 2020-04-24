@@ -63,7 +63,7 @@ public class PayInfoController {
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
             if (-1 != inviter.getUserId()) {
                 userService.updateMoney(inviter.getUserId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
-                brokerageService.insertInvite(viewUser.getId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
+                brokerageService.insertInvite(inviter.getUserId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
             }
         }
         /*添加进账*/
