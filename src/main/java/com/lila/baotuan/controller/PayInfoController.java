@@ -56,8 +56,9 @@ public class PayInfoController {
         Member member =memberService.getMemberById(payInfo.getMemberId());
         /*修改会员等级*/
         userService.updateMember(userId, member.getId());
+
         /*上级获取分佣*/
-        if (-1 != viewUser.getUserId()&&viewUser.getMemberId()!=1) {
+        if (-1 != viewUser.getUserId()&&viewUser.getMemberId()==1) {
             userService.updateMoney(viewUser.getUserId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
             brokerageService.insertInvite(viewUser.getUserId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
