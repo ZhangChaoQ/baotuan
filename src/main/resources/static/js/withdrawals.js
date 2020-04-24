@@ -3,6 +3,10 @@ function checkMoney(money) {
         alert("金额输入错误，请重新输入")
         return false;
     }
+    if(money>parseInt(localStorage.getItem("surplus"))){
+        alert("余额不足");
+        return false;
+    }
     return true;
 }
 
