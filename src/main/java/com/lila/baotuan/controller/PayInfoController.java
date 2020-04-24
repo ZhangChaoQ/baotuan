@@ -52,14 +52,14 @@ public class PayInfoController {
         PayInfo payInfo=payInfoService.getPayInfoById(id);
 
         int userId = payInfo.getUserId();
+        ViewUser viewUser = viewUserService.getViewUserById(userId);
         Member member =memberService.getMemberById(payInfo.getMemberId());
         /*修改会员等级*/
         userService.updateMember(userId, member.getId());
         /*上级获取分佣*/
-        ViewUser viewUser = viewUserService.getViewUserById(userId);
-        if (-1 != viewUser.getUserId()) {
+        if (-1 != viewUser.getUserId()&&viewUser.getMemberId()!=1) {
             userService.updateMoney(viewUser.getUserId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
-            brokerageService.insertInvite(viewUser.getId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
+            brokerageService.insertInvite(viewUser.getUserId(), DoubleUtil.mul(viewUser.getInviterMemberMoney(), 0.2));
             ViewUser inviter = viewUserService.getViewUserById(viewUser.getUserId());
             if (-1 != inviter.getUserId()) {
                 userService.updateMoney(inviter.getUserId(), DoubleUtil.mul(inviter.getInviterMemberMoney(), 0.05));
