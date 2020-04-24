@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 119.8.37.167_3306
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50725
- Source Host           : 119.8.37.167:3306
+ Source Server Version : 50720
+ Source Host           : localhost:3306
  Source Schema         : baotuan
 
  Target Server Type    : MySQL
- Target Server Version : 50725
+ Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 23/04/2020 17:22:09
+ Date: 24/04/2020 09:42:07
 */
 
 SET NAMES utf8mb4;
@@ -130,6 +130,7 @@ CREATE TABLE `pay_info`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '购买内容',
+  `member_id` int(11) NULL DEFAULT NULL COMMENT '会员id',
   `pay_money` double(255, 2) NULL DEFAULT NULL COMMENT '应付金额',
   `pay_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '支付单号',
   `pay_status_id` int(11) NULL DEFAULT NULL COMMENT '审核状态',

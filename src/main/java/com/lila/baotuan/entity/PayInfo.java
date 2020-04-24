@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-23
+ * @since 2020-04-24
  */
 public class PayInfo extends Model<PayInfo> {
 
@@ -30,6 +30,11 @@ public class PayInfo extends Model<PayInfo> {
      * 购买内容
      */
     private String content;
+
+    /**
+     * 会员id
+     */
+    private Integer memberId;
 
     /**
      * 应付金额
@@ -79,6 +84,14 @@ public class PayInfo extends Model<PayInfo> {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
     }
 
     public Double getPayMoney() {
@@ -132,6 +145,7 @@ public class PayInfo extends Model<PayInfo> {
         "id=" + id +
         ", userId=" + userId +
         ", content=" + content +
+        ", memberId=" + memberId +
         ", payMoney=" + payMoney +
         ", payCode=" + payCode +
         ", payStatusId=" + payStatusId +

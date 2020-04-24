@@ -28,7 +28,7 @@ function bindAlipay() {
         }
         const data = new Object();
         data.id = localStorage.getItem("userId");
-        data.alipayUrl = res;
+        data.alipayUrl = res.data.id;
         data.alipayName = $("#alipayName").val();
         data.alipayAccount = $("#alipayAccount").val();
         call('/baotuan/user/bindAlipay', data, function (res) {

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Zhang
- * @since 2020-04-23
+ * @since 2020-04-24
  */
 public interface ViewTaskMapper extends BaseMapper<ViewTask> {
 

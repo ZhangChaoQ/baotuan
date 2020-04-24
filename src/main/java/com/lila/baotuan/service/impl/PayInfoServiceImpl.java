@@ -23,10 +23,11 @@ import java.util.List;
 @Service
 public class PayInfoServiceImpl extends ServiceImpl<PayInfoMapper, PayInfo> implements IPayInfoService {
 
-    public int insertPayInfo(int userId, int payMoney, String payCode) {
+    public int insertPayInfo(int userId, int payMoney, String payCode,int memberId) {
         PayInfo payinfo = new PayInfo();
         payinfo.setCreatetime(LocalDateTime.now());
         payinfo.setPayCode(payCode);
+        payinfo.setMemberId(memberId);
         payinfo.setPayStatusId(1);
         payinfo.setUserId(userId);
         payinfo.setPayMoney(Double.valueOf(payMoney));

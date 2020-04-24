@@ -38,11 +38,12 @@ public class PayInfoController {
     public Result addPay(HttpServletRequest request) {
         int userId = Integer.valueOf(request.getParameter("userId"));
         int payMoney = Integer.valueOf(request.getParameter("payMoney"));
+        int memberId = Integer.valueOf(request.getParameter("memberId"));
         String payCode = request.getParameter("payCode");
         Result result=new Result();
         result.setCode(true);
         result.setMsg("正交由人工审核中，订单将于2小时内生效");
-        result.setData(payInfoService.insertPayInfo(userId,payMoney,payCode));
+        result.setData(payInfoService.insertPayInfo(userId,payMoney,payCode,memberId));
         return result;
     }
     @RequestMapping("/success")
@@ -51,7 +52,7 @@ public class PayInfoController {
         PayInfo payInfo=payInfoService.getPayInfoById(id);
 
         int userId = payInfo.getUserId();
-        Member member =memberService.getMemberIdByPrice(payInfo.getPayMoney());
+        Member member =memberService.getMemberById(payInfo.getMemberId());
         /*修改会员等级*/
         userService.updateMember(userId, member.getId());
         /*上级获取分佣*/

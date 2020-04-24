@@ -55,6 +55,6 @@ function checkUp(id, money, name) {
     } else if (memberId == id) {
         alert('这是您当前会员等级，请重新选择');
     } else {
-        navicatTo('pay?money=' + (money - userMemberMoney) + "&name=" + encodeURI(name));
+        navicatTo('pay?money=' + (money - userMemberMoney) + "&name=" + encodeURI(name)+"&memberId="+id);
     }
 }
