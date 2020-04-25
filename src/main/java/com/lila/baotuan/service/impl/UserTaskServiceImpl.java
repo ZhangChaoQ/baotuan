@@ -30,8 +30,6 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
      * 接取任务
      * */
     public int insertUserTask(int userId, int taskId) {
-        System.out.println(checkNum(userId, taskId));
-        System.out.println(checkCount(userId, taskId));
         if (checkNum(userId, taskId)) return -1;
         if (checkCount(userId, taskId)) return -2;
         UserTask userTask = new UserTask();
