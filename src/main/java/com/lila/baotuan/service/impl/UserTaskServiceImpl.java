@@ -58,7 +58,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
      * */
     private boolean checkNum(int userId, int taskId) {
         boolean result;
-        result = baseMapper.selectCount(new QueryWrapper<UserTask>().eq("user_id", userId).eq("task_id", taskId)) == 1;
+        result = baseMapper.selectCount(new QueryWrapper<UserTask>().eq("user_id", userId).between("createtime", DateTimeUtil.getNowDayBefore(), DateTimeUtil.getNowDayEnd()).eq("task_id", taskId)) == 1;
         return result;
     }
 
